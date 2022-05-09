@@ -18,14 +18,14 @@ if(!empty($email)){
 
         $random_str = generateRandomString(20);
 
-        $update_sql = "UPDATE users SET forgot_token='$random_str' where id=$user_id;";
+        $update_sql = "UPDATE users SET reset_token='$random_str' where id=$user_id;";
 
         $result_update = $conn->query($update_sql);
 
         if($result_update){
 
             //send email to user;
-        echo    $url = "http://testing.local/php-login-signup/reset-password.php?token=$random_str";
+        echo    $url = "http://phplogin.local/reset-password.php?token=$random_str";
 
 
         }else{

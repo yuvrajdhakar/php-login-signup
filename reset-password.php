@@ -4,7 +4,7 @@ require "db-connection.php";
 
 $token = $_GET['token'];
 
-$sql = "select id, name, email from users where forgot_token = '$token' LIMIT 1";
+$sql = "select id, name, email from users where reset_token = '$token' LIMIT 1";
 
 
 $result = $conn->query($sql);
@@ -42,7 +42,8 @@ $result = $conn->query($sql);
 </div>
 <?php } ?>
 
-				<form method="post" action="process-forgot-password.php">
+				<form method="post" action="process-reset-password.php">
+                    <input type="hidden" name="token" value="<?php echo $token; ?>"/>
 					<div>
 						<span class="text-sm text-gray-900">Welcome back</span>
 						<h1 class="text-2xl font-bold">Create your new password</h1>
