@@ -17,7 +17,8 @@ if( !empty($email) && !empty($password)){
 
         $row = $result->fetch_assoc();
 
-        if($password == $row['password']){
+       
+        if( password_verify($password, $row['password'])  ){
 
             $_SESSION['name'] = $row['name'];
             $_SESSION['email'] = $row['email'];
@@ -28,7 +29,7 @@ if( !empty($email) && !empty($password)){
             die();
         }else{
             header("Location: index.php?error='Your password is incorrect.'");
-        die();
+            die();
         }
 
        

@@ -11,8 +11,12 @@ if(!empty($name) && !empty($email) && !empty($password) && !empty($confirm_passw
     //signup the user
 
     if($password == $confirm_password){
+
+        $encrypt_password = password_hash($password, PASSWORD_DEFAULT);
+
         
-        $sql = "INSERT INTO users (name, email, password) values ('$name', '$email', '$password' )";
+       $sql = "INSERT INTO users (name, email, password) values ('$name', '$email', '$encrypt_password' )";
+     
         
         if ($conn->query($sql) === TRUE) {
            $msg = "Your account created successfully.";
