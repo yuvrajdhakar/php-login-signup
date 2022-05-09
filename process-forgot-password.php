@@ -25,7 +25,7 @@ if(!empty($email)){
         if($result_update){
 
             //send email to user;
-        echo    $url = "http://phplogin.local/reset-password.php?token=$random_str";
+        echo    $url = $_ENV['WEBSITE_HOST']."/reset-password.php?token=$random_str";
 
 
         }else{
