@@ -27,8 +27,8 @@
 
 				<form method="post" action="process-forgot-password.php">
 					<div>
-						<span class="text-sm text-gray-900">Welcome back</span>
-						<h1 class="text-2xl font-bold">Login to your account</h1>
+						<span class="text-sm text-gray-900">Hello</span>
+						<h1 class="text-2xl font-bold">Request forgot password</h1>
 					</div>
 					
 						<div class="mt-5 ">
