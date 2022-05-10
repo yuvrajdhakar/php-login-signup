@@ -10,7 +10,11 @@ $password = $_POST['password'];
 if( !empty($email) && !empty($password)){
   $sql = "select id, name, email,password from users where email = '$email' LIMIT 1";
 
-  $result = $conn->query($sql);
+  $stmt = $conn->prepare("select id, name, email,password from users where email = ? LIMIT 1");
+  $stmt->bind_param("s", $email);
+
+   $stmt->execute();
+   $result = $stmt->get_result();
 
   if ($result) {
     if ($result->num_rows > 0) {
