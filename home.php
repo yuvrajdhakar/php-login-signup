@@ -180,11 +180,11 @@ if($_SESSION['user_id']){
 
               <li class="items-center">
                 <a
-                  href="./settings.html"
+                  href="/user.php "
                   class="text-xs uppercase py-3 font-bold block text-blueGray-700 hover:text-blueGray-500"
                 >
                   <i class="fas fa-tools mr-2 text-sm text-blueGray-300"></i>
-                  Settings
+                  users
                 </a>
               </li>
 

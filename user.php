@@ -188,11 +188,11 @@ if ($_SESSION['user_id']) {
 
                         <li class="items-center">
                             <a
-                                    href="./settings.html"
+                                    href="./user.php"
                                     class="text-xs uppercase py-3 font-bold block text-blueGray-700 hover:text-blueGray-500"
                             >
                                 <i class="fas fa-tools mr-2 text-sm text-blueGray-300"></i>
-                                Settings
+                                user
                             </a>
                         </li>
 
@@ -352,7 +352,9 @@ if ($_SESSION['user_id']) {
                         <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                           Email id
                         </th>
-  
+                        <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                          Status
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
@@ -369,7 +371,7 @@ if ($_SESSION['user_id']) {
                         <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                         <?php echo $row['email'];?>
                         </td>
-                        
+                         
                       </tr>
                       <?php
                     }
