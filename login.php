@@ -8,9 +8,9 @@ $email = $_POST['email'];
 $password = $_POST['password'];
 
 if( !empty($email) && !empty($password)){
-  $sql = "select id, name, email,password from users where email = '$email' LIMIT 1";
+  $sql = "select id, name, email,password, status from users where email = '$email' LIMIT 1";
 
-  $stmt = $conn->prepare("select id, name, email,password from users where email = ? LIMIT 1");
+  $stmt = $conn->prepare("select id, name, email,password, status from users where email = ? LIMIT 1");
   $stmt->bind_param("s", $email);
 
    $stmt->execute();
@@ -21,16 +21,20 @@ if( !empty($email) && !empty($password)){
 
         $row = $result->fetch_assoc();
 
-       
         if( password_verify($password, $row['password'])  ){
 
-            $_SESSION['name'] = $row['name'];
-            $_SESSION['email'] = $row['email'];
+            if($row['status'] == 1) {
+                $_SESSION['name'] = $row['name'];
+                $_SESSION['email'] = $row['email'];
 
-            $_SESSION['user_id'] = $row['id'];
+                $_SESSION['user_id'] = $row['id'];
 
-            header("Location: home.php");
-            die();
+                header("Location: home.php");
+                die();
+            }else{
+                header("Location: index.php?error='Your account is disabled.'");
+                die();
+            }
         }else{
             header("Location: index.php?error='Your password is incorrect.'");
             die();
