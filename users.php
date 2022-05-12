@@ -4,9 +4,25 @@ session_start();
 
 include "db-connection.php";
 
+if (isset($_POST['id']) && !empty($_POST['id'])) {
+    $id = $_POST['id'];
+    $del = "DELETE FROM users  WHERE id='$id';";
+    $delet = $conn->query($del);
+
+    if($delet){
+        header("Location: users.php?success='User deleted sucessfully!");
+        die();
+    }else{
+        header("Location: users.php?error='Unable to delete");
+    die();
+    }
+}
+
 $sql = "select * from users;";
 
 $result = $conn->query($sql);
+
+
 
 if ($_SESSION['user_id']) {
     ?>
@@ -48,7 +64,9 @@ if ($_SESSION['user_id']) {
                         class="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
                         href="../../index.html"
                 >
-                    <?php echo $_SESSION['name']; ?>
+                <img src="https://skyesol.com/wp-content/uploads/2021/09/skyesol248x94.png" alt="Sky e-Solutions">
+            
+                <!-- <?php echo $_SESSION['name']; ?>-->
                 </a>
                 <ul class="md:hidden items-center flex flex-wrap list-none">
                     <li class="inline-block relative">
@@ -179,7 +197,7 @@ if ($_SESSION['user_id']) {
                         <li class="items-center">
                             <a
                                     href="home.php"
-                                    class="text-xs uppercase py-3 font-bold block text-pink-500 hover:text-pink-600"
+                                    class="text-xs uppercase py-3 font-bold block "
                             >
                                 <i class="fas fa-tv mr-2 text-sm opacity-75"></i>
                                 Dashboard
@@ -208,7 +226,7 @@ if ($_SESSION['user_id']) {
 
                         <li class="items-center">
                             <a
-                                    href="./maps.html"
+                                    href="https://www.google.com/maps"
                                     class="text-xs uppercase py-3 font-bold block text-blueGray-700 hover:text-blueGray-500"
                             >
                                 <i
@@ -370,6 +388,9 @@ if ($_SESSION['user_id']) {
                                     <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                                         Action
                                     </th>
+                                    <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                       
+                                    </th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -397,8 +418,20 @@ if ($_SESSION['user_id']) {
                                                 Edit
                                             </a>
                                         </td>
+             
+                                        <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                          
 
-                                    </tr>
+                                            <form method="post">
+                                                <input type="hidden" name="id" value="<?php echo $row['id'];?>"/>
+                                            <button type="submit"
+                                                    class="bg-red-500 text-white active:bg-red-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
+                                            Delete
+                                </button>
+                                </form>
+    
+                                        </td>
+                                  </tr>
                                     <?php
                                 }
                                 ?>
@@ -410,65 +443,44 @@ if ($_SESSION['user_id']) {
                 <!-- content ends here.  -->
 
                 <footer class="block py-4">
-                    <div class="container mx-auto px-4">
-                        <hr class="mb-4 border-b-1 border-blueGray-200"/>
-                        <div
-                                class="flex flex-wrap items-center md:justify-between justify-center"
-                        >
-                            <div class="w-full md:w-4/12 px-4">
-                                <div
-                                        class="text-sm text-blueGray-500 font-semibold py-1 text-center md:text-left"
-                                >
-                                    Copyright © <span id="get-current-year"></span>
-                                    <a
-                                            href="https://www.creative-tim.com?ref=njs-dashboard"
-                                            class="text-blueGray-500 hover:text-blueGray-700 text-sm font-semibold py-1"
-                                    >
-                                        Creative Tim
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="w-full md:w-8/12 px-4">
-                                <ul
-                                        class="flex flex-wrap list-none md:justify-end justify-center"
-                                >
-                                    <li>
-                                        <a
-                                                href="https://www.creative-tim.com?ref=njs-dashboard"
-                                                class="text-blueGray-600 hover:text-blueGray-800 text-sm font-semibold block py-1 px-3"
-                                        >
-                                            Creative Tim
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                                href="https://www.creative-tim.com/presentation?ref=njs-dashboard"
-                                                class="text-blueGray-600 hover:text-blueGray-800 text-sm font-semibold block py-1 px-3"
-                                        >
-                                            About Us
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                                href="http://blog.creative-tim.com?ref=njs-dashboard"
-                                                class="text-blueGray-600 hover:text-blueGray-800 text-sm font-semibold block py-1 px-3"
-                                        >
-                                            Blog
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                                href="https://github.com/creativetimofficial/notus-js/blob/main/LICENSE.md?ref=njs-dashboard"
-                                                class="text-blueGray-600 hover:text-blueGray-800 text-sm font-semibold block py-1 px-3"
-                                        >
-                                            MIT License
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
+            <div class="container mx-auto px-4">
+              <hr class="mb-4 border-b-1 border-blueGray-200" />
+              <div
+                class="flex flex-wrap items-center md:justify-between justify-center"
+              >
+                <div class="w-full md:w-4/12 px-4">
+                  <div
+                    class="text-sm text-blueGray-500 font-semibold py-1 text-center md:text-left"
+                  >
+                    Copyright © <span id="get-current-year"></span>
+                    <a
+                      href="https://skyesol.com/"
+                      class="text-blueGray-500 hover:text-blueGray-700 text-sm font-semibold py-1"
+                    >
+                    skyesol solution
+                    </a>
+                  </div>
+                </div>
+                <div class="w-full md:w-8/12 px-4">
+                  <ul
+                    class="flex flex-wrap list-none md:justify-end justify-center"
+                  >
+                     
+                    <li>
+                      <a
+                        href="https://www.creative-tim.com/presentation?ref=njs-dashboard"
+                        class="text-blueGray-600 hover:text-blueGray-800 text-sm font-semibold block py-1 px-3"
+                      >
+                        About Us
+                      </a>
+                    </li>
+                     
+ 
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </footer>
             </div>
         </div>
     </div>

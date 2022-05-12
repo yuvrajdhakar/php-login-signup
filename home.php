@@ -39,10 +39,12 @@ if($_SESSION['user_id']){
             <i class="fas fa-bars"></i>
           </button>
           <a
-            class="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
+            class="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold  px-0"
             href="../../index.html"
           >
-            <?php echo $_SESSION['name'];?>
+          <img src="https://skyesol.com/wp-content/uploads/2021/09/skyesol248x94.png" alt="Sky e-Solutions">
+
+            <!--<?php echo $_SESSION['name'];?>-->
           </a>
           <ul class="md:hidden items-center flex flex-wrap list-none">
             <li class="inline-block relative">
@@ -170,8 +172,8 @@ if($_SESSION['user_id']){
             <ul class="md:flex-col md:min-w-full flex flex-col list-none">
               <li class="items-center">
                 <a
-                  href="homw.php"
-                  class="text-xs uppercase py-3 font-bold block text-pink-500 hover:text-pink-600"
+                  href="home.php"
+                  class="text-xs uppercase py-3 font-bold block "
                 >
                   <i class="fas fa-tv mr-2 text-sm opacity-75"></i>
                   Dashboard
@@ -200,7 +202,7 @@ if($_SESSION['user_id']){
 
               <li class="items-center">
                 <a
-                  href="./maps.html"
+                  href="https://www.google.com/maps "
                   class="text-xs uppercase py-3 font-bold block text-blueGray-700 hover:text-blueGray-500"
                 >
                   <i
@@ -905,10 +907,10 @@ if($_SESSION['user_id']){
                   >
                     Copyright © <span id="get-current-year"></span>
                     <a
-                      href="https://www.creative-tim.com?ref=njs-dashboard"
+                      href="https://skyesol.com/"
                       class="text-blueGray-500 hover:text-blueGray-700 text-sm font-semibold py-1"
                     >
-                      Creative Tim
+                    skyesol solution
                     </a>
                   </div>
                 </div>
@@ -916,14 +918,7 @@ if($_SESSION['user_id']){
                   <ul
                     class="flex flex-wrap list-none md:justify-end justify-center"
                   >
-                    <li>
-                      <a
-                        href="https://www.creative-tim.com?ref=njs-dashboard"
-                        class="text-blueGray-600 hover:text-blueGray-800 text-sm font-semibold block py-1 px-3"
-                      >
-                        Creative Tim
-                      </a>
-                    </li>
+                     
                     <li>
                       <a
                         href="https://www.creative-tim.com/presentation?ref=njs-dashboard"
@@ -932,22 +927,8 @@ if($_SESSION['user_id']){
                         About Us
                       </a>
                     </li>
-                    <li>
-                      <a
-                        href="http://blog.creative-tim.com?ref=njs-dashboard"
-                        class="text-blueGray-600 hover:text-blueGray-800 text-sm font-semibold block py-1 px-3"
-                      >
-                        Blog
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="https://github.com/creativetimofficial/notus-js/blob/main/LICENSE.md?ref=njs-dashboard"
-                        class="text-blueGray-600 hover:text-blueGray-800 text-sm font-semibold block py-1 px-3"
-                      >
-                        MIT License
-                      </a>
-                    </li>
+                     
+ 
                   </ul>
                 </div>
               </div>
