@@ -4,16 +4,16 @@ session_start();
 
 include "db-connection.php";
 
-if (isset($_POST['id']) && !empty($_POST['id'])) {
-    $id = $_POST['id'];
-    $del = "DELETE FROM users  WHERE id='$id';";
+if (isset($_POST['ID']) && !empty($_POST['ID'])) {
+    $id = $_POST['ID'];
+    $del = "DELETE FROM pages  WHERE id='$id';";
     $delet = $conn->query($del);
 
     if ($delet) {
-        header("Location: users.php?success='User deleted sucessfully!");
+        header("Location: pages.php?success='Page deleted successfully!");
         die();
     } else {
-        header("Location: users.php?error='Unable to delete");
+        header("Location: pages.php?error='Unable to delete the page");
         die();
     }
 }
@@ -30,28 +30,27 @@ $offset_value = (($current_page - 1) * 5);
 if (isset($_GET['s'])) {
     $s = $_GET['s'];
 
-
-    $total_recordsResult = $conn->query("select count(*) as total_records from users where email like '%$s%';");
+    $total_recordsResult = $conn->query("select count(*) as total_records from pages where title like '%$s%';");
     $total_records = $total_recordsResult->fetch_assoc()['total_records'];
 
     $number_of_pages = ceil($total_records / $per_page);
 
-    $sql = "select * from users where email like '%$s%' limit $per_page offset $offset_value";
+    $sql = "select * from pages where title like '%$s%' limit $per_page offset $offset_value";
 
 
 } else {
 
-    $total_recordsResult = $conn->query("select count(*) as total_records from users;");
+    $total_recordsResult = $conn->query("select count(*) as total_records from pages;");
     $total_records = $total_recordsResult->fetch_assoc()['total_records'];
 
     $number_of_pages = ceil($total_records / $per_page);
 
-    $sql = "select * from users limit $per_page OFFSET $offset_value;";
+    $sql = "select * from pages limit $per_page OFFSET $offset_value;";
 
 }
 
 $result = $conn->query($sql);
-$title = "Users lists";
+$title = "Pages lists";
 
 if ($_SESSION['user_id']) {
     ?>
@@ -88,27 +87,27 @@ if ($_SESSION['user_id']) {
                             <div class="flex flex-wrap items-center">
                                 <div class="relative w-full px-4 max-w-full flex-grow flex-1">
                                     <h3 class="font-semibold text-base text-blueGray-700">
-                                        Users ( <?php echo $total_records; ?> )
+                                        Pages ( <?php echo $total_records; ?> )
                                     </h3>
                                 </div>
                                 <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
                                     <form>
                                         <input
-                                                type="text"
-                                                name="s"
-                                                value="<?php if (isset($_GET['s'])) {
-                                                    echo $_GET['s'];
-                                                } ?>"
-                                                placeholder="Search in user email here..."
-                                                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full pl-10"
+                                            type="text"
+                                            name="s"
+                                            value="<?php if (isset($_GET['s'])) {
+                                                echo $_GET['s'];
+                                            } ?>"
+                                            placeholder="Search in page title here..."
+                                            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full pl-10"
                                         />
-                                   </div>
-                                      <div>
-                                        <button type="submit"
-                                                class="  bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                                type="button">
-                                            Search
-                                        </button>
+                                </div>
+                                <div>
+                                    <button type="submit"
+                                            class="  bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                            type="button">
+                                        Search
+                                    </button>
                                     </form>
                                 </div>
                             </div>
@@ -122,16 +121,19 @@ if ($_SESSION['user_id']) {
                                         Id
                                     </th>
                                     <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                        Name
+                                        Title
                                     </th>
                                     <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                        Email id
+                                       Status
                                     </th>
                                     <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                        Status
+                                        Author
                                     </th>
                                     <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                        Action
+                                        Date
+                                    </th>
+                                    <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+
                                     </th>
                                     <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
 
@@ -144,29 +146,21 @@ if ($_SESSION['user_id']) {
                                     ?>
                                     <tr>
                                         <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                                            <?php echo $row['id']; ?>
+                                            <?php echo $row['ID']; ?>
                                         </th>
                                         <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                            <?php echo $row['name']; ?>
+                                            <?php echo $row['title']; ?>
                                         </td>
                                         <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                            <?php echo $row['email']; ?>
-                                        </td>
-
-                                        <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                            <?php if ($row['status'] == 1) {
-                                                echo "Active";
-                                            } else {
-                                                echo "InActive";
-                                            } ?>
+                                            <?php echo $row['status']; ?>
                                         </td>
 
                                         <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                            <a href="edit-user.php?id=<?php echo $row['id']; ?>"
-                                               class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                               type="button">
-                                                Edit
-                                            </a>
+                                            <?php echo $row['author']; ?>
+                                        </td>
+
+                                        <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                            <?php echo $row['updated_at']; ?>
                                         </td>
                                         <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                             <a href="view-user.php?id=<?php echo $row['id']; ?>"
@@ -177,10 +171,8 @@ if ($_SESSION['user_id']) {
                                         </td>
 
                                         <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-
-
                                             <form method="post">
-                                                <input type="hidden" name="id" value="<?php echo $row['id']; ?>"/>
+                                                <input type="hidden" name="ID" value="<?php echo $row['ID']; ?>"/>
                                                 <button type="submit"
                                                         class="bg-red-500 text-white active:bg-red-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                                         type="button">
