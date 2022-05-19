@@ -102,8 +102,10 @@ if ($_SESSION['user_id']) {
                                                 placeholder="Search here..."
                                                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full pl-10"
                                         />
+                                   </div>
+                                      <div>
                                         <button type="submit"
-                                                class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                                class="  bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                                 type="button">
                                             Search
                                         </button>
@@ -164,6 +166,13 @@ if ($_SESSION['user_id']) {
                                                class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                                type="button">
                                                 Edit
+                                            </a>
+                                        </td>
+                                        <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                            <a href="viue.php?id=<?php echo $row['id']; ?>"
+                                               class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                               type="button">
+                                                view
                                             </a>
                                         </td>
 
