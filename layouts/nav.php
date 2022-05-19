@@ -148,7 +148,7 @@
                 <li class="items-center">
                     <a
                             href="home.php"
-                            class="text-xs uppercase py-3 font-bold block "
+                            class="text-xs uppercase py-3 font-bold block <?php if(endsWith($_SERVER['SCRIPT_NAME'], 'home.php') ){ echo 'text-pink-500 hover:text-pink-600';} else { echo 'text-blueGray-700 hover:text-blueGray-500'; }?>"
                     >
                         <i class="fas fa-tv mr-2 text-sm opacity-75"></i>
                         Dashboard
@@ -158,7 +158,7 @@
                 <li class="items-center">
                     <a
                             href="users.php"
-                            class="text-xs uppercase py-3 font-bold block text-blueGray-700 hover:text-blueGray-500"
+                            class="text-xs uppercase py-3 font-bold block <?php if(endsWith($_SERVER['SCRIPT_NAME'], 'users.php') or endsWith($_SERVER['SCRIPT_NAME'], 'edit-user.php') or endsWith($_SERVER['SCRIPT_NAME'], 'view-user.php')){ echo 'text-pink-500 hover:text-pink-600';} else { echo 'text-blueGray-700 hover:text-blueGray-500'; }?>"
                     >
                         <i class="fas fa-tools mr-2 text-sm text-blueGray-300"></i>
                         Users
