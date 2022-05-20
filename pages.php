@@ -35,7 +35,7 @@ if (isset($_GET['s'])) {
 
     $number_of_pages = ceil($total_records / $per_page);
 
-    $sql = "select * from pages where title like '%$s%' limit $per_page offset $offset_value";
+    $sql = "select pages.ID, pages.title, pages.status,  pages.created_at, users.id as user_id, users.name as author_name, users.email as email from pages INNER JOIN users on users.id = pages.author where pages.title like '%$s%' limit $per_page offset $offset_value";
 
 
 } else {
@@ -45,7 +45,7 @@ if (isset($_GET['s'])) {
 
     $number_of_pages = ceil($total_records / $per_page);
 
-    $sql = "select * from pages limit $per_page OFFSET $offset_value;";
+    $sql = "select pages.ID, pages.title, pages.status, pages.created_at, users.id as user_id, users.name as author_name, users.email as email from pages INNER JOIN users on users.id = pages.author limit $per_page OFFSET $offset_value;";
 
 }
 
@@ -156,20 +156,34 @@ if ($_SESSION['user_id']) {
                                         </td>
 
                                         <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                            <?php echo $row['author']; ?>
+                                            <?php
+                                            echo $row['author_name'];
+                                          //  $user_id = $row['author'];
+                                          //  $user_result_q = $conn->query("SELECT * from users where id=$user_id");
+                                         //   $user_details = $user_result_q->fetch_assoc();
+                                         //   echo $user_details['name']." ".$user_details['email'];
+                                            ?>
                                         </td>
 
                                         <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                            <?php echo $row['updated_at']; ?>
+                                            <?php echo $row['created_at']; ?>
                                         </td>
                                         <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                            <a href="view-user.php?id=<?php echo $row['id']; ?>"
+                                            <a href="view-pages.php ?id=<?php echo $row['ID']; ?>"
                                                class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                                type="button">
                                                 view
+                                
                                             </a>
                                         </td>
-
+                                        <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                            <a href="add-pages.php ?id=<?php echo $row['ID']; ?>"
+                                               class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                               type="button">
+                                                ADD
+                                
+                                            </a>
+                                        </td>
                                         <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                             <form method="post">
                                                 <input type="hidden" name="ID" value="<?php echo $row['ID']; ?>"/>
@@ -181,6 +195,7 @@ if ($_SESSION['user_id']) {
                                             </form>
 
                                         </td>
+                                         
                                     </tr>
                                     <?php
                                 }
