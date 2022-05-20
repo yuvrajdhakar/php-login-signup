@@ -25,3 +25,6 @@ CREATE TABLE `pages` (
       `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
       PRIMARY KEY (`ID`)
 ) ENGINE = InnoDB;
+
+
+ALTER TABLE `pages` ADD `slug` VARCHAR(256) NOT NULL, ADD UNIQUE `slug` (`slug`);

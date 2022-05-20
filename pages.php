@@ -89,6 +89,15 @@ if ($_SESSION['user_id']) {
                                     <h3 class="font-semibold text-base text-blueGray-700">
                                         Pages ( <?php echo $total_records; ?> )
                                     </h3>
+
+
+                                </div>
+                                <div>
+                                    <a href="add-pages.php"
+                                       class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                       type="button">
+                                        Add New Page
+                                    </a>
                                 </div>
                                 <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
                                     <form>
@@ -169,7 +178,7 @@ if ($_SESSION['user_id']) {
                                             <?php echo $row['created_at']; ?>
                                         </td>
                                         <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                            <a href="view-pages.php ?id=<?php echo $row['ID']; ?>"
+                                            <a href="view-pages.php?id=<?php echo $row['ID']; ?>"
                                                class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                                type="button">
                                                 view
@@ -177,12 +186,7 @@ if ($_SESSION['user_id']) {
                                             </a>
                                         </td>
                                         <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                            <a href="add-pages.php ?id=<?php echo $row['ID']; ?>"
-                                               class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                               type="button">
-                                                ADD
-                                
-                                            </a>
+
                                         </td>
                                         <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                             <form method="post">
