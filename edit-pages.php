@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$title ="Edit User";
+$title = "Edit User";
 $id = $_GET['id'];
 
 if ($id && !empty($id)) {
@@ -12,7 +12,13 @@ if ($id && !empty($id)) {
     if ($result) {
         $user = $result->fetch_assoc();
 
-        ?>
+        if($_SESSION['role'] != 'admin'){
+            if($user['author'] != $_SESSION['user_id']){
+                header("Location: pages.php?error='You don't have permission for that page.");
+                die();
+            }
+        }
+            ?>
 
         <!DOCTYPE html>
         <html>
@@ -58,7 +64,7 @@ if ($id && !empty($id)) {
                             </div>
                             <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
                                 <form action="process-edit-pages.php" method="POST">
-                                    <input type="hidden" name="id" value="<?php echo $_GET['id'];?>"/>
+                                    <input type="hidden" name="id" value="<?php echo $_GET['id']; ?>"/>
                                     <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
                                         User Information
                                     </h6>
@@ -75,36 +81,43 @@ if ($id && !empty($id)) {
                                                        value="<?php echo $user['title']; ?>">
                                             </div>
                                         </div>
-                                      
+
                                         <div class="w-full lg:w-6/12 px-4">
                                             <div class="relative w-full mb-3">
                                                 <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                                                        htmlfor="grid-password">
                                                     Status
                                                 </label>
-                                                 
-                                              <input name="status"
-                                                        class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                                        value="<?php echo $user['status']; ?>"> 
 
-                                              
+                                                <select
+                                                        name="status"
+                                                        class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                                >
+                                                    <option value="draft" <?php if ($user['status'] == 'draft') {
+                                                        echo 'selected';
+                                                    } ?>>draft
+                                                    </option>
+                                                    <option value="published" <?php if ($user['status'] == 'published') {
+                                                        echo 'selected';
+                                                    } ?>>Published
+                                                    </option>
+                                                </select>
                                             </div>
                                         </div>
 
                                         <div class="w-full px-4">
-                                    <div class="relative w-full mb-3">
-                                            <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                                                   htmlfor="grid-password">
-                                                Content
-                                            </label>
-                                            <textarea id="tiny" name="content"
-                                                      class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                            ><?php echo $user['content'];?></textarea>
+                                            <div class="relative w-full mb-3">
+                                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                                       htmlfor="grid-password">
+                                                    Content
+                                                </label>
+                                                <textarea id="tiny" name="content"
+                                                          class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                                ><?php echo $user['content']; ?></textarea>
 
-                                        </div>
+                                            </div>
                                         </div>
 
-                                         
 
                                     </div>
 

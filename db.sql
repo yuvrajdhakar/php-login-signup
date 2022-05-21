@@ -26,5 +26,16 @@ CREATE TABLE `pages` (
       PRIMARY KEY (`ID`)
 ) ENGINE = InnoDB;
 
+ALTER TABLE `pages` ADD `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
 
 ALTER TABLE `pages` ADD `slug` VARCHAR(256) NOT NULL, ADD UNIQUE `slug` (`slug`);
+
+ALTER TABLE `pages` ADD `published_at` TIMESTAMP NULL;
+
+ALTER TABLE `users` ADD `role` VARCHAR(256) NULL AFTER `reset_token`;
+
+-- CREATE TABLE `roles` (
+--                          `id` BIGINT NOT NULL AUTO_INCREMENT ,
+--                          `name` VARCHAR(256) NOT NULL ,
+--                          PRIMARY KEY (`id`)
+-- );

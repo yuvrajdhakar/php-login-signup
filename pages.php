@@ -40,13 +40,23 @@ if (isset($_GET['s'])) {
 
 } else {
 
-    $total_recordsResult = $conn->query("select count(*) as total_records from pages;");
+    if($_SESSION['role'] == 'admin'){
+        $total_recordsResult = $conn->query("select count(*) as total_records from pages;");
+    }else{
+        $total_recordsResult = $conn->query("select count(*) as total_records from pages where author=".$_SESSION['user_id'].";");
+    }
+
+
     $total_records = $total_recordsResult->fetch_assoc()['total_records'];
 
     $number_of_pages = ceil($total_records / $per_page);
 
-    $sql = "select pages.ID, pages.title, pages.status, pages.created_at, users.id as user_id, users.name as author_name, users.email as email from pages INNER JOIN users on users.id = pages.author limit $per_page OFFSET $offset_value;";
 
+    if($_SESSION['role'] == 'admin'){
+        $sql = "select pages.ID, pages.title, pages.status, pages.created_at, users.id as user_id, users.name as author_name, users.email as email from pages INNER JOIN users on users.id = pages.author limit $per_page OFFSET $offset_value;";
+    }else{
+        $sql = "select pages.ID, pages.title, pages.status, pages.created_at, users.id as user_id, users.name as author_name, users.email as email from pages INNER JOIN users on users.id = pages.author where pages.author=".$_SESSION['user_id']." limit $per_page OFFSET $offset_value;";
+    }
 }
 
 $result = $conn->query($sql);
@@ -140,6 +150,12 @@ if ($_SESSION['user_id']) {
                                     </th>
                                     <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                                         Date
+                                    </th>
+                                    <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+
+                                    </th>
+                                    <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+
                                     </th>
                                     <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
 
