@@ -29,7 +29,7 @@
         >
             <a
                 class="text-blueGray-500 block"
-                href="#pablo"
+                 
                 onclick="openDropdown(event,'user-dropdown')"
             >
                 <div class="items-center flex">

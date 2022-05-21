@@ -67,30 +67,36 @@ $title = "Edit User";
                                         </div>
                                     </div>
                                     <div class="w-full lg:w-6/12 px-4">
-                                        <div class="relative w-full mb-3">
+                                    <div class="relative w-full mb-3">
+                                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                                       htmlfor="grid-password">
+                                                    Status
+                                                </label>
+                                                <select
+                                                        name="status"
+                                                        class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                                >
+                                                <option value="draft" >draft</option>
+                                                <option>publiced</option>
+                                                    <option>unpubliced</option>
+                                                    <option>null</option>
+                                                </select>
+                                            </div>
+           
+                                    </div>
+
+                                    <div class="w-full px-4">
+                                    <div class="relative w-full mb-3">
                                             <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                                                    htmlfor="grid-password">
                                                 Content
                                             </label>
-                                            <textarea name="content"
+                                            <textarea id="tiny" name="content"
                                                       class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                                             ></textarea>
 
                                         </div>
-                                    </div>
-
-                                    <div class="w-full lg:w-6/12 px-4">
-                                        <div class="relative w-full mb-3">
-                                            <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                                                   htmlfor="grid-password">
-                                                Status
-                                            </label>
-                                            <input type="text"
-                                                   name="status"
-                                                   class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                                   value="">
                                         </div>
-                                    </div>
 
 
                                 </div>

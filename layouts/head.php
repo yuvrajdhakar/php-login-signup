@@ -11,4 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/>
 
     <title><?php if(isset($title)){echo $title;}else{ echo "Sky e-Solutions"; }?></title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="node_modules/tinymce/tinymce.min.js"></script>
+<script src="node_modules/@tinymce/tinymce-jquery/dist/tinymce-jquery.min.js"></script>
 </head>

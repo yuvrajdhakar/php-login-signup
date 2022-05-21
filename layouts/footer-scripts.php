@@ -11,6 +11,8 @@
                 "get-current-year"
             ).innerHTML = new Date().getFullYear();
         }
+
+        $('#tiny').tinymce({height: 500});
     })();
 
     /* Sidebar - Side navigation menu on mobile/responsive mode */
@@ -237,4 +239,8 @@
         ctx = document.getElementById("bar-chart").getContext("2d");
         window.myBar = new Chart(ctx, config);
     })();
+
+
+   
 </script>
+
