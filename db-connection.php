@@ -19,6 +19,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+
 function createUrlSlug($urlString, $conn)
 {
     $slug = preg_replace('/[^A-Za-z0-9-]+/', '-', $urlString);
