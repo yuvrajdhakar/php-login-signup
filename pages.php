@@ -53,9 +53,9 @@ if (isset($_GET['s'])) {
 
 
     if($_SESSION['role'] == 'admin'){
-        $sql = "select pages.ID, pages.title, pages.status, pages.created_at, users.id as user_id, users.name as author_name, users.email as email from pages INNER JOIN users on users.id = pages.author limit $per_page OFFSET $offset_value;";
+        $sql = "select pages.ID,pages.slug, pages.title, pages.status, pages.created_at, users.id as user_id, users.name as author_name, users.email as email from pages INNER JOIN users on users.id = pages.author limit $per_page OFFSET $offset_value;";
     }else{
-        $sql = "select pages.ID, pages.title, pages.status, pages.created_at, users.id as user_id, users.name as author_name, users.email as email from pages INNER JOIN users on users.id = pages.author where pages.author=".$_SESSION['user_id']." limit $per_page OFFSET $offset_value;";
+        $sql = "select pages.ID,pages.slug, pages.title, pages.status, pages.created_at, users.id as user_id, users.name as author_name, users.email as email from pages INNER JOIN users on users.id = pages.author where pages.author=".$_SESSION['user_id']." limit $per_page OFFSET $offset_value;";
     }
 }
 
@@ -198,16 +198,22 @@ if ($_SESSION['user_id']) {
                                                class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                                type="button">
                                               edit
-                                
                                             </a>
                                         </td>
                                         <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                            <?php if($row['status']== 'draft') { ?>
                                             <a href="view-pages.php?id=<?php echo $row['ID']; ?>"
                                                class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                                type="button">
-                                              view page
-                                
+                                              View page
                                             </a>
+                                        <?php }else{ ?>
+                                            <a href="page-view.php?slug=<?php echo $row['slug']; ?>"
+                                               target="_blank"
+                                               class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                               type="button">View page
+                                            </a>
+                                            <?php } ?>
                                         </td>
                                         <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
 

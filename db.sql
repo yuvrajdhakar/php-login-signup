@@ -39,3 +39,6 @@ ALTER TABLE `users` ADD `role` VARCHAR(256) NULL AFTER `reset_token`;
 --                          `name` VARCHAR(256) NOT NULL ,
 --                          PRIMARY KEY (`id`)
 -- );
+
+
+ALTER TABLE `pages` ADD `image_path` VARCHAR(256) NULL;

@@ -2,7 +2,7 @@
 session_start();
 
 include "db-connection.php";
-$title = "Edit User";
+$title = "Add new page";
 ?>
 
     <!DOCTYPE html>
@@ -47,7 +47,7 @@ $title = "Edit User";
 
 
                         <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
-                            <form action="add-process.php" method="POST">
+                            <form action="add-process.php" method="POST" enctype="multipart/form-data">
 
                                 <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
                                     Page Information
@@ -92,12 +92,23 @@ $title = "Edit User";
                                             <textarea id="tiny" name="content"
                                                       class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                                             ></textarea>
-
                                         </div>
                                     </div>
 
-
+                                    <div class="w-full px-4">
+                                        <div class="relative w-full mb-3">
+                                            <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                                   htmlfor="image">
+                                                Image
+                                            </label>
+                                            <input type="file"
+                                                   class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                                   name="image" id="image">
+                                        </div>
+                                    </div>
                                 </div>
+
+
 
                                 <button type="submit"
                                         class="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
