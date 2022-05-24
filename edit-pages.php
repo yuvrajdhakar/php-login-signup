@@ -10,15 +10,15 @@ if ($id && !empty($id)) {
     $result = $conn->query("Select * from pages where id=$id");
 
     if ($result) {
-        $user = $result->fetch_assoc();
+        $page = $result->fetch_assoc();
 
-        if($_SESSION['role'] != 'admin'){
-            if($user['author'] != $_SESSION['user_id']){
+        if ($_SESSION['role'] != 'admin') {
+            if ($page['author'] != $_SESSION['user_id']) {
                 header("Location: pages.php?error='You don't have permission for that page.");
                 die();
             }
         }
-            ?>
+        ?>
 
         <!DOCTYPE html>
         <html>
@@ -63,7 +63,7 @@ if ($id && !empty($id)) {
                                 </div>
                             </div>
                             <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
-                                <form action="process-edit-pages.php" method="POST">
+                                <form action="process-edit-pages.php" method="POST" enctype="multipart/form-data">
                                     <input type="hidden" name="id" value="<?php echo $_GET['id']; ?>"/>
                                     <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
                                         User Information
@@ -78,7 +78,7 @@ if ($id && !empty($id)) {
                                                 <input type="text"
                                                        name="title"
                                                        class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                                       value="<?php echo $user['title']; ?>">
+                                                       value="<?php echo $page['title']; ?>">
                                             </div>
                                         </div>
 
@@ -93,11 +93,11 @@ if ($id && !empty($id)) {
                                                         name="status"
                                                         class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                                                 >
-                                                    <option value="draft" <?php if ($user['status'] == 'draft') {
+                                                    <option value="draft" <?php if ($page['status'] == 'draft') {
                                                         echo 'selected';
                                                     } ?>>draft
                                                     </option>
-                                                    <option value="published" <?php if ($user['status'] == 'published') {
+                                                    <option value="published" <?php if ($page['status'] == 'published') {
                                                         echo 'selected';
                                                     } ?>>Published
                                                     </option>
@@ -113,11 +113,34 @@ if ($id && !empty($id)) {
                                                 </label>
                                                 <textarea id="tiny" name="content"
                                                           class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                                ><?php echo $user['content']; ?></textarea>
+                                                ><?php echo $page['content']; ?></textarea>
 
                                             </div>
                                         </div>
 
+                                        <?php if ($page['image_path']) { ?>
+                                            <div class="w-full px-4">
+                                                <div class="relative w-full mb-3">
+                                                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                                           htmlfor="image">
+                                                        Current Image
+                                                    </label>
+                                                    <img src="<?php echo $page['image_path']; ?>">
+                                                </div>
+                                            </div>
+                                        <?php } ?>
+
+                                        <div class="w-full px-4">
+                                            <div class="relative w-full mb-3">
+                                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                                       htmlfor="image">
+                                                    Image
+                                                </label>
+                                                <input type="file"
+                                                       class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                                       name="image" id="image">
+                                            </div>
+                                        </div>
 
                                     </div>
 
@@ -144,10 +167,10 @@ if ($id && !empty($id)) {
         <?php
 
     } else {
-        header("Location: users.php?error='No user found with provided id {$id}");
+        header("Location: pages.php?error='No page found with provided id {$id}");
         die();
     }
 } else {
-    header("Location: users.php?error='Url is invalid");
+    header("Location: pages.php?error='Url is invalid");
     die();
 }
