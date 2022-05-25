@@ -1,6 +1,6 @@
 <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"
-    charset="utf-8"
+        src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"
+        charset="utf-8"
 ></script>
 <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.js"></script>
 <script type="text/javascript">
@@ -12,7 +12,57 @@
             ).innerHTML = new Date().getFullYear();
         }
 
-        $('#tiny').tinymce({height: 500});
+        const example_image_upload_handler = (blobInfo, progress) => new Promise((resolve, reject) => {
+            const xhr = new XMLHttpRequest();
+            xhr.withCredentials = false;
+            xhr.open('POST', 'upload.php');
+
+            xhr.upload.onprogress = (e) => {
+                progress(e.loaded / e.total * 100);
+            };
+
+            xhr.onload = () => {
+                if (xhr.status === 403) {
+                    reject({ message: 'HTTP Error: ' + xhr.status, remove: true });
+                    return;
+                }
+
+                if (xhr.status < 200 || xhr.status >= 300) {
+                    reject('HTTP Error: ' + xhr.status);
+                    return;
+                }
+
+                const json = JSON.parse(xhr.responseText);
+
+                if (!json || typeof json.location != 'string') {
+                    reject('Invalid JSON: ' + xhr.responseText);
+                    return;
+                }
+
+                resolve(json.location);
+            };
+
+            xhr.onerror = () => {
+                reject('Image upload failed due to a XHR Transport error. Code: ' + xhr.status);
+            };
+
+            const formData = new FormData();
+            formData.append('file', blobInfo.blob(), blobInfo.filename());
+
+            xhr.send(formData);
+        });
+
+
+        $('#tiny').tinymce({
+            height: 500,
+            plugins: 'image',
+            toolbar: 'image',
+
+            images_upload_url: 'upload.php',
+            automatic_uploads: true,
+
+            images_upload_handler: example_image_upload_handler
+        });
     })();
 
     /* Sidebar - Side navigation menu on mobile/responsive mode */
@@ -241,6 +291,5 @@
     })();
 
 
-   
 </script>
 
