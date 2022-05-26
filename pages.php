@@ -35,15 +35,16 @@ if (isset($_GET['s'])) {
 
     $number_of_pages = ceil($total_records / $per_page);
 
+
     $sql = "select pages.ID, pages.title, pages.status,  pages.created_at, users.id as user_id, users.name as author_name, users.email as email from pages INNER JOIN users on users.id = pages.author where pages.title like '%$s%' limit $per_page offset $offset_value";
 
 
 } else {
 
-    if($_SESSION['role'] == 'admin'){
+    if ($_SESSION['role'] == 'admin') {
         $total_recordsResult = $conn->query("select count(*) as total_records from pages;");
-    }else{
-        $total_recordsResult = $conn->query("select count(*) as total_records from pages where author=".$_SESSION['user_id'].";");
+    } else {
+        $total_recordsResult = $conn->query("select count(*) as total_records from pages where author=" . $_SESSION['user_id'] . ";");
     }
 
 
@@ -52,10 +53,10 @@ if (isset($_GET['s'])) {
     $number_of_pages = ceil($total_records / $per_page);
 
 
-    if($_SESSION['role'] == 'admin'){
+    if ($_SESSION['role'] == 'admin') {
         $sql = "select pages.ID,pages.slug, pages.title, pages.status, pages.created_at, users.id as user_id, users.name as author_name, users.email as email from pages INNER JOIN users on users.id = pages.author limit $per_page OFFSET $offset_value;";
-    }else{
-        $sql = "select pages.ID,pages.slug, pages.title, pages.status, pages.created_at, users.id as user_id, users.name as author_name, users.email as email from pages INNER JOIN users on users.id = pages.author where pages.author=".$_SESSION['user_id']." limit $per_page OFFSET $offset_value;";
+    } else {
+        $sql = "select pages.ID,pages.slug, pages.title, pages.status, pages.created_at, users.id as user_id, users.name as author_name, users.email as email from pages INNER JOIN users on users.id = pages.author where pages.author=" . $_SESSION['user_id'] . " limit $per_page OFFSET $offset_value;";
     }
 }
 
@@ -100,7 +101,7 @@ if ($_SESSION['user_id']) {
                                         Pages ( <?php echo $total_records; ?> )
                                     </h3>
 
-                                    
+
                                 </div>
                                 <div>
                                     <a href="add-pages.php"
@@ -112,14 +113,19 @@ if ($_SESSION['user_id']) {
                                 <div class="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
                                     <form>
                                         <input
-                                            type="text"
-                                            name="s"
-                                            value="<?php if (isset($_GET['s'])) {
-                                                echo $_GET['s'];
-                                            } ?>"
-                                            placeholder="Search in page title here..."
-                                            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full pl-10"
+                                                type="text"
+                                                name="s"
+                                                value="<?php if (isset($_GET['s'])) {
+                                                    echo $_GET['s'];
+                                                } ?>"
+                                                placeholder="Search in page title here..."
+                                                onkeyup="getSerach(this.value)"
+                                                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full pl-10"
                                         />
+
+                                        <div id="search-result" class="absolute p-5 border hidden">
+
+                                        </div>
                                 </div>
                                 <div>
                                     <button type="submit"
@@ -143,7 +149,7 @@ if ($_SESSION['user_id']) {
                                         Title
                                     </th>
                                     <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                       Status
+                                        Status
                                     </th>
                                     <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                                         Author
@@ -183,10 +189,10 @@ if ($_SESSION['user_id']) {
                                         <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                             <?php
                                             echo $row['author_name'];
-                                          //  $user_id = $row['author'];
-                                          //  $user_result_q = $conn->query("SELECT * from users where id=$user_id");
-                                         //   $user_details = $user_result_q->fetch_assoc();
-                                         //   echo $user_details['name']." ".$user_details['email'];
+                                            //  $user_id = $row['author'];
+                                            //  $user_result_q = $conn->query("SELECT * from users where id=$user_id");
+                                            //   $user_details = $user_result_q->fetch_assoc();
+                                            //   echo $user_details['name']." ".$user_details['email'];
                                             ?>
                                         </td>
 
@@ -197,22 +203,22 @@ if ($_SESSION['user_id']) {
                                             <a href="edit-pages.php?id=<?php echo $row['ID']; ?>"
                                                class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                                type="button">
-                                              edit
+                                                edit
                                             </a>
                                         </td>
                                         <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                            <?php if($row['status']== 'draft') { ?>
-                                            <a href="view-pages.php?id=<?php echo $row['ID']; ?>"
-                                               class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                               type="button">
-                                              View page
-                                            </a>
-                                        <?php }else{ ?>
-                                            <a href="page-view.php?slug=<?php echo $row['slug']; ?>"
-                                               target="_blank"
-                                               class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                               type="button">View page
-                                            </a>
+                                            <?php if ($row['status'] == 'draft') { ?>
+                                                <a href="view-pages.php?id=<?php echo $row['ID']; ?>"
+                                                   class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                                   type="button">
+                                                    View page
+                                                </a>
+                                            <?php } else { ?>
+                                                <a href="page-view.php?slug=<?php echo $row['slug']; ?>"
+                                                   target="_blank"
+                                                   class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                                   type="button">View page
+                                                </a>
                                             <?php } ?>
                                         </td>
                                         <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
@@ -229,7 +235,7 @@ if ($_SESSION['user_id']) {
                                             </form>
 
                                         </td>
-                                         
+
                                     </tr>
                                     <?php
                                 }
@@ -285,6 +291,32 @@ if ($_SESSION['user_id']) {
         </div>
     </div>
     <?php include "layouts/footer-scripts.php"; ?>
+    <script>
+        function getSerach(str) {
+            $.ajax({
+                url: "ajax.php?s=" + str,
+            }).done(function (response) {
+                response = JSON.parse(response);
+                if (response.success) {
+                    let pages = response.data;
+
+                    let ss = '<ul>';
+                    pages.forEach((page) => {
+                        ss = ss + "<li class='border-b-2'><a href='edit-pages.php?id="+page.ID+"'>" + page.title + "</a></li>";
+                    });
+
+                    ss = ss + "</ul>";
+
+                    $("#search-result").html(ss);
+                    $("#search-result").show();
+                } else {
+                    console.log("no result found.");
+                    $("#search-result").hide();
+                }
+
+            });
+        }
+    </script>
     </body>
     </html>
 <?php } else {
