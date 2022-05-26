@@ -119,7 +119,7 @@ if ($_SESSION['user_id']) {
                                                     echo $_GET['s'];
                                                 } ?>"
                                                 placeholder="Search in page title here..."
-                                                onkeyup="getSerach(this.value)"
+                                                onkeyup="getSearch(this.value)"
                                                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full pl-10"
                                         />
 
@@ -292,7 +292,7 @@ if ($_SESSION['user_id']) {
     </div>
     <?php include "layouts/footer-scripts.php"; ?>
     <script>
-        function getSerach(str) {
+        function getSearch(str) {
             $.ajax({
                 url: "ajax.php?s=" + str,
             }).done(function (response) {
