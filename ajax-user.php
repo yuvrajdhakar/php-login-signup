@@ -10,7 +10,7 @@ $response = [
 ];
 
 if (!empty($s)) {
-    $sql = "select * from users where email like '%$s%' limit 10";
+    $sql = "select * from users where email like '%$s%' OR name like '%$s%' limit 10";
 
 
     $result = $conn->query($sql);

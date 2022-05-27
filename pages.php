@@ -123,7 +123,8 @@ if ($_SESSION['user_id']) {
                                                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full pl-10"
                                         />
 
-                                        <div id="search-result" class="absolute p-5 border hidden">
+                                        <div id="search-result"
+                                             class="absolute p-5 border hidden bg-pink-600 text-white text-left">
 
                                         </div>
                                 </div>
@@ -302,7 +303,20 @@ if ($_SESSION['user_id']) {
 
                     let ss = '<ul>';
                     pages.forEach((page) => {
-                        ss = ss + "<li class='border-b-2'><a href='edit-pages.php?id="+page.ID+"'>" + page.title + "</a></li>";
+
+                        let my_li = "<li class='border-b-1 border-mycolor py-1'>";
+
+                        my_li = my_li + "<a href='edit-pages.php?id=" + page.ID + "'>" + page.title + "</a> &nbsp; ";
+
+                        if (page.status === 'published') {
+                            my_li = my_li + "<a class='bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150' target='_blank' href='page-view.php?slug=" + page.slug + "'>View Page</a>";
+                        }
+
+                        my_li = my_li + "</li>";
+
+
+                        ss = ss + my_li;
+
                     });
 
                     ss = ss + "</ul>";

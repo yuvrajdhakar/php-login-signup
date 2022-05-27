@@ -10,7 +10,7 @@ $response = [
 ];
 
 if (!empty($s)) {
-    $sql = "select pages.ID, pages.title, pages.status,  pages.created_at, users.id as user_id, users.name as author_name, users.email as email from pages INNER JOIN users on users.id = pages.author where pages.title like '%$s%' limit 10";
+    $sql = "select pages.ID,pages.slug, pages.title, pages.status,  pages.created_at, users.id as user_id, users.name as author_name, users.email as email from pages INNER JOIN users on users.id = pages.author where pages.title like '%$s%' limit 10";
 
     $result = $conn->query($sql);
 

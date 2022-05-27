@@ -2,7 +2,7 @@
 // Start the session
 session_start();
 
-if($_SESSION['role'] !='admin'){
+if ($_SESSION['role'] != 'admin') {
     header("Location: home.php?error='You don't have permission for that page.");
     die();
 }
@@ -108,19 +108,20 @@ if ($_SESSION['user_id']) {
                                                 onkeyup="getSearch(this.value)"
                                                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full pl-10"
                                         />
-                                       
-         
-                                        <div id="search-result" class="absolute p-5 border hidden bg-pink-600 text-white">
+
+
+                                        <div id="search-result"
+                                             class="absolute p-5 border hidden bg-pink-600 text-white">
 
                                         </div>
 
-                                   </div>
-                                      <div>
-                                        <button type="submit"
-                                                class="  bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                                type="button">
-                                            Search
-                                        </button>
+                                </div>
+                                <div>
+                                    <button type="submit"
+                                            class="  bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                            type="button">
+                                        Search
+                                    </button>
                                     </form>
                                 </div>
                             </div>
@@ -267,7 +268,11 @@ if ($_SESSION['user_id']) {
 
                     let ss = '<ul>';
                     users.forEach((user) => {
-                        ss = ss + "<li class='border-b-2 border-white'><a href='edit-user.php?id="+user.id+"'>" + user.email + "</a></li>";
+                        let my_li = "<li class='border-b-1 border-mycolor'>";
+
+                        my_li = my_li + "<a href='edit-user.php?id=" + user.id + "'>" +user.name + " - " + user.email + "</a> &nbsp; ";
+                        my_li = my_li + "</li>";
+                        ss = ss + my_li;
                     });
 
                     ss = ss + "</ul>";
