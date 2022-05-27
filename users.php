@@ -105,8 +105,15 @@ if ($_SESSION['user_id']) {
                                                     echo $_GET['s'];
                                                 } ?>"
                                                 placeholder="Search in user email here..."
+                                                onkeyup="getSearch(this.value)"
                                                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full pl-10"
                                         />
+                                       
+         
+                                        <div id="search-result" class="absolute p-5 border hidden bg-pink-600 text-white">
+
+                                        </div>
+
                                    </div>
                                       <div>
                                         <button type="submit"
@@ -201,7 +208,7 @@ if ($_SESSION['user_id']) {
                                 </tbody>
                             </table>
                             <!-- This example requires Tailwind CSS v2.0+ -->
-                            <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+                            <div class=" border-b-1 bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
 
                                 <div class=" sm:flex-1 sm:flex sm:items-center sm:justify-between">
 
@@ -249,6 +256,33 @@ if ($_SESSION['user_id']) {
         </div>
     </div>
     <?php include "layouts/footer-scripts.php"; ?>
+    <script>
+        function getSearch(str) {
+            $.ajax({
+                url: "ajax-user.php?s=" + str,
+            }).done(function (response) {
+                response = JSON.parse(response);
+                if (response.success) {
+                    let users = response.data;
+
+                    let ss = '<ul>';
+                    users.forEach((user) => {
+                        ss = ss + "<li class='border-b-2 border-white'><a href='edit-user.php?id="+user.id+"'>" + user.email + "</a></li>";
+                    });
+
+                    ss = ss + "</ul>";
+
+                    $("#search-result").html(ss);
+                    $("#search-result").show();
+                } else {
+                    console.log("no result found.");
+                    $("#search-result").hide();
+                }
+
+            });
+        }
+    </script>
+
     </body>
     </html>
 <?php } else {
