@@ -1,80 +1,19 @@
 <?php
-  
-
-
-//$files = scandir("uploads");
-//
-//foreach ($files as $file) {
-//    if($file != '.' && $file !='..'){
-//        echo "<img src='uploads/$file'>";
-//    }
-//}
-
-
- 
 // Start the session
 session_start();
 
 include "db-connection.php";
 
-if (isset($_POST['ID']) && !empty($_POST['ID'])) {
-    $id = $_POST['ID'];
-    $del = "DELETE FROM pages  WHERE id='$id';";
-    $delet = $conn->query($del);
-
-    if ($delet) {
-        header("Location: pages.php?success='Page deleted successfully!");
+if (isset($_POST['path']) && !empty($_POST['path'])) {
+    $is_delete = unlink($_POST['path']);
+    if ($is_delete) {
+        header("Location: media.php?success='Image deleted successfully!");
         die();
     } else {
-        header("Location: pages.php?error='Unable to delete the page");
+        header("Location: media.php?error='Unable to delete the image");
         die();
     }
 }
-
-if (isset($_GET['page'])) {
-    $current_page = $_GET['page']; //2
-} else {
-    $current_page = 1;
-}
-
-$per_page = 5;
-$offset_value = (($current_page - 1) * 5);
-
-if (isset($_GET['s'])) {
-    $s = $_GET['s'];
-
-    $total_recordsResult = $conn->query("select count(*) as total_records from pages where title like '%$s%';");
-    $total_records = $total_recordsResult->fetch_assoc()['total_records'];
-
-    $number_of_pages = ceil($total_records / $per_page);
-
-
-    $sql = "select pages.ID, pages.title, pages.status,  pages.created_at, users.id as user_id, users.name as author_name, users.email as email from pages INNER JOIN users on users.id = pages.author where pages.title like '%$s%' limit $per_page offset $offset_value";
-
-
-} else {
-
-    if ($_SESSION['role'] == 'admin') {
-        $total_recordsResult = $conn->query("select count(*) as total_records from pages;");
-    } else {
-        $total_recordsResult = $conn->query("select count(*) as total_records from pages where author=" . $_SESSION['user_id'] . ";");
-    }
-
-
-    $total_records = $total_recordsResult->fetch_assoc()['total_records'];
-
-    $number_of_pages = ceil($total_records / $per_page);
-
-
-    if ($_SESSION['role'] == 'admin') {
-        $sql = "select pages.ID,pages.slug, pages.title, pages.status, pages.created_at, users.id as user_id, users.name as author_name, users.email as email from pages INNER JOIN users on users.id = pages.author limit $per_page OFFSET $offset_value;";
-    } else {
-        $sql = "select pages.ID,pages.slug, pages.title, pages.status, pages.created_at, users.id as user_id, users.name as author_name, users.email as email from pages INNER JOIN users on users.id = pages.author where pages.author=" . $_SESSION['user_id'] . " limit $per_page OFFSET $offset_value;";
-    }
-}
-
-$result = $conn->query($sql);
-$title = "Pages lists";
 
 if ($_SESSION['user_id']) {
     ?>
@@ -87,111 +26,159 @@ if ($_SESSION['user_id']) {
     <div id="root">
         <?php include "layouts/nav.php"; ?>
         <div class="relative md:ml-64 bg-blueGray-50">
-        <nav
-    class="absolute top-0 left-0 w-full z-10 bg-transparent md:flex-row md:flex-nowrap md:justify-start flex items-center p-4"
->
-    <div
-        class="w-full mx-autp items-center flex justify-between md:flex-nowrap flex-wrap md:px-10 px-4"
-    >
-        <a
-            class="text-white text-sm uppercase hidden lg:inline-block font-semibold"
-            href=""
-        >Dashboard</a
-        >
-        <form
-            class="md:flex hidden flex-row flex-wrap items-center lg:ml-auto mr-3"
-        >
-            <div class="relative flex w-full flex-wrap items-stretch">
+            <nav
+                    class="absolute top-0 left-0 w-full z-10 bg-transparent md:flex-row md:flex-nowrap md:justify-start flex items-center p-4"
+            >
+                <div
+                        class="w-full mx-autp items-center flex justify-between md:flex-nowrap flex-wrap md:px-10 px-4"
+                >
+                    <a
+                            class="text-white text-sm uppercase hidden lg:inline-block font-semibold"
+                            href=""
+                    >Dashboard</a
+                    >
+                    <form
+                            class="md:flex hidden flex-row flex-wrap items-center lg:ml-auto mr-3"
+                    >
+                        <div class="relative flex w-full flex-wrap items-stretch">
                 <span
-                    class="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 absolute bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3"
+                        class="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 absolute bg-transparent rounded text-base items-center justify-center w-8 pl-3 py-3"
                 ><i class="fas fa-search"></i
                     ></span>
-                <input
-                    type="text"
-                    placeholder="Search here..."
-                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full pl-10"
-                />
-            </div>
-        </form>
-        <ul
-            class="flex-col md:flex-row list-none items-center hidden md:flex"
-        >
-            <a
-                class="text-blueGray-500 block"
-                 
-                onclick="openDropdown(event,'user-dropdown')"
-            >
-                <div class="items-center flex">
+                            <input
+                                    type="text"
+                                    placeholder="Search here..."
+                                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full pl-10"
+                            />
+                        </div>
+                    </form>
+                    <ul
+                            class="flex-col md:flex-row list-none items-center hidden md:flex"
+                    >
+                        <a
+                                class="text-blueGray-500 block"
+
+                                onclick="openDropdown(event,'user-dropdown')"
+                        >
+                            <div class="items-center flex">
                   <span
-                      class="w-12 h-12 text-sm text-white bg-blueGray-200 inline-flex items-center justify-center rounded-full"
+                          class="w-12 h-12 text-sm text-white bg-blueGray-200 inline-flex items-center justify-center rounded-full"
                   ><img
-                          alt="<?php echo $_SESSION['name']; ?>"
-                          class="w-full rounded-full align-middle border-none shadow-lg"
-                          src="https://s.gravatar.com/avatar/<?php echo md5($_SESSION['email']); ?>?s=80"
+                              alt="<?php echo $_SESSION['name']; ?>"
+                              class="w-full rounded-full align-middle border-none shadow-lg"
+                              src="https://s.gravatar.com/avatar/<?php echo md5($_SESSION['email']); ?>?s=80"
                       /></span>
+                            </div>
+                        </a>
+                        <div
+                                class="hidden bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
+                                id="user-dropdown"
+                        >
+                            <a
+                                    href="#pablo"
+                                    class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
+                            >Action</a
+                            ><a
+                                    href="#pablo"
+                                    class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
+                            >Another action</a
+                            ><a
+                                    href="#pablo"
+                                    class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
+                            >Something else here</a
+                            >
+                            <div
+                                    class="h-0 my-2 border border-solid border-blueGray-100"
+                            ></div>
+                            <a
+                                    href="logout.php"
+                                    class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
+                            >Logout</a
+                            >
+                        </div>
+                    </ul>
                 </div>
-            </a>
-            <div
-                class="hidden bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
-                id="user-dropdown"
-            >
-                <a
-                    href="#pablo"
-                    class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-                >Action</a
-                ><a
-                    href="#pablo"
-                    class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-                >Another action</a
-                ><a
-                    href="#pablo"
-                    class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-                >Something else here</a
-                >
-                <div
-                    class="h-0 my-2 border border-solid border-blueGray-100"
-                ></div>
-                <a
-                    href="logout.php"
-                    class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-                >Logout</a
-                >
-            </div>
-        </ul>
-    </div>
-</nav>
-<!-- Header -->
-<div class="relative bg-pink-600 md:  pb-32  ">
-     
-
-    </div>
-</div>
-
-            <div class="px-4 md:pl-64 mx-auto w-full -m-24 pt-32">
-                <!-- content start here -->
-            
-                <div class="grid grid-cols-5 gap-4">
-            
-                 <?php
-                   $files = scandir("uploads");
-
-                  foreach ($files as $file) {
-            if($file != '.' && $file !='..'){
-              echo "<img src='uploads/$file'>";
-            
-          }
-      }
-            ?>        
-             </div>
+            </nav>
+            <!-- Header -->
+            <div class="relative bg-pink-600 md:  pb-32  ">
 
 
-                 <!-- content ends here.  -->
-                <?php include "layouts/footer.php"; ?>
             </div>
         </div>
+
+        <div class="px-4 md:pl-64 mx-auto w-full -m-24 pt-32">
+            <!-- content start here -->
+            <?php if (isset($_GET['success'])) { ?>
+                <div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800"
+                     role="alert">
+                    <span class="font-medium">Success!</span> <?php echo $_GET['success']; ?>
+                </div>
+            <?php } ?>
+
+            <?php if (isset($_GET['error'])) { ?>
+                <div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+                     role="alert">
+                    <?php echo $_GET['error']; ?>
+                </div>
+            <?php } ?>
+            <div class="grid grid-cols-5 gap-4">
+
+                <?php
+                $files = scandir("uploads");
+                $i = 0;
+                foreach ($files as $file) {
+                    $i++;// $i = $i+1;
+                    if ($file != '.' && $file != '..' && $file != '.DS_Store') {
+                        ?>
+                        <div class='img_div text-center border p-4' id="img_id_<?php echo $i;?>">
+                            <img src='uploads/<?php echo $file; ?>'>
+                            <div id="form_id_<?php echo $i; ?>" class="hidden ">
+                                <form method="post" onsubmit="return confirm('Are you sure to delete this image?');">
+                                    <input type="hidden" name="path" value="uploads/<?php echo $file; ?>">
+                                    <button type="submit"
+                                            class="bg-red-500 text-white active:bg-red-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
+                                        Delete
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        <?php
+
+                    }
+                }
+                ?>
+            </div>
+
+
+
+            <!-- content ends here.  -->
+            <?php include "layouts/footer.php"; ?>
+        </div>
+    </div>
     </div>
     <?php include "layouts/footer-scripts.php"; ?>
-     
+
+    <script>
+        (function () {
+            $(".img_div").on("mouseover", function () {
+
+                let img_id = this.id;
+
+                let form_id = img_id.replace("img_id_", "form_id_");
+
+                $("#"+form_id).show();
+            });
+
+            $(".img_div").on("mouseout", function () {
+
+                let img_id = this.id;
+
+                let form_id = img_id.replace("img_id_", "form_id_");
+
+                $("#"+form_id).hide();
+            });
+        })();
+    </script>
     </body>
     </html>
 <?php } else {
