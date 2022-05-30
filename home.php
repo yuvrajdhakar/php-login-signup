@@ -44,7 +44,7 @@ if($_SESSION['user_id']){
                           <div
                             class="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full bg-red-500"
                           >
-                            <i class="far fa-chart-bar"></i>
+                              <i class="fa-regular fa-images"></i>
                           </div>
                         </div>
                       </div>

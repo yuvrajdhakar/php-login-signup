@@ -130,16 +130,20 @@ if ($_SESSION['user_id']) {
                     $i++;// $i = $i+1;
                     if ($file != '.' && $file != '..' && $file != '.DS_Store') {
                         ?>
-                        <div class='img_div text-center border p-4' id="img_id_<?php echo $i;?>">
-                            <img src='uploads/<?php echo $file; ?>'>
+                        <div class='img_div text-center border p-4' id="img_id_<?php echo $i; ?>">
+                            <img  class="" src='uploads/<?php echo $file; ?>'>
                             <div id="form_id_<?php echo $i; ?>" class="hidden ">
-                                <form method="post" onsubmit="return confirm('Are you sure to delete this image?');">
-                                    <input type="hidden" name="path" value="uploads/<?php echo $file; ?>">
-                                    <button type="submit"
-                                            class="bg-red-500 text-white active:bg-red-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
-                                        Delete
-                                    </button>
-                                </form>
+                                <div class="inline-flex p-4">
+                                    <button class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">View button</button> &nbsp;
+                                    <form method="post"
+                                          onsubmit="return confirm('Are you sure to delete this image?');">
+                                        <input type="hidden" name="path" value="uploads/<?php echo $file; ?>">
+                                        <button type="submit"
+                                                class="bg-red-500 text-white active:bg-red-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                         <?php
@@ -148,7 +152,6 @@ if ($_SESSION['user_id']) {
                 }
                 ?>
             </div>
-
 
 
             <!-- content ends here.  -->
@@ -166,7 +169,7 @@ if ($_SESSION['user_id']) {
 
                 let form_id = img_id.replace("img_id_", "form_id_");
 
-                $("#"+form_id).show();
+                $("#" + form_id).show();
             });
 
             $(".img_div").on("mouseout", function () {
@@ -175,7 +178,7 @@ if ($_SESSION['user_id']) {
 
                 let form_id = img_id.replace("img_id_", "form_id_");
 
-                $("#"+form_id).hide();
+                $("#" + form_id).hide();
             });
         })();
     </script>

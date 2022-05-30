@@ -3729,10 +3729,6 @@ select {
   hostname: port;
 }
 
-.hover\:block:hover {
-  display: block;
-}
-
 .hover\:bg-green-400:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(74 222 128 / var(--tw-bg-opacity));
