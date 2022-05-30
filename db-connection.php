@@ -19,6 +19,28 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+//
+$setting_site_logo = '';
+$setting_site_title = '';
+$setting_copywrite_text = '';
+
+$resultSettings = $conn->query("Select * from settings");
+
+if ($resultSettings) {
+    while ($rowSettings = $resultSettings->fetch_assoc()) {
+        if($rowSettings['name'] == 'site_logo'){
+            $setting_site_logo = $rowSettings['value'];
+        }
+
+        if($rowSettings['name'] == 'site_title'){
+            $setting_site_title = $rowSettings['value'];
+        }
+
+        if($rowSettings['name'] == 'copywrite_text'){
+            $setting_copywrite_text = $rowSettings['value'];
+        }
+    }
+}
 
 function createUrlSlug($urlString, $conn)
 {

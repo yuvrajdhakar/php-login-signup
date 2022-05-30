@@ -15,7 +15,7 @@
                 class="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
                 href="home.php"
         >
-            <img src="https://skyesol.com/wp-content/uploads/2021/09/skyesol248x94.png" alt="Sky e-Solutions">
+            <img src="<?php echo $setting_site_logo ;?>" alt="Sky e-Solutions">
 
             <!-- <?php echo $_SESSION['name']; ?>-->
         </a>
