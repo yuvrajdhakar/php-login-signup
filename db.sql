@@ -42,3 +42,26 @@ ALTER TABLE `users` ADD `role` VARCHAR(256) NULL AFTER `reset_token`;
 
 
 ALTER TABLE `pages` ADD `image_path` VARCHAR(256) NULL;
+
+
+
+CREATE TABLE `settings` (
+                            `id` bigint NOT NULL,
+                            `name` varchar(256) NOT NULL,
+                            `value` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `settings`
+--
+INSERT INTO `settings` (`id`, `name`, `value`) VALUES
+                                                   (1, 'site_logo', 'assets/logos/logo_default.png'),
+                                                   (2, 'site_title', 'Sky e-Solutions '),
+                                                   (3, 'copywrite_text', NULL);
+
+ALTER TABLE `settings`
+    ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `settings_name` (`name`);
+
+ALTER TABLE `settings`
+    MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
