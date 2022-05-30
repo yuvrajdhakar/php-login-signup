@@ -78,7 +78,7 @@ if ($_SESSION['user_id']) {
 
             <div class="px-4 md:px-10 mx-auto w-full -m-24">
                 <!-- content start here -->
-                <div class="w-full  mb-12 xl:mb-0 px-4">
+                 <div class="w-full  mb-12 xl:mb-0 px-4">
 
                     <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
                         <?php if (isset($_GET['success'])) { ?>
@@ -138,15 +138,15 @@ if ($_SESSION['user_id']) {
                                 </div>
                             </div>
                         </div>
-                        <div class="block w-full overflow-x-auto">
+                        <div class="block w-full overflow-x-auto"> 
                             <!-- Projects table -->
                             <table class="items-center w-full bg-transparent border-collapse">
                                 <thead>
                                 <tr>
-                                    <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                    <th class="px-6  w-[300px]  bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                                         Id
                                     </th>
-                                    <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                    <th class="px-6bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                                         Title
                                     </th>
                                     <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
@@ -158,28 +158,49 @@ if ($_SESSION['user_id']) {
                                     <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                                         Date
                                     </th>
-                                    <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-
-                                    </th>
-                                    <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-
-                                    </th>
-                                    <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-
-                                    </th>
-                                    <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-
-                                    </th>
-                                </tr>
-                                </thead>
+                                                                  </tr>
+                            </thead>
                                 <tbody>
                                 <?php
                                 while ($row = $result->fetch_assoc()) {
                                     ?>
-                                    <tr>
-                                        <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
+                                     
+                                    <tr id="action_h_id_<?php echo  $row['ID']; ?>" class="action_hover h-20">
+                                        
+                                        <td  class=" border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
                                             <?php echo $row['ID']; ?>
-                                        </th>
+                                            <div id="action_div_<?php echo  $row['ID']; ?>" class="hidden">
+                                            <div class="inline-flex pt-3">
+                                            <a href="edit-pages.php?id=<?php echo $row['ID']; ?>"
+                                               class="bg-indigo-500 text-white active:bg-indigo-600 text-[8px] font-bold uppercase px-1 py-0 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                               type="button">
+                                                edit
+                                            </a>
+                                            <form method="post">
+                                                <input type="hidden" name="ID" value="<?php echo $row['ID']; ?>"/>
+                                                <button type="submit"
+                                                        class="bg-red-500 text-white active:bg-red-600 text-[8px] font-bold uppercase px-1 py-0 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                                        type="button">
+                                                    Delete
+                                                </button>
+                                            </form>
+
+                                            <?php if ($row['status'] == 'draft') { ?>
+                                                <a href="view-pages.php?id=<?php echo $row['ID']; ?>"
+                                                   class="bg-indigo-500 text-white active:bg-indigo-600 text-[8px] font-bold uppercase px-1 py-0 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                                   type="button">
+                                                    View page
+                                                </a>
+                                            <?php } else { ?>
+                                                <a href="page-view.php?slug=<?php echo $row['slug']; ?>"
+                                                   target="_blank"
+                                                   class="bg-indigo-500 text-white active:bg-indigo-600 text-[8px] font-bold uppercase px-1 py-0 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                                   type="button">View 
+                                                </a>
+                                            <?php } ?>
+                                </div>
+                                </div>
+                                </td>
                                         <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                             <?php echo $row['title']; ?>
                                         </td>
@@ -200,44 +221,7 @@ if ($_SESSION['user_id']) {
                                         <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                             <?php echo $row['created_at']; ?>
                                         </td>
-                                        <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                            <a href="edit-pages.php?id=<?php echo $row['ID']; ?>"
-                                               class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                               type="button">
-                                                edit
-                                            </a>
-                                        </td>
-                                        <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                            <?php if ($row['status'] == 'draft') { ?>
-                                                <a href="view-pages.php?id=<?php echo $row['ID']; ?>"
-                                                   class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                                   type="button">
-                                                    View page
-                                                </a>
-                                            <?php } else { ?>
-                                                <a href="page-view.php?slug=<?php echo $row['slug']; ?>"
-                                                   target="_blank"
-                                                   class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                                   type="button">View page
-                                                </a>
-                                            <?php } ?>
-                                        </td>
-                                        <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-
-                                        </td>
-                                        <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                            <form method="post">
-                                                <input type="hidden" name="ID" value="<?php echo $row['ID']; ?>"/>
-                                                <button type="submit"
-                                                        class="bg-red-500 text-white active:bg-red-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                                        type="button">
-                                                    Delete
-                                                </button>
-                                            </form>
-
-                                        </td>
-
-                                    </tr>
+                                    </tr>     
                                     <?php
                                 }
                                 ?>
@@ -292,6 +276,19 @@ if ($_SESSION['user_id']) {
         </div>
     </div>
     <?php include "layouts/footer-scripts.php"; ?>
+
+    <script>
+        (function () {
+            $(".action_hover").on("mouseover", function () {
+                $("#" + this.id.replace("action_h_id_", "action_div_")).show();
+            });
+
+            $(".action_hover").on("mouseout", function () {
+                $("#" + this.id.replace("action_h_id_", "action_div_")).hide();
+            });
+        })();
+    </script>
+
     <script>
         function getSearch(str) {
             $.ajax({

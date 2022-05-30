@@ -54,7 +54,7 @@ if( !empty($email) && !empty($password)){
      die();
    }
    
-   $conn->close();
+        $conn->close();
 
 }else{
     header("Location: index.php?error='Please provide login details'");

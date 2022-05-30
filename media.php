@@ -100,7 +100,7 @@ if ($_SESSION['user_id']) {
                 </div>
             </nav>
             <!-- Header -->
-            <div class="relative bg-pink-600 md:  pb-32  ">
+            <div class="relative bg-pink-600 pb-32">
 
 
             </div>
@@ -108,6 +108,10 @@ if ($_SESSION['user_id']) {
 
         <div class="px-4 md:pl-64 mx-auto w-full -m-24 pt-32">
             <!-- content start here -->
+               <div class="w-full   mb-12 xl:mb-0 px-4">
+
+                    <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
+
             <?php if (isset($_GET['success'])) { ?>
                 <div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800"
                      role="alert">
@@ -134,12 +138,12 @@ if ($_SESSION['user_id']) {
                             <img  class="" src='uploads/<?php echo $file; ?>'>
                             <div id="form_id_<?php echo $i; ?>" class="hidden ">
                                 <div class="inline-flex p-4">
-                                    <button class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">View button</button> &nbsp;
+                                    <button class="bg-indigo-500 text-white active:bg-indigo-600 text-[8px] font-bold uppercase px-1 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">View </button> &nbsp;
                                     <form method="post"
                                           onsubmit="return confirm('Are you sure to delete this image?');">
                                         <input type="hidden" name="path" value="uploads/<?php echo $file; ?>">
                                         <button type="submit"
-                                                class="bg-red-500 text-white active:bg-red-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
+                                                class="bg-red-500 text-white active:bg-red-600 text-[8px] font-bold uppercase px-1 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
                                             Delete
                                         </button>
                                     </form>
@@ -151,6 +155,8 @@ if ($_SESSION['user_id']) {
                     }
                 }
                 ?>
+            </div>
+            </div>
             </div>
 
 

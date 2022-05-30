@@ -134,7 +134,7 @@ if ($_SESSION['user_id']) {
                                     <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                                         Id
                                     </th>
-                                    <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                    <th class="px-6 bg-blueGray-50 w-[300px] text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                                         Name
                                     </th>
                                     <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
@@ -143,24 +143,45 @@ if ($_SESSION['user_id']) {
                                     <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                                         Status
                                     </th>
-                                    <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                        Action
-                                    </th>
-                                    <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-
-                                    </th>
+                                     
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <?php
                                 while ($row = $result->fetch_assoc()) {
                                     ?>
-                                    <tr>
-                                        <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
+                                    <tr id="action_h_id_<?php echo  $row['id']; ?>" class="action_hover h-20">
+                                        <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
                                             <?php echo $row['id']; ?>
-                                        </th>
+                                          
+                                        </td>
                                         <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                             <?php echo $row['name']; ?>
+
+                                            <div id="action_div_<?php echo  $row['id']; ?>" class="hidden">
+                                            <div class="inline-flex pt-3">
+
+                                            <a href="edit-user.php?id=<?php echo $row['id']; ?>"
+                                               class="bg-indigo-500 text-white active:bg-indigo-600 text-[8px] font-bold uppercase px-1 py-0 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                               type="button">
+                                                Edit
+                                            </a>
+                                            <a href="view-user.php?id=<?php echo $row['id']; ?>"
+                                               class="bg-indigo-500 text-white active:bg-indigo-600 text-[8px] font-bold uppercase px-1 py-0 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                               type="button">
+                                                view
+                                            </a>
+                                            <form method="post">
+                                                <input type="hidden" name="id" value="<?php echo $row['id']; ?>"/>
+                                                <button type="submit"
+                                                        class="bg-red-500 text-white active:bg-red-600 text-[8px] font-bold uppercase px-1 py-0 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                                        type="button">
+                                                    Delete
+                                                </button>
+                                            </form>
+ 
+                                         </div>
+                                         </div>
                                         </td>
                                         <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                             <?php echo $row['email']; ?>
@@ -174,34 +195,7 @@ if ($_SESSION['user_id']) {
                                             } ?>
                                         </td>
 
-                                        <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                            <a href="edit-user.php?id=<?php echo $row['id']; ?>"
-                                               class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                               type="button">
-                                                Edit
-                                            </a>
-                                        </td>
-                                        <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                            <a href="view-user.php?id=<?php echo $row['id']; ?>"
-                                               class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                               type="button">
-                                                view
-                                            </a>
-                                        </td>
-
-                                        <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-
-
-                                            <form method="post">
-                                                <input type="hidden" name="id" value="<?php echo $row['id']; ?>"/>
-                                                <button type="submit"
-                                                        class="bg-red-500 text-white active:bg-red-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                                        type="button">
-                                                    Delete
-                                                </button>
-                                            </form>
-
-                                        </td>
+                                         
                                     </tr>
                                     <?php
                                 }
@@ -257,6 +251,19 @@ if ($_SESSION['user_id']) {
         </div>
     </div>
     <?php include "layouts/footer-scripts.php"; ?>
+
+    <script>
+        (function () {
+            $(".action_hover").on("mouseover", function () {
+                $("#" + this.id.replace("action_h_id_", "action_div_")).show();
+            });
+
+            $(".action_hover").on("mouseout", function () {
+                $("#" + this.id.replace("action_h_id_", "action_div_")).hide();
+            });
+        })();
+    </script>
+
     <script>
         function getSearch(str) {
             $.ajax({
