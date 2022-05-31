@@ -65,3 +65,9 @@ ALTER TABLE `settings`
 
 ALTER TABLE `settings`
     MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+
+
+
+
+       
