@@ -61,10 +61,10 @@ if (isset($_POST['path']) && !empty($_POST['path'])) {
                                 $i++;// $i = $i+1;
                                 if ($file != '.' && $file != '..' && $file != '.DS_Store') {
                                     ?>
-                                    <div class='img_div text-center border p-4 bg-white' id="img_id_<?php echo $i; ?>">
+                                    <div class='img_div text-center border p-4 bg-white relative' id="img_id_<?php echo $i; ?>">
                                     
                                     <img class="" src='uploads/<?php echo $file; ?>'>
-                                        <div id="form_id_<?php echo $i; ?>" class="hidden ">
+                                        <div id="form_id_<?php echo $i; ?>" class="hidden absolute -top-[24px] -right-[19px]">
                                             <div class="inline-flex p-4">
                                             <form method="post"
                                                       onsubmit="return confirm('Are you sure to delete this image?');">
