@@ -15,7 +15,7 @@
                 class="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
                 href="home.php"
         >
-            <img src="<?php echo $setting_site_logo ;?>" alt="Sky e-Solutions">
+            <img src="<?php echo $setting_site_logo; ?>" alt="Sky e-Solutions">
 
             <!-- <?php echo $_SESSION['name']; ?>-->
         </a>
@@ -209,6 +209,25 @@
                         Media
                     </a>
                 </li>
+
+                <?php
+                if ($_SESSION['role'] == 'admin') { ?>
+                    <li class="items-center">
+                        <a
+                                href="settings.php"
+                                class="text-xs uppercase py-3 font-bold block <?php if (endsWith($_SERVER['SCRIPT_NAME'], 'settings.php')) {
+                                    echo 'text-pink-500 hover:text-pink-600';
+                                } else {
+                                    echo 'text-blueGray-700 hover:text-blueGray-500';
+                                } ?>"
+                        >
+                            <i
+                                    class="fas fa-map-marked mr-2 text-sm text-blueGray-300"
+                            ></i>
+                            Settings
+                        </a>
+                    </li>
+                <?php } ?>
             </ul>
 
             <!-- Divider -->

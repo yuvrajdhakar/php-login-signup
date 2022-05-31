@@ -13,7 +13,7 @@
                         href="https://skyesol.com/"
                         class="text-blueGray-500 hover:text-blueGray-700 text-sm font-semibold py-1"
                     >
-                        Sky e-Solutions
+                        <?php echo $setting_copywrite_text; ?>
                     </a>
                 </div>
             </div>

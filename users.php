@@ -32,6 +32,17 @@ if (isset($_GET['page'])) {
 $per_page = 5;
 $offset_value = (($current_page - 1) * 5);
 
+$order_by = 'id';
+$order = 'desc';
+
+if(!empty($_GET['order_by'])){
+    $order_by = $_GET['order_by'];
+}
+
+if(!empty($_GET['order'])){
+    $order = $_GET['order'];
+}
+
 if (isset($_GET['s'])) {
     $s = $_GET['s'];
 
@@ -41,7 +52,7 @@ if (isset($_GET['s'])) {
 
     $number_of_pages = ceil($total_records / $per_page);
 
-    $sql = "select * from users where email like '%$s%' limit $per_page offset $offset_value";
+    $sql = "select * from users where email like '%$s%' order by $order_by $order limit $per_page offset $offset_value";
 
 
 } else {
@@ -51,7 +62,7 @@ if (isset($_GET['s'])) {
 
     $number_of_pages = ceil($total_records / $per_page);
 
-    $sql = "select * from users limit $per_page OFFSET $offset_value;";
+    $sql = "select * from users order by $order_by $order limit $per_page OFFSET $offset_value;";
 
 }
 
