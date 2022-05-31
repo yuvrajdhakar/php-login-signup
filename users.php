@@ -35,11 +35,11 @@ $offset_value = (($current_page - 1) * 5);
 $order_by = 'id';
 $order = 'desc';
 
-if(!empty($_GET['order_by'])){
+if (!empty($_GET['order_by'])) {
     $order_by = $_GET['order_by'];
 }
 
-if(!empty($_GET['order'])){
+if (!empty($_GET['order'])) {
     $order = $_GET['order'];
 }
 
@@ -143,56 +143,69 @@ if ($_SESSION['user_id']) {
                                 <thead>
                                 <tr>
                                     <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                        Id
+                                        <?php if (!empty($_GET['order']) && $_GET['order'] == 'desc') { ?>
+                                            <a href="?order_by=id&order=asc">Id <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-caret-up" width="40" height="40" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                    <desc>Download more icon variants from https://tabler-icons.io/i/caret-up</desc>
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                    <path d="M18 15l-6 -6l-6 6h12"></path>
+                                                </svg></a>
+                                        <?php } else { ?>
+                                            <a href="?order_by=id&order=desc">Id <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-caret-down" width="40" height="40" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                    <desc>Download more icon variants from https://tabler-icons.io/i/caret-down</desc>
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                    <path d="M18 15l-6 -6l-6 6h12" transform="rotate(180 12 12)"></path>
+                                                </svg></a>
+                                        <?php } ?>
                                     </th>
                                     <th class="px-6 bg-blueGray-50 w-[300px] text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                        Name
+                                        <a href="?order_by=name">Name</a>
                                     </th>
                                     <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                        Email id
+                                        <a href="?order_by=email">Email id</a>
                                     </th>
                                     <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                                         Status
                                     </th>
-                                     
+
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <?php
                                 while ($row = $result->fetch_assoc()) {
                                     ?>
-                                    <tr id="action_h_id_<?php echo  $row['id']; ?>" class="action_hover h-20">
+                                    <tr id="action_h_id_<?php echo $row['id']; ?>" class="action_hover h-20">
                                         <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
                                             <?php echo $row['id']; ?>
-                                          
+
                                         </td>
                                         <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                             <?php echo $row['name']; ?>
 
-                                            <div id="action_div_<?php echo  $row['id']; ?>" class="hidden">
-                                            <div class="inline-flex pt-3">
+                                            <div id="action_div_<?php echo $row['id']; ?>" class="hidden">
+                                                <div class="inline-flex pt-3">
 
-                                            <a href="edit-user.php?id=<?php echo $row['id']; ?>"
-                                               class="bg-indigo-500 text-white active:bg-indigo-600 text-[8px] font-bold uppercase px-1 py-0 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                               type="button">
-                                                Edit
-                                            </a>
-                                            <a href="view-user.php?id=<?php echo $row['id']; ?>"
-                                               class="bg-indigo-500 text-white active:bg-indigo-600 text-[8px] font-bold uppercase px-1 py-0 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                               type="button">
-                                                view
-                                            </a>
-                                            <form method="post">
-                                                <input type="hidden" name="id" value="<?php echo $row['id']; ?>"/>
-                                                <button type="submit"
-                                                        class="bg-red-500 text-white active:bg-red-600 text-[8px] font-bold uppercase px-1 py-0 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                                        type="button">
-                                                    Delete
-                                                </button>
-                                            </form>
- 
-                                         </div>
-                                         </div>
+                                                    <a href="edit-user.php?id=<?php echo $row['id']; ?>"
+                                                       class="bg-indigo-500 text-white active:bg-indigo-600 text-[8px] font-bold uppercase px-1 py-0 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                                       type="button">
+                                                        Edit
+                                                    </a>
+                                                    <a href="view-user.php?id=<?php echo $row['id']; ?>"
+                                                       class="bg-indigo-500 text-white active:bg-indigo-600 text-[8px] font-bold uppercase px-1 py-0 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                                       type="button">
+                                                        view
+                                                    </a>
+                                                    <form method="post">
+                                                        <input type="hidden" name="id"
+                                                               value="<?php echo $row['id']; ?>"/>
+                                                        <button type="submit"
+                                                                class="bg-red-500 text-white active:bg-red-600 text-[8px] font-bold uppercase px-1 py-0 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                                                type="button">
+                                                            Delete
+                                                        </button>
+                                                    </form>
+
+                                                </div>
+                                            </div>
                                         </td>
                                         <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                             <?php echo $row['email']; ?>
@@ -206,7 +219,7 @@ if ($_SESSION['user_id']) {
                                             } ?>
                                         </td>
 
-                                         
+
                                     </tr>
                                     <?php
                                 }
@@ -288,7 +301,7 @@ if ($_SESSION['user_id']) {
                     users.forEach((user) => {
                         let my_li = "<li class='border-b-1 border-mycolor'>";
 
-                        my_li = my_li + "<a href='edit-user.php?id=" + user.id + "'>" +user.name + " - " + user.email + "</a> &nbsp; ";
+                        my_li = my_li + "<a href='edit-user.php?id=" + user.id + "'>" + user.name + " - " + user.email + "</a> &nbsp; ";
                         my_li = my_li + "</li>";
                         ss = ss + my_li;
                     });
