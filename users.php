@@ -142,15 +142,15 @@ if ($_SESSION['user_id']) {
                             <table class="items-center w-full bg-transparent border-collapse">
                                 <thead>
                                 <tr>
-                                    <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                    <th class="px-6   bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                                         <?php if (!empty($_GET['order']) && $_GET['order'] == 'desc') { ?>
-                                            <a href="?order_by=id&order=asc">Id <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-caret-up" width="40" height="40" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <a href="?order_by=id&order=asc">Id <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-caret-up inline-flex" width="40" height="40" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                                     <desc>Download more icon variants from https://tabler-icons.io/i/caret-up</desc>
                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                                     <path d="M18 15l-6 -6l-6 6h12"></path>
                                                 </svg></a>
                                         <?php } else { ?>
-                                            <a href="?order_by=id&order=desc">Id <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-caret-down" width="40" height="40" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <a href="?order_by=id&order=desc">Id <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-caret-down inline-flex" width="40" height="40" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                                     <desc>Download more icon variants from https://tabler-icons.io/i/caret-down</desc>
                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                                     <path d="M18 15l-6 -6l-6 6h12" transform="rotate(180 12 12)"></path>

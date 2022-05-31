@@ -27,6 +27,20 @@ if (isset($_GET['page'])) {
 $per_page = 5;
 $offset_value = (($current_page - 1) * 5);
 
+$order_by = 'ID';
+$order = 'desc';
+
+if (!empty($_GET['order_by'])) {
+    $order_by = $_GET['order_by'];
+}
+
+if (!empty($_GET['order'])) {
+    $order = $_GET['order'];
+}
+
+$order_by = "pages.".$order_by;
+
+
 if (isset($_GET['s'])) {
     $s = $_GET['s'];
 
@@ -36,7 +50,7 @@ if (isset($_GET['s'])) {
     $number_of_pages = ceil($total_records / $per_page);
 
 
-    $sql = "select pages.ID, pages.title, pages.status,  pages.created_at, users.id as user_id, users.name as author_name, users.email as email from pages INNER JOIN users on users.id = pages.author where pages.title like '%$s%' limit $per_page offset $offset_value";
+    $sql = "select pages.ID, pages.title, pages.status,  pages.created_at, users.id as user_id, users.name as author_name, users.email as email from pages INNER JOIN users on users.id = pages.author where pages.title like '%$s%' order by $order_by $order limit $per_page offset $offset_value";
 
 
 } else {
@@ -47,18 +61,21 @@ if (isset($_GET['s'])) {
         $total_recordsResult = $conn->query("select count(*) as total_records from pages where author=" . $_SESSION['user_id'] . ";");
     }
 
+   
+
 
     $total_records = $total_recordsResult->fetch_assoc()['total_records'];
 
     $number_of_pages = ceil($total_records / $per_page);
-
-
+    
     if ($_SESSION['role'] == 'admin') {
-        $sql = "select pages.ID,pages.slug, pages.title, pages.status, pages.created_at, users.id as user_id, users.name as author_name, users.email as email from pages INNER JOIN users on users.id = pages.author limit $per_page OFFSET $offset_value;";
+        $sql = "select pages.ID,pages.slug, pages.title, pages.status, pages.created_at, users.id as user_id, users.name as author_name, users.email as email from pages INNER JOIN users on users.id = pages.author  order by $order_by $order limit $per_page OFFSET $offset_value;";
     } else {
-        $sql = "select pages.ID,pages.slug, pages.title, pages.status, pages.created_at, users.id as user_id, users.name as author_name, users.email as email from pages INNER JOIN users on users.id = pages.author where pages.author=" . $_SESSION['user_id'] . " limit $per_page OFFSET $offset_value;";
-    }
+       $sql = "select pages.ID,pages.slug, pages.title, pages.status, pages.created_at, users.id as user_id, users.name as author_name, users.email as email from pages INNER JOIN users on users.id = pages.author where pages.author=" . $_SESSION['user_id'] . " limit $per_page OFFSET $offset_value;";
+   }
+    
 }
+//$sql = "select * from pages order by $order_by $order limit $per_page OFFSET $offset_value;";
 
 $result = $conn->query($sql);
 $title = "Pages lists";
@@ -144,7 +161,19 @@ if ($_SESSION['user_id']) {
                                 <thead>
                                 <tr>
                                     <th class="px-6  w-[300px]  bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                        Id
+                                    <?php if (!empty($_GET['order']) && $_GET['order'] == 'desc') { ?>
+                                            <a href="?order_by=id&order=asc">ID<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-caret-up inline-flex" width="40" height="40" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                    <desc>Download more icon variants from https://tabler-icons.io/i/caret-up</desc>
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                    <path d="M18 15l-6 -6l-6 6h12"></path>
+                                                </svg></a>
+                                        <?php } else { ?>
+                                            <a href="?order_by=id&order=desc">ID<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-caret-down inline-flex" width="40" height="40" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                    <desc>Download more icon variants from https://tabler-icons.io/i/caret-down</desc>
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                    <path d="M18 15l-6 -6l-6 6h12" transform="rotate(180 12 12)"></path>
+                                                </svg></a>
+                                        <?php } ?>
                                     </th>
                                     <th class="px-6bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                                         Title

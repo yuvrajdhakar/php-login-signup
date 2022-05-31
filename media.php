@@ -53,6 +53,7 @@ if (isset($_POST['path']) && !empty($_POST['path'])) {
                     </div>
                     <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
                         <div class="grid grid-cols-5 gap-4 p-4">
+                             
                             <?php
                             $files = scandir("uploads");
                             $i = 0;
@@ -61,17 +62,26 @@ if (isset($_POST['path']) && !empty($_POST['path'])) {
                                 if ($file != '.' && $file != '..' && $file != '.DS_Store') {
                                     ?>
                                     <div class='img_div text-center border p-4 bg-white' id="img_id_<?php echo $i; ?>">
-                                        <img class="" src='uploads/<?php echo $file; ?>'>
+                                    
+                                    <img class="" src='uploads/<?php echo $file; ?>'>
                                         <div id="form_id_<?php echo $i; ?>" class="hidden ">
                                             <div class="inline-flex p-4">
-                                                <form method="post"
+                                            <form method="post"
                                                       onsubmit="return confirm('Are you sure to delete this image?');">
                                                     <input type="hidden" name="path"
                                                            value="uploads/<?php echo $file; ?>">
-                                                    <button type="submit"
-                                                            class="bg-red-500 text-white active:bg-red-600 text-[8px] font-bold uppercase px-1 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
-                                                        Delete
-                                                    </button>
+                                             <button type="submit">
+                                                   <a><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash stroke-red-700" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                    <desc>Download more icon variants from https://tabler-icons.io/i/trash</desc>
+                                                   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                     <line x1="4" y1="7" x2="20" y2="7"></line>
+                                                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                                                     <line x1="14" y1="11" x2="14" y2="17"></line>
+                                                     <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
+                                                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
+                                                      </svg></a>
+                                                      </button>
+                                                          
                                                 </form>
                                             </div>
                                         </div>
