@@ -5,8 +5,8 @@ include "db-connection.php";
 $total_recordsvalue  = $conn->query("select count(*) as total_recordss from users;");
 $total_recordss = $total_recordsvalue->fetch_assoc()['total_recordss'];
 
-$total_recordsResult = $conn->query("select count(*) as total_records from pages;");
-$total_records = $total_recordsResult->fetch_assoc()['total_records'];
+$total_recordsResult = $conn->query("select count(*) as total_pages from pages;");
+$total_pages = $total_recordsResult->fetch_assoc()['total_pages'];
 
 if($_SESSION['user_id']){
 ?>
@@ -156,7 +156,7 @@ if($_SESSION['user_id']){
                           >
                            Total users
                           </h5>
-                          <span class="font-semibold text-xl text-blueGray-700">
+                          <span id="users_total" class="font-semibold text-xl text-blueGray-700">
                           <?php echo $total_recordss; ?>
                           </span>
                         </div>
@@ -191,8 +191,8 @@ if($_SESSION['user_id']){
                           >
                            Total Pages
                           </h5>
-                          <span class="font-semibold text-xl text-blueGray-700">
-                          <?php echo $total_records; ?>
+                          <span id="total_pages" class="font-semibold text-xl text-blueGray-700">
+                          <?php echo $total_pages; ?>
                           </span>
                         </div>
                         <div class="relative w-auto pl-4 flex-initial">
@@ -260,7 +260,31 @@ if($_SESSION['user_id']){
     </div>
     <?php include "layouts/footer-scripts.php"; ?>
   </body>
+
+    <script>
+        function getData() {
+            $.ajax({
+                url: "ajax-home.php",
+            }).done(function (response) {
+                response = JSON.parse(response);
+                if (response.success) {
+                    let data = response.data;
+
+                    $("#users_total").html(data.total_users);
+                    $("#total_pages").html(data.total_pages);
+                } else {
+                    console.log("no result found.");
+                }
+            });
+        }
+
+        (function () {
+            setInterval(getData, 10000);
+        })();
+    </script>
 </html>
+
+
 <?php }else{
  header("Location: index.php?error='Please login first.");
  die();   
