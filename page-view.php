@@ -1,4 +1,7 @@
 <?php
+// Start the session
+session_start();
+
 include "db-connection.php";
 
 $slug = $_GET['slug'];
@@ -9,6 +12,30 @@ if (!empty($slug)) {
     if ($result) {
         $page = $result->fetch_assoc();
         if ($page) {
+            $page_id = $page['ID'];
+
+            if(!empty($_POST['content'])){
+                //insert a comment
+
+                $content = $_POST['content'];
+                $user = 'Guest';
+
+                if($_SESSION['user_id']){
+                    $user = $_SESSION['user_id'];
+                }
+
+
+
+                $result_comment = $conn->prepare("INSERT INTO comments (content, user, page_id) values(?, ?,?);");
+
+                $result_comment->bind_param("ssi", $content, $user, $page_id);
+                $result_comment->execute();
+            }
+
+
+            $comments = $conn->query("Select * from comments where page_id=$page_id");
+
+
             ?>
             <!DOCTYPE html>
             <html>
@@ -164,6 +191,30 @@ No Layout
                         echo html_entity_decode($page['content']);
 
                         ?>
+
+                        <div class="pt-4">
+
+                            <div>
+            <?php
+            while ($row_comment = $comments->fetch_assoc()) {
+                ?>
+                <div>
+                    <?php echo $row_comment['content']; ?>
+                    <hr/>
+                </div>
+                <?php
+            }
+            ?>
+                            </div>
+                            <br/>
+                            <hr/>
+                            <br/>
+                            <form method="post">
+                                <textarea name="content" placeholder="Leave your comment" required="required"></textarea>
+                                <button type="submit" class="px-2 py-1 text-white bg-green-500 rounded shadow-xl">submit
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </section>
 
