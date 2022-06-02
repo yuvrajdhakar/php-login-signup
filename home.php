@@ -8,6 +8,19 @@ $total_recordss = $total_recordsvalue->fetch_assoc()['total_recordss'];
 $total_recordsResult = $conn->query("select count(*) as total_pages from pages;");
 $total_pages = $total_recordsResult->fetch_assoc()['total_pages'];
 
+$total_a = $conn->query("select COUNT(*) as total_activs FROM users WHERE status =1;");
+$total_activs = $total_a->fetch_assoc()['total_activs'];
+
+$total_b = $conn->query("select COUNT(*) as total_inactivs FROM users WHERE status =0;");
+$total_inactivs = $total_b->fetch_assoc()['total_inactivs'];
+
+$jbl = $conn->query("select COUNT(*) as published FROM pages WHERE status ='publishe';");
+$published = $jbl->fetch_assoc()['published'];
+
+$asdf = $conn->query("select COUNT(*) as draft FROM pages WHERE status ='draft';");
+$draft = $asdf->fetch_assoc()['draft'];
+
+
 if($_SESSION['user_id']){
 ?>
 
@@ -105,44 +118,8 @@ if($_SESSION['user_id']){
             <div>
               <!-- Card stats -->
               <div class="flex flex-wrap">
-                <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
-                  <div
-                    class="relative flex flex-col min-w-0 break-words bg-white rounded mb-6 xl:mb-0 shadow-lg"
-                  >
-                    <div class="flex-auto p-4">
-                      <div class="flex flex-wrap">
-                        <div
-                          class="relative w-full pr-4 max-w-full flex-grow flex-1"
-                        >
-                          <h5
-                            class="text-blueGray-400 uppercase font-bold text-xs"
-                          >
-                            Traffic
-                          </h5>
-                          <span class="font-semibold text-xl text-blueGray-700">
-                            350,897
-                          </span>
-                        </div>
-                        <div class="relative w-auto pl-4 flex-initial">
-                          <div
-                            class="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full bg-red-500"
-                          >
-                              <i class="fa-regular fa-images"></i>
-                          </div>
-                        </div>
-                      </div>
-                      <p class="text-sm text-blueGray-400 mt-4">
-                        <span class="text-emerald-500 mr-2">
-                          <i class="fas fa-arrow-up"></i> 3.48%
-                        </span>
-                        <span class="whitespace-nowrap">
-                          Since last month
-                        </span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
+
+              <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
                   <div
                     class="relative flex flex-col min-w-0 break-words bg-white rounded mb-6 xl:mb-0 shadow-lg"
                   >
@@ -177,6 +154,83 @@ if($_SESSION['user_id']){
                     </div>
                   </div>
                 </div>
+
+                <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
+                  <div
+                    class="relative flex flex-col min-w-0 break-words bg-white rounded mb-6 xl:mb-0 shadow-lg"
+                  >
+                    <div class="flex-auto p-4">
+                      <div class="flex flex-wrap">
+                        <div
+                          class="relative w-full pr-4 max-w-full flex-grow flex-1"
+                        >
+                          <h5
+                            class="text-blueGray-400 uppercase font-bold text-xs"
+                          >
+                           Activ users
+                          </h5>
+                          <span id = "total_activs" class="font-semibold text-xl text-blueGray-700">
+                          <?php echo $total_activs; ?>
+                          </span>
+                        </div>
+                        <div class="relative w-auto pl-4 flex-initial">
+                        <div
+                            class="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full bg-orange-500"
+                          >
+                            <i class="fas fa-users"></i>
+                          </div>
+                        </div>
+                      </div>
+                      <p class="text-sm text-blueGray-400 mt-4">
+                        <span class="text-emerald-500 mr-2">
+                          <i class="fas fa-arrow-up"></i> 3.48%
+                        </span>
+                        <span class="whitespace-nowrap">
+                          Since today
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+               
+                <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
+                  <div
+                    class="relative flex flex-col min-w-0 break-words bg-white rounded mb-6 xl:mb-0 shadow-lg"
+                  >
+                    <div class="flex-auto p-4">
+                      <div class="flex flex-wrap">
+                        <div
+                          class="relative w-full pr-4 max-w-full flex-grow flex-1"
+                        >
+                          <h5
+                            class="text-blueGray-400 uppercase font-bold text-xs"
+                          >
+                           Inactivs users
+                          </h5>
+                          <span id = "total_inactivs" class="font-semibold text-xl text-blueGray-700">
+                          <?php echo $total_inactivs; ?>
+                          </span>
+                        </div>
+                        <div class="relative w-auto pl-4 flex-initial">
+                        <div
+                            class="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full bg-orange-500"
+                          >
+                            <i class="fas fa-users"></i>
+                          </div>
+                        </div>
+                      </div>
+                      <p class="text-sm text-blueGray-400 mt-4">
+                        <span class="text-emerald-500 mr-2">
+                          <i class="fas fa-arrow-up"></i> 12%
+                        </span>
+                        <span class="whitespace-nowrap">
+                          Since today
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
                 <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
                   <div
                     class="relative flex flex-col min-w-0 break-words bg-white rounded mb-6 xl:mb-0 shadow-lg"
@@ -212,7 +266,8 @@ if($_SESSION['user_id']){
                     </div>
                   </div>
                 </div>
-                <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
+                
+                <div class="w-full lg:w-6/12 xl:w-3/12 px-4 py-6">
                   <div
                     class="relative flex flex-col min-w-0 break-words bg-white rounded mb-6 xl:mb-0 shadow-lg"
                   >
@@ -224,17 +279,17 @@ if($_SESSION['user_id']){
                           <h5
                             class="text-blueGray-400 uppercase font-bold text-xs"
                           >
-                            Performance
+                          published pages
                           </h5>
-                          <span class="font-semibold text-xl text-blueGray-700">
-                            49,65%
+                          <span id = "published" class="font-semibold text-xl text-blueGray-700">
+                          <?php echo $published; ?>
                           </span>
                         </div>
                         <div class="relative w-auto pl-4 flex-initial">
-                          <div
-                            class="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full bg-lightBlue-500"
+                        <div
+                            class="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full bg-pink-500"
                           >
-                            <i class="fas fa-percent"></i>
+                          <i class="fa-solid fa-file"></i>
                           </div>
                         </div>
                       </div>
@@ -243,7 +298,44 @@ if($_SESSION['user_id']){
                           <i class="fas fa-arrow-up"></i> 12%
                         </span>
                         <span class="whitespace-nowrap">
-                          Since last month
+                          Since today
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="w-full lg:w-6/12 xl:w-3/12 px-4 py-6">
+                  <div
+                    class="relative flex flex-col min-w-0 break-words bg-white rounded mb-6 xl:mb-0 shadow-lg"
+                  >
+                    <div class="flex-auto p-4">
+                      <div class="flex flex-wrap">
+                        <div
+                          class="relative w-full pr-4 max-w-full flex-grow flex-1"
+                        >
+                          <h5
+                            class="text-blueGray-400 uppercase font-bold text-xs"
+                          >
+                          draft pages
+                          </h5>
+                          <span id = "draft" class="font-semibold text-xl text-blueGray-700">
+                          <?php echo $draft; ?>
+                          </span>
+                        </div>
+                        <div class="relative w-auto pl-4 flex-initial">
+                        <div
+                            class="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full bg-pink-500"
+                          >
+                          <i class="fa-solid fa-file"></i>
+                          </div>
+                        </div>
+                      </div>
+                      <p class="text-sm text-blueGray-400 mt-4">
+                        <span class="text-emerald-500 mr-2">
+                          <i class="fas fa-arrow-up"></i> 12%
+                        </span>
+                        <span class="whitespace-nowrap">
+                          Since today
                         </span>
                       </p>
                     </div>
@@ -272,6 +364,10 @@ if($_SESSION['user_id']){
 
                     $("#users_total").html(data.total_users);
                     $("#total_pages").html(data.total_pages);
+                    $("#total_activs").html(data.total_activs);
+                    $("#total_inactivs").html(data.total_inactivs);
+                    $("#published").html(data.published);
+                    $("#draft").html(data.draft);
                 } else {
                     console.log("no result found.");
                 }

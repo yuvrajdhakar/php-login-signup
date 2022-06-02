@@ -26,7 +26,12 @@ if (isset($_POST['path']) && !empty($_POST['path'])) {
 <div id="root">
     <?php include "layouts/nav.php"; ?>
     <div class="relative md:ml-64 bg-blueGray-50">
-        <?php include "layouts/top.php"; ?>
+        
+    
+
+    <?php include "layouts/top.php"; ?>
+
+       
         <div class="px-4 md:px-10 mx-auto w-full -m-24">
             <!-- content start here -->
             <div class="w-full px-4">
@@ -95,6 +100,34 @@ if (isset($_POST['path']) && !empty($_POST['path'])) {
                 </div>
             </div>
             <!-- content ends here.  -->
+
+            <form action="media-uplode-process.php" method="POST" enctype="multipart/form-data">
+            <div class="mt-8 flex justify-center absulate ">
+           
+  <div class="rounded-lg bg-gray-50  shadow-xl lg:w-1/2">
+    <div class="m-4">
+      <label class="mb-2 inline-block text-gray-500">Upload Image(jpg,png,svg,jpeg)</label>
+      <div class="flex w-full items-center justify-center">
+        <label htmlfor="image" class="flex h-32 w-full flex-col border-4 border-dashed hover:border-gray-300 hover:bg-gray-100">
+          <div class="flex flex-col items-center justify-center pt-7">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-400 group-hover:text-gray-600" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd" />
+            </svg>
+            <p class="pt-1 text-sm tracking-wider text-gray-400 group-hover:text-gray-600">Select a photo</p>
+          </div>
+          <input type="file" class="opacity-0" name="image" id="image"/>
+        </label>
+      </div>
+    </div>
+    <div class="flex p-2 space-x-2">
+             
+            <button type="submit" class="px-2 py-1 text-white bg-green-500 rounded shadow-xl">submit</button>
+        </div>
+                        
+  </div>
+  
+</div>
+</form>
             <?php include "layouts/footer.php"; ?>
         </div>
     </div>
