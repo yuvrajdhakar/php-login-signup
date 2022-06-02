@@ -22,7 +22,7 @@ try{
     $total_b = $conn->query("select COUNT(*) as total_inactivs FROM users WHERE status =0;");
     $total_inactivs = $total_b->fetch_assoc()['total_inactivs'];
 
-    $jbl = $conn->query("select COUNT(*) as published FROM pages WHERE status ='publishe';");
+    $jbl = $conn->query("select COUNT(*) as published FROM pages WHERE status ='published';");
     $published = $jbl->fetch_assoc()['published'];
 
     $asdf = $conn->query("select COUNT(*) as draft FROM pages WHERE status ='draft';");

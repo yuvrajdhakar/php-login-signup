@@ -3,9 +3,4 @@ Project is basic users login/signup and pages management and media management fe
 
 ### Tasks TODO
 * Apply role all over the project
-* Media page upload feature.
- 
 * Update Logo on settings page.
-*  
-*    
-  
