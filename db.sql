@@ -84,4 +84,7 @@ CREATE TABLE `comments`
     `parent_id` BIGINT NULL,
     PRIMARY KEY (`id`)
 );
-       
+
+
+ALTER TABLE `comments` ADD `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
+ALTER TABLE `comments` ADD `likes` BIGINT NULL;

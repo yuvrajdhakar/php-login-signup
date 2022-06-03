@@ -14,26 +14,29 @@ if (!empty($slug)) {
         if ($page) {
             $page_id = $page['ID'];
 
-            if(!empty($_POST['content'])){
+            if (!empty($_POST['content'])) {
                 //insert a comment
 
                 $content = $_POST['content'];
                 $user = 'Guest';
 
-                if($_SESSION['user_id']){
+                if ($_SESSION['user_id']) {
                     $user = $_SESSION['user_id'];
                 }
 
+                $parent_id = null;
 
+                if(!empty($_POST['parent_id'])){
+                    $parent_id = $_POST['parent_id'];
+                }
 
-                $result_comment = $conn->prepare("INSERT INTO comments (content, user, page_id) values(?, ?,?);");
+                $result_comment = $conn->prepare("INSERT INTO comments (content, user, page_id, parent_id) values(?, ?,?, ?);");
 
-                $result_comment->bind_param("ssi", $content, $user, $page_id);
+                $result_comment->bind_param("ssii", $content, $user, $page_id, $parent_id);
                 $result_comment->execute();
             }
 
-
-            $comments = $conn->query("Select * from comments where page_id=$page_id");
+            $comments = $conn->query("Select * from comments where parent_id is null and  page_id=$page_id");
 
 
             ?>
@@ -52,6 +55,17 @@ if (!empty($slug)) {
                       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/>
                 <link rel="stylesheet" href="app.css"/>
                 <title><?php echo $page['title']; ?> - Sky e-Solutions</title>
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+                <script>
+                    function hideTheForm(id){
+                        $("#reply_form_" + id).hide();
+                    }
+
+                    function showTheForm(id){
+                        $("#reply_form_" + id).show();
+                    }
+                </script>
             </head>
             <body class="text-blueGray-700 antialiased">
             <nav class="top-0 absolute z-50 w-full flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg">
@@ -195,47 +209,169 @@ No Layout
                         <div class="pt-4">
 
                             <div>
-            <?php
-            while ($row_comment = $comments->fetch_assoc()) {
-                ?>
-                <div>
-                    <?php echo $row_comment['content']; ?>
-                    <hr/>
-                </div>
-                <?php
-            }
-            ?>
+                                <div class="flex items-center justify-center bg-gray-100">
+                                    <div class="flex h-auto w-full flex-col space-y-2 bg-white px-3 py-2 shadow">
+                                        <?php
+                                        while ($row_comment = $comments->fetch_assoc()) {
+                                            ?>
+                                            <div class="flex items-center space-x-2">
+                                                <div class="group relative flex flex-shrink-0 cursor-pointer self-start">
+                                                    <img src="https://images.unsplash.com/photo-1507965613665-5fbb4cbb8399?ixid=MXwxMjA3fDB8MHx0b3BpYy1mZWVkfDQzfHRvd0paRnNrcEdnfHxlbnwwfHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                                                         alt="" class="h-8 w-8 rounded-full object-fill"/>
+                                                </div>
+
+                                                <div class="flex items-center justify-center space-x-2">
+                                                    <div class="block">
+                                                        <div class="flex  space-x-2">
+                                                            <div class="w-auto rounded-xl bg-gray-100 px-2 pb-2">
+                                                                <div class="font-medium">
+                                                                    <a href="#" class="text-sm hover:underline">
+                                                                        <small><?php echo $row_comment['user']; ?></small>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="text-xs">  <?php echo $row_comment['content']; ?></div>
+                                                            </div>
+                                                            <div class="flex transform items-center justify-center self-stretch opacity-0 transition-opacity duration-200 hover:opacity-100">
+                                                                <a href="#" class="">
+                                                                    <div class="flex h-6 w-6 transform cursor-pointer items-center justify-center rounded-full text-xs transition-colors duration-200 hover:bg-gray-100">
+                                                                        <svg class="h-6 w-4" fill="none"
+                                                                             stroke="currentColor" viewBox="0 0 24 24"
+                                                                             xmlns="http://www.w3.org/2000/svg">
+                                                                            <path stroke-linecap="round"
+                                                                                  stroke-linejoin="round"
+                                                                                  stroke-width="2"
+                                                                                  d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path>
+                                                                        </svg>
+                                                                    </div>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="flex w-full items-center justify-start text-xs">
+                                                            <div class="flex items-center justify-center space-x-1 px-2 font-semibold text-gray-700">
+                                                                <a href="#" class="hover:underline">
+                                                                    <small>Like (<?php echo $row_comment['likes'];?>)</small>
+                                                                </a>
+                                                                <small class="self-center">.</small>
+                                                                <a class="hover:underline reply_click_class" id="reply_click_<?php echo $row_comment['id'];?>" onclick="showTheForm(<?php echo $row_comment['id'];?>)">
+                                                                    <small>Reply</small>
+                                                                </a>
+                                                                <small class="self-center">.</small>
+                                                                <a href="#" class="hover:underline">
+                                                                    <small><?php echo $row_comment['created_at']; ?></small>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Subcomment Sample -->
+                                                        <?php
+
+                                                        $resultReplyComments = $conn->query("Select * from comments where parent_id=".$row_comment['id']);
+                                                        while ($row_reply_comment = $resultReplyComments->fetch_assoc()) {
+
+                                                        ?>
+                                                        <div class="flex items-center space-x-2 space-y-2">
+                                                            <div class="group relative flex flex-shrink-0 cursor-pointer self-start pt-2">
+                                                                <img src="https://images.unsplash.com/photo-1610156830615-2eb9732de349?ixid=MXwxMjA3fDB8MHx0b3BpYy1mZWVkfDExfHJuU0tESHd3WVVrfHxlbnwwfHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                                                                     alt="" class="h-8 w-8 rounded-full object-fill"/>
+                                                            </div>
+
+                                                            <div class="flex items-center justify-center space-x-2">
+                                                                <div class="block">
+                                                                    <div class="w-auto rounded-xl bg-gray-100 px-2 pb-2">
+                                                                        <div class="font-medium">
+                                                                            <a href="#" class="text-sm hover:underline">
+                                                                                <small><?php echo $row_reply_comment['user'];?> </small>
+                                                                            </a>
+                                                                        </div>
+                                                                        <div class="text-xs"><?php echo $row_reply_comment['content'];?>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="flex w-full items-center justify-start text-xs">
+                                                                        <div class="flex items-center justify-center space-x-1 px-2 font-semibold text-gray-700">
+                                                                            <a href="#" class="hover:underline">
+                                                                                <small>Like</small>
+                                                                            </a>
+                                                                            <small class="self-center">.</small>
+                                                                            <a href="#" class="hover:underline">
+                                                                                <small>Reply</small>
+                                                                            </a>
+                                                                            <small class="self-center">.</small>
+                                                                            <a href="#" class="hover:underline">
+                                                                                <small><?php echo $row_reply_comment['created_at'];?></small>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="translate flex -translate-y-2 transform items-center justify-center self-stretch opacity-0 transition-opacity duration-200 hover:opacity-100">
+                                                                <a href="#" class="">
+                                                                    <div class="flex h-6 w-6 transform cursor-pointer items-center justify-center rounded-full text-xs transition-colors duration-200 hover:bg-gray-100">
+                                                                        <svg class="h-6 w-4" fill="none"
+                                                                             stroke="currentColor" viewBox="0 0 24 24"
+                                                                             xmlns="http://www.w3.org/2000/svg">
+                                                                            <path stroke-linecap="round"
+                                                                                  stroke-linejoin="round"
+                                                                                  stroke-width="2"
+                                                                                  d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path>
+                                                                        </svg>
+                                                                    </div>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- New Subcomment Paste Here !! -->
+                                                        <?php } ?>
+                                                        <div class="hidden" id="reply_form_<?php echo $row_comment['id']; ?>">
+                                                            <form method="post" class="w-full p-4">
+                                                                <input type="hidden" name="parent_id" value="<?php echo $row_comment['id']; ?>" />
+                                                                <label class="mb-2 block">
+                                                                    <textarea name="content"
+                                                                              placeholder="Leave your reply comment"
+                                                                              required="required"
+                                                                              class="mt-1 block w-full rounded"
+                                                                              rows="3"></textarea>
+                                                                </label>
+                                                                <button type="submit"
+                                                                        class="rounded bg-blue-600 px-3 py-2 text-sm text-blue-100">
+                                                                    Reply Comment
+                                                                </button>
+                                                                <button type="button" onclick="hideTheForm(<?php echo $row_comment['id']; ?>)"
+                                                                        class="rounded bg-red-600 px-3 py-2 text-sm text-blue-100">
+                                                                   Cancel
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- New Comment Paste Here -->
+
+                                            <?php
+                                        }
+                                        ?>
+                                    </div>
+                                </div>
                             </div>
                             <br/>
-                            <hr/>
+
                             <br/>
-                           <!-- <form method="post">
-                                <textarea name="content" placeholder="Leave your comment" required="required"></textarea>
-                                <button type="submit" class="px-2 py-1 text-white bg-green-500 rounded shadow-xl">submit
+                            <!-- <form method="post">
+                                 <textarea name="content" placeholder="Leave your comment" required="required"></textarea>
+                                 <button type="submit" class="px-2 py-1 text-white bg-green-500 rounded shadow-xl">submit
+                                 </button>
+                             </form>-->
+                            <form method="post" class="w-full p-4">
+                                <label class="mb-2 block">
+                                    <span class="text-gray-600">Add a comment</span>
+                                    <textarea name="content" placeholder="Leave your comment" required="required"
+                                              class="mt-1 block w-full rounded" rows="3"></textarea>
+                                </label>
+                                <button type="submit" class="rounded bg-blue-600 px-3 py-2 text-sm text-blue-100">
+                                    Comment
                                 </button>
-                            </form>-->
-                            <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tailwind comment box with tailwindcss form plugin</title>
-    <script src="https://cdn.tailwindcss.com/?plugins=forms"></script>
-  </head>
-
-  <body>
-    <div class="max-w-lg shadow-md">
-      <form method="post" class="w-full p-4">
-        <label class="mb-2 block">
-          <span class="text-gray-600">Add a comment</span>
-          <textarea name="content" placeholder="Leave your comment" required="required" class="mt-1 block w-full rounded" rows="3"></textarea>
-        </label>
-        <button type="submit" class="rounded bg-blue-600 px-3 py-2 text-sm text-blue-100">Comment</button>
-      </form>
-    </div>
-  </body>
-</html>
-
+                            </form>
                         </div>
                     </div>
                 </section>
@@ -353,6 +489,14 @@ No Layout
             </footer>
             </body>
             <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.js"></script>
+            <script>
+                // (function () {
+                //     $(".reply_click_class").on("click", function () {
+                //         $("#" + this.id.replace("reply_click_", "reply_form_")).show();
+                //     });
+                //
+                // })();
+            </script>
             <script>
                 /* Make dynamic date appear */
                 (function () {
