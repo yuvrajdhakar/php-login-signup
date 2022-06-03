@@ -209,11 +209,33 @@ No Layout
                             <br/>
                             <hr/>
                             <br/>
-                            <form method="post">
+                           <!-- <form method="post">
                                 <textarea name="content" placeholder="Leave your comment" required="required"></textarea>
                                 <button type="submit" class="px-2 py-1 text-white bg-green-500 rounded shadow-xl">submit
                                 </button>
-                            </form>
+                            </form>-->
+                            <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tailwind comment box with tailwindcss form plugin</title>
+    <script src="https://cdn.tailwindcss.com/?plugins=forms"></script>
+  </head>
+
+  <body>
+    <div class="max-w-lg shadow-md">
+      <form method="post" class="w-full p-4">
+        <label class="mb-2 block">
+          <span class="text-gray-600">Add a comment</span>
+          <textarea name="content" placeholder="Leave your comment" required="required" class="mt-1 block w-full rounded" rows="3"></textarea>
+        </label>
+        <button type="submit" class="rounded bg-blue-600 px-3 py-2 text-sm text-blue-100">Comment</button>
+      </form>
+    </div>
+  </body>
+</html>
+
                         </div>
                     </div>
                 </section>
