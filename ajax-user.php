@@ -31,3 +31,4 @@ if (!empty($s)) {
 }
 
 echo json_encode($response);
+die();
