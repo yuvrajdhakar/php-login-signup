@@ -22,4 +22,5 @@
 
     <script type="text/javascript" charset="utf8"
             src="node_modules/datatables.net/js/jquery.dataTables.min.js"></script>
+
 </head>

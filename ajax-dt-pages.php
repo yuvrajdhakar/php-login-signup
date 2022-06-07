@@ -38,7 +38,6 @@ $sql_details = array(
 
 require( 'ssp.class.php' );
 
-sleep(2);
 echo json_encode(
     SSP::simple( $_GET, $sql_details, $table, $primaryKey, $columns )
 );

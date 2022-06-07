@@ -193,6 +193,21 @@
                     </a>
                 </li>
 
+                <li class="items-center">
+                    <a
+                            href="pages-datatables.php"
+                            class="text-xs uppercase py-3 font-bold block <?php if (endsWith($_SERVER['SCRIPT_NAME'], 'pages-datatables.php')) {
+                                echo 'text-pink-500 hover:text-pink-600';
+                            } else {
+                                echo 'text-blueGray-700 hover:text-blueGray-500';
+                            } ?>"
+                    >
+                        <i
+                                class="fas fa-map-marked mr-2 text-sm text-blueGray-300"
+                        ></i>
+                        Pages DataTables
+                    </a>
+                </li>
 
                 <li class="items-center">
                     <a

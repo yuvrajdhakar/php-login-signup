@@ -100,28 +100,29 @@ if ($_SESSION['user_id']) {
                         </div>
                         <div class="block w-full overflow-x-auto">
                             <!-- Projects table -->
-                            <table id="example" class="items-center w-full bg-transparent border-collapse">
-                                <thead>
-                                <tr>
-                                    <th class="px-6  w-[300px]  bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                        ID
-                                    </th>
-                                    <th class="px-6bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                        Title
-                                    </th>
-                                    <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                        Status
-                                    </th>
-                                    <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                        Author
-                                    </th>
-                                    <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                        Date
-                                    </th>
-                                </tr>
-                                </thead>
-                            </table>
-
+                            <div class="table-responsive">
+                                <table id="example" class="items-center w-full bg-transparent border-collapse">
+                                    <thead>
+                                    <tr>
+                                        <th class="px-6  w-[300px]  bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                            ID
+                                        </th>
+                                        <th class="px-6bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                            Title
+                                        </th>
+                                        <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                            Status
+                                        </th>
+                                        <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                            Author
+                                        </th>
+                                        <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                            Date
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -137,8 +138,12 @@ if ($_SESSION['user_id']) {
             $('#example').DataTable({
                 processing: true,
                 serverSide: true,
-              //  ajax: 'ajax-datatables-pages.php',
+                responsive: true,
+                //  ajax: 'ajax-datatables-pages.php',
                 ajax: 'ajax-dt-pages.php',
+                rowReorder: {
+                    selector: 'td:nth-child(2)'
+                },
             });
         });
 
