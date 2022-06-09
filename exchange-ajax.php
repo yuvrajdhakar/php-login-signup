@@ -5,9 +5,17 @@ use GuzzleHttp\Client;
 
 require "db-connection.php";
 
-$from = $_GET['from'];
-$to = $_GET['to'];
-$amount = $_GET['amount'];
+$body = file_get_contents('php://input');
+
+$body_data = json_decode($body);
+//
+//$from = $_POST['from'];
+//$to = $_POST['to'];
+//$amount = $_POST['amount'];
+
+$from = $body_data->from;
+$to = $body_data->to;
+$amount = $body_data->amount;
 
 $response = [
     'success' => false,

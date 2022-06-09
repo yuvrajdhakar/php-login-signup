@@ -119,6 +119,9 @@ include "db-connection.php";
                             </div>
                         </div>
 
+                        <div class="hidden" id="loading">
+                            <img src="assets/img/loading.gif" width="70"/>
+                        </div>
                         <button
                                 onclick="getExchangeRate()"
                                 class="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
@@ -144,8 +147,20 @@ include "db-connection.php";
         let amount = $('#amount').val();
 
         $.ajax({
-            url: "exchange-ajax.php?from=" + from + "&to=" + to + "&amount=" + amount,
+         //   url: "exchange-ajax.php",
+            url: "https://api.apilayer.com/exchangerates_data/convert?from="+from+"&to="+to+"&amount="+amount,
+            headers:{
+                "apikey":"7D11GNCS0rQPQplrept4qgwE1NvUZ1k0"
+            },
+           // method:"POST",
+           // data: JSON.stringify({ from: from, to:to, amount:amount }),
+        //    contentType: "application/json; charset=utf-8",
+          //  timeout: 5000,
+            beforeSend: function (xhr) {
+                $("#loading").show();
+            }
         }).done(function (response) {
+            $("#loading").hide();
             response = JSON.parse(response);
             if (response.success) {
 
