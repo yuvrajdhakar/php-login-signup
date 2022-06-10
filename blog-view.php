@@ -205,16 +205,7 @@ No Layout
                                             <div class="flex items-center space-x-2">
                                                  
 
-                                                <div class="flex items-center justify-center space-x-2">
-                                                    <div class="block">
-                                                        <div class="flex  space-x-2">
-                                                            <div class="w-auto rounded-xl bg-gray-100 px-2 pb-2">
-                                                                <div class="font-medium">
-                                                                    <a href="#" class="text-sm hover:underline">
-                                                                        <small><?php ?></small>
-                                                                    </a>
-                                                                </div>
-                                                            </div>
+                                                
                                                             <div class="flex transform items-center justify-center self-stretch opacity-0 transition-opacity duration-200 hover:opacity-100">
                                                                 <a href="#" class="">
                                                                     <div class="flex h-6 w-6 transform cursor-pointer items-center justify-center rounded-full text-xs transition-colors duration-200 hover:bg-gray-100">
