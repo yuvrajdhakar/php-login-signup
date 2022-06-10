@@ -189,10 +189,10 @@ No Layout
                     </div>
                     <div class="container mx-auto px-4">
 
-                        <?php
-
                         
-                        ?>
+                    <?php echo $body_parsed->body; ?>
+                        
+                       
 
                         <div class="pt-4">
 
@@ -203,10 +203,7 @@ No Layout
                                         
                                             ?>
                                             <div class="flex items-center space-x-2">
-                                                <div class="group relative flex flex-shrink-0 cursor-pointer self-start">
-                                                    <img src="https://images.unsplash.com/photo-1507965613665-5fbb4cbb8399?ixid=MXwxMjA3fDB8MHx0b3BpYy1mZWVkfDQzfHRvd0paRnNrcEdnfHxlbnwwfHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-                                                         alt="" class="h-8 w-8 rounded-full object-fill"/>
-                                                </div>
+                                                 
 
                                                 <div class="flex items-center justify-center space-x-2">
                                                     <div class="block">
@@ -214,7 +211,7 @@ No Layout
                                                             <div class="w-auto rounded-xl bg-gray-100 px-2 pb-2">
                                                                 <div class="font-medium">
                                                                     <a href="#" class="text-sm hover:underline">
-                                                                        <small><?php echo $body_parsed->body; ?></small>
+                                                                        <small><?php ?></small>
                                                                     </a>
                                                                 </div>
                                                             </div>
