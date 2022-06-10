@@ -36,12 +36,6 @@ if(!empty($id)){
 
     }
 }
-
-
- 
-// Start the session
-session_start();
-      
             ?>
             <!DOCTYPE html>
             <html>
@@ -223,7 +217,6 @@ No Layout
                                                                         <small><?php echo $body_parsed->body; ?></small>
                                                                     </a>
                                                                 </div>
-                                                                <div class="text-xs">  <?php// echo $body_parsed_comments->comments; ?></div>
                                                             </div>
                                                             <div class="flex transform items-center justify-center self-stretch opacity-0 transition-opacity duration-200 hover:opacity-100">
                                                                 <a href="#" class="">
@@ -240,19 +233,79 @@ No Layout
                                                                 </a>
                                                             </div>
                                                         </div>
-                                                         
 
-                                                        <!-- Subcomment Sample -->
-                                                        
 
-                                                            <!-- New Subcomment Paste Here !! -->
-                                                        
+                                                        <div class="pt-4">
 
-                                            <!-- New Comment Paste Here -->
+                                                            <div>
+                                                                <div class="flex items-center justify-center bg-gray-100">
+                                                                    <div class="flex h-auto w-full flex-col space-y-2 bg-white px-3 py-2 shadow">
+                                                                        <?php
+                                                                        foreach ($body_parsed_comments as $row_comment)  {
+                                                                            ?>
+                                                                            <div class="flex items-center space-x-2">
+                                                                                <div class="group relative flex flex-shrink-0 cursor-pointer self-start">
+                                                                                    <img src="https://images.unsplash.com/photo-1507965613665-5fbb4cbb8399?ixid=MXwxMjA3fDB8MHx0b3BpYy1mZWVkfDQzfHRvd0paRnNrcEdnfHxlbnwwfHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                                                                                         alt="" class="h-8 w-8 rounded-full object-fill"/>
+                                                                                </div>
 
-                                            <?php
-                                        
-                                        ?>
+                                                                                <div class="flex items-center justify-center space-x-2">
+                                                                                    <div class="block">
+                                                                                        <div class="flex  space-x-2">
+                                                                                            <div class="w-auto rounded-xl bg-gray-100 px-2 pb-2">
+                                                                                                <div class="font-medium">
+                                                                                                    <a href="#" class="text-sm hover:underline">
+                                                                                                        <small><?php echo $row_comment->name; ?></small>
+                                                                                                    </a>
+                                                                                                </div>
+                                                                                                <div class="text-xs">  <?php echo $row_comment->body; ?></div>
+                                                                                            </div>
+                                                                                            <div class="flex transform items-center justify-center self-stretch opacity-0 transition-opacity duration-200 hover:opacity-100">
+                                                                                                <a href="#" class="">
+                                                                                                    <div class="flex h-6 w-6 transform cursor-pointer items-center justify-center rounded-full text-xs transition-colors duration-200 hover:bg-gray-100">
+                                                                                                        <svg class="h-6 w-4" fill="none"
+                                                                                                             stroke="currentColor" viewBox="0 0 24 24"
+                                                                                                             xmlns="http://www.w3.org/2000/svg">
+                                                                                                            <path stroke-linecap="round"
+                                                                                                                  stroke-linejoin="round"
+                                                                                                                  stroke-width="2"
+                                                                                                                  d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path>
+                                                                                                        </svg>
+                                                                                                    </div>
+                                                                                                </a>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <!-- New Comment Paste Here -->
+
+                                                                            <?php
+                                                                        }
+                                                                        ?>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <br/>
+
+                                                            <br/>
+                                                            <!-- <form method="post">
+                                                                 <textarea name="content" placeholder="Leave your comment" required="required"></textarea>
+                                                                 <button type="submit" class="px-2 py-1 text-white bg-green-500 rounded shadow-xl">submit
+                                                                 </button>
+                                                             </form>-->
+                                                            <form method="post" class="w-full p-4">
+                                                                <label class="mb-2 block">
+                                                                    <span class="text-gray-600">Add a comment</span>
+                                                                    <textarea name="content" placeholder="Leave your comment" required="required"
+                                                                              class="mt-1 block w-full rounded" rows="3"></textarea>
+                                                                </label>
+                                                                <button type="submit" class="rounded bg-blue-600 px-3 py-2 text-sm text-blue-100">
+                                                                    Comment
+                                                                </button>
+                                                            </form>
+                                                        </div>
                                     </div>
                                 </div>
                             </div>
