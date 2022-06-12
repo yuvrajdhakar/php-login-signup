@@ -8,9 +8,9 @@ $dotenv->load();
 require "functions.php";
 
 $imageKit = new ImageKit(
-    "public_7mICj522D31+qZdIZy7p3y7cGGQ=",
-    "private_DFav2srSShQy7mAvFi00Pm8OpY8=",
-    "https://ik.imagekit.io/skyesol"
+    "",
+    "",
+    ""
 );
 
 $listFiles = $imageKit->listFiles(array(
