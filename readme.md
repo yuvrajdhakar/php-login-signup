@@ -7,3 +7,4 @@ https://apilayer.com/marketplace/exchangerates_data-api?preview=true#documentati
 ### Tasks TODO
 * Apply role all over the project
 * Update Logo on settings page.
+* Create ImageKit media with list files & delete and upload. https://imagekit.io/
