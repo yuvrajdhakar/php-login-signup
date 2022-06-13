@@ -7,6 +7,7 @@ $title = "Manage Media";
 
 
 use ImageKit\ImageKit;
+
 require "vendor/autoload.php";
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
@@ -15,46 +16,29 @@ $dotenv->load();
 require "functions.php";
 
 $imageKit = new ImageKit(
- $_ENV['IMAGEKIT_PUBLIC_KEY'],
- $_ENV['IMAGEKIT_PRIVATE_KEY'],
-$_ENV['IMAGEKIT_ENDPOINT']
-    
+    $_ENV['IMAGEKIT_PUBLIC_KEY'],
+    $_ENV['IMAGEKIT_PRIVATE_KEY'],
+    $_ENV['IMAGEKIT_ENDPOINT']
+
 );
-
-//$deleteFile = $imageKit->deleteFile("62a6059add24af8932ea58ab");
-
 
 $listFiles = $imageKit->listFiles(array(
     "skip" => 0,
     "limit" => 10,
 ));
 
-// echo "<pre>";
-// var_dump($listFiles);
-// echo "</pre>";
-//foreach($listFiles->success as $file){
-   // echo "<img alt='".$file->fileId."' src='".$file->thumbnail."'/>";
-//}
+if (isset($_POST['fileId']) && !empty($_POST['fileId'])) {
 
+    $deleteFile = $imageKit->deleteFile($_POST['fileId']);
 
-
-
- 
-
-
-
-
-if (isset($_POST['path']) && !empty($_POST['path'])) {
-    $is_delete = unlink($_POST['path']);
-    if ($is_delete) {
-        header("Location: media.php?success='Image deleted successfully!");
+    if ($deleteFile) {
+        header("Location: imagekit.php?success='Image deleted successfully!");
         die();
     } else {
-        header("Location: media.php?error='Unable to delete the image");
+        header("Location: imagekit.php?error='Unable to delete the image");
         die();
     }
 }
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -99,7 +83,8 @@ if (isset($_POST['path']) && !empty($_POST['path'])) {
                                 <div class="mt-8 flex justify-center absulate ">
                                     <div class="rounded-lg bg-gray-50  shadow-xl lg:w-1/2">
                                         <div class="m-4">
-                                            <label class="mb-2 inline-block text-gray-500">Upload Image(jpg,png,svg,jpeg)</label>
+                                            <label class="mb-2 inline-block text-gray-500">Upload
+                                                Image(jpg,png,svg,jpeg)</label>
                                             <div class="flex w-full items-center justify-center">
                                                 <label htmlfor="image"
                                                        class="flex h-32 w-full flex-col border-4 border-dashed hover:border-gray-300 hover:bg-gray-100">
@@ -114,13 +99,15 @@ if (isset($_POST['path']) && !empty($_POST['path'])) {
                                                         <p class="pt-1 text-sm tracking-wider text-gray-400 group-hover:text-gray-600">
                                                             Select a photo</p>
                                                     </div>
-                                                    <input type="file" class="opacity-0" name="image" id="image" required="required"/>
+                                                    <input type="file" class="opacity-0" name="image" id="image"
+                                                           required="required"/>
                                                 </label>
                                             </div>
                                         </div>
                                         <div class="flex p-2 space-x-2">
 
-                                            <button type="submit" class="px-2 py-1 text-white bg-green-500 rounded shadow-xl">submit
+                                            <button type="submit"
+                                                    class="px-2 py-1 text-white bg-green-500 rounded shadow-xl">submit
                                             </button>
                                         </div>
 
@@ -130,64 +117,57 @@ if (isset($_POST['path']) && !empty($_POST['path'])) {
                             </form>
                         </div>
                         <div class="grid grid-cols-5 gap-4 p-4">
-
                             <?php
-                            
-                            foreach($listFiles->success as $file){
-                            ?>
-                            <div>
-                               <?php echo "<img alt='".$file->fileId."' src='".$file->thumbnail."'/>"; ?>
-                            </div>
-                               
-                                <?php } ?>      
+                            foreach ($listFiles->success as $file) {
+                                ?>
+                                <div class='img_div text-center border p-4 bg-white relative'
+                                     id="img_id_<?php echo $file->fileId; ?>">
 
-                                         
-                                    <!-- <div id="form_id_ class='img_div'"
-                                             class="hidden absolute -top-[24px] -right-[19px]">
-                                            <div class="inline-flex p-4">
-                                               
+                                    <img class="" src='<?php echo $file->thumbnail; ?>'>
+                                    <div id="form_id_<?php echo $file->fileId; ?>"
+                                         class="hidden absolute -top-[24px] -right-[19px]">
+                                        <div class="inline-flex p-4">
                                             <form method="post"
-                                                      onsubmit="return confirm('Are you sure to delete this image?');">
-                                                    <input type="hidden" name="path"
-                                                           value="<?php// echo $file; ?>">
-                                                    <button type="submit">
-                                                        <a>
-                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                 class="icon icon-tabler icon-tabler-trash stroke-red-700"
-                                                                 width="24" height="24" viewBox="0 0 24 24"
-                                                                 stroke-width="2" stroke="currentColor" fill="none"
-                                                                 stroke-linecap="round" stroke-linejoin="round">
-                                                                <desc>Download more icon variants from
-                                                                    https://tabler-icons.io/i/trash
-                                                                </desc>
-                                                                <path stroke="none" d="M0 0h24v24H0z"
-                                                                      fill="none"></path>
-                                                                <line x1="4" y1="7" x2="20" y2="7"></line>
-                                                                <line x1="10" y1="11" x2="10" y2="17"></line>
-                                                                <line x1="14" y1="11" x2="14" y2="17"></line>
-                                                                <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
-                                                                <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
-                                                            </svg>
-                                                        </a>
-                                                    </button>
-
-                                                </form>
-                                               
-                                            </div>
-                                           
+                                                  onsubmit="return confirm('Are you sure to delete this image?');">
+                                                <input type="hidden" name="fileId"
+                                                       value="<?php echo $file->fileId; ?>">
+                                                <button type="submit">
+                                                    <a>
+                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                             class="icon icon-tabler icon-tabler-trash stroke-red-700"
+                                                             width="24" height="24" viewBox="0 0 24 24"
+                                                             stroke-width="2" stroke="currentColor" fill="none"
+                                                             stroke-linecap="round" stroke-linejoin="round">
+                                                            <desc>Download more icon variants from
+                                                                https://tabler-icons.io/i/trash
+                                                            </desc>
+                                                            <path stroke="none" d="M0 0h24v24H0z"
+                                                                  fill="none"></path>
+                                                            <line x1="4" y1="7" x2="20" y2="7"></line>
+                                                            <line x1="10" y1="11" x2="10" y2="17"></line>
+                                                            <line x1="14" y1="11" x2="14" y2="17"></line>
+                                                            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
+                                                            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
+                                                        </svg>
+                                                    </a>
+                                                </button>
+                                            </form>
                                         </div>
                                     </div>
-                                     
+                                </div>
+                            <?php } ?>
                         </div>
+
                     </div>
-                </div>-->
+                </div>
             </div>
-            <!-- content ends here.  -->
-
-
-            <?php include "layouts/footer.php"; ?>
         </div>
+        <!-- content ends here.  -->
+
+
+        <?php include "layouts/footer.php"; ?>
     </div>
+</div>
 </div>
 <?php include "layouts/footer-scripts.php"; ?>
 <script>
