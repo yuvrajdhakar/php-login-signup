@@ -4,6 +4,7 @@
         "vlucas/phpdotenv": "^5.4",
       "ext-mysqli": "*",
         "guzzlehttp/guzzle": "^7.4",
-        "imagekit/imagekit": "^2.0"
+        "imagekit/imagekit": "^2.0",
+        "stripe/stripe-php": "^8.6"
     }
 }

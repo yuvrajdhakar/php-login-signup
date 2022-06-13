@@ -3,17 +3,9 @@ session_start();
 
 $title = "Manage Media";
 
-//include "db-connection.php";
-
-
 use ImageKit\ImageKit;
+include "db-connection.php";
 
-require "vendor/autoload.php";
-
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-$dotenv->load();
-
-require "functions.php";
 
 $imageKit = new ImageKit(
     $_ENV['IMAGEKIT_PUBLIC_KEY'],
