@@ -79,7 +79,7 @@ if (isset($_POST['fileId']) && !empty($_POST['fileId'])) {
                     </div>
                     <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
                         <div>
-                            <form action="media-uplode-process.php" method="POST" enctype="multipart/form-data">
+                            <form action="imagekit-upload.php" method="POST" enctype="multipart/form-data">
                                 <div class="mt-8 flex justify-center absulate ">
                                     <div class="rounded-lg bg-gray-50  shadow-xl lg:w-1/2">
                                         <div class="m-4">
