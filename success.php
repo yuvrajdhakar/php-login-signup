@@ -17,6 +17,9 @@ if (!empty($_GET['session_id'])) {
     if ($checkout_session->status == 'complete') {
         $mail = new PHPMailer(true);
 
+        //TODO update the order status to PAID
+        $conn->query("UPDATE orders set status='paid' WHERE session_id='$session_id'");
+
         try {
             //Server settings
             //   $mail->SMTPDebug = SMTP::DEBUG_SERVER; //Enable verbose debug output

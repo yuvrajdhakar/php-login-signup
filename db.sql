@@ -86,5 +86,42 @@ CREATE TABLE `comments`
 );
 
 
-ALTER TABLE `comments` ADD `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
-ALTER TABLE `comments` ADD `likes` BIGINT NULL;
+ALTER TABLE `comments`
+    ADD `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
+ALTER TABLE `comments`
+    ADD `likes` BIGINT NULL;
+
+
+CREATE TABLE `products`
+(
+    `id`    BIGINT       NOT NULL AUTO_INCREMENT,
+    `name`  VARCHAR(256) NOT NULL,
+    `price` DOUBLE(10, 2
+) NOT NULL,
+     `description` LONGTEXT NULL ,
+      `slug` VARCHAR(256) NOT NULL ,
+      `created_at` TIMESTAMP NOT NULL ,
+      `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
+      `deleted_at` TIMESTAMP NULL ,
+      PRIMARY KEY (`id`),
+      UNIQUE `product_slug` (`slug`)
+      );
+
+ALTER TABLE `products`
+    ADD `primary_image` VARCHAR(256) NULL;
+ALTER TABLE `products`
+    ADD `status` VARCHAR(256) NOT NULL DEFAULT 'draft';
+
+
+CREATE TABLE `orders`
+(
+    `id`         BIGINT       NOT NULL AUTO_INCREMENT,
+    `product_id` BIGINT       NOT NULL,
+    `qty`        INT(11) NOT NULL,
+    `user_id`    BIGINT       NOT NULL,
+    `status`     VARCHAR(100) NOT NULL DEFAULT 'checkout',
+    `created_at` TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`)
+);
+
+ALTER TABLE `orders` ADD `session_id` VARCHAR(256) NULL;
