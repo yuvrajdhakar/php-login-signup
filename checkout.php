@@ -62,6 +62,9 @@ $products = $conn->query("Select * from products where status='published'");
                                         <div class="img_div text-center border p-4 bg-white relative">
                                             <img class="" src="<?php echo $product['primary_image']; ?>">
                                             <div>
+                                                <?php echo $product['description']; ?>
+                                            </div>
+                                            <div>
                                                 <h3>Price: INR <?php echo $product['price']; ?></h3>
                                             </div>
                                             <input type="number" name="qty" placeholder="Put quantity">
