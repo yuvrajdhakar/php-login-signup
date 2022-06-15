@@ -9,9 +9,7 @@ $password = $_POST['password'];
 
 if( !empty($email) && !empty($password)){
 
-
-echo  $sql = "select id, name, email,password, status, role from users where email = '$email' LIMIT 1";
-die();
+ $sql = "select id, name, email,password, status, role from users where email = '$email' LIMIT 1";
 
   $stmt = $conn->prepare("select id, name, email,password, status, role from users where email = ? LIMIT 1");
   $stmt->bind_param("s", $email);
