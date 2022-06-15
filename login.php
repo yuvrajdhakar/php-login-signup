@@ -15,21 +15,19 @@ if( !empty($email) && !empty($password)){
   $stmt->bind_param("s", $email);
 
    $stmt->execute();
-   $result = $stmt->get_result(); //TODO use bind_result
+  // $result = $stmt->get_result(); //TODO use bind_result
+    $stmt->bind_result($row_id, $row_name, $row_email, $row_password, $row_status, $row_role);
+  if ($stmt->fetch()) {
+       // $row = $result->fetch_assoc();
 
-  if ($result) {
-    if ($result->num_rows > 0) {
+        if( password_verify($password, $row_password)  ){
 
-        $row = $result->fetch_assoc();
+            if($row_status == 1) {
+                $_SESSION['name'] = $row_name;
+                $_SESSION['email'] = $row_email;
 
-        if( password_verify($password, $row['password'])  ){
-
-            if($row['status'] == 1) {
-                $_SESSION['name'] = $row['name'];
-                $_SESSION['email'] = $row['email'];
-
-                $_SESSION['user_id'] = $row['id'];
-                $_SESSION['role'] = $row['role'];
+                $_SESSION['user_id'] = $row_id;
+                $_SESSION['role'] = $row_role;
 
                 header("Location: home.php");
                 die();
@@ -43,10 +41,6 @@ if( !empty($email) && !empty($password)){
         }
 
        
-    }else{
-        header("Location: index.php?error='No user with provided emial id.'");
-        die();
-    }
 
    } else {
      $err = "Error: " . $sql . "<br>" . $conn->error;
