@@ -7,6 +7,6 @@ deployment:
     - rsync -r --times --exclude '.git' --exclude '.cpanel.yml' $REPODIR $DEPLOYPATH #copy all from root
     - cd $DEPLOYPATH
     - export changedFiles="$(git --git-dir=$REPOPATH --no-pager diff-tree -r --name-only --no-commit-id HEAD)"
-    - if echo "$changedFiles" | grep -q "composer.json"; then eval "php composer.phar install --no-interaction --profile"; fi
+    - php composer.phar install
     - echo "Run the npm"
     - npm install
