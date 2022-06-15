@@ -65,7 +65,7 @@ $products = $conn->query("Select * from plans where status='published'");
                                                 <?php echo $product['description']; ?>
                                             </div>
                                             <div>
-                                                <h3>Price: INR <?php echo $product['price_id']; ?></h3>
+                                                <h3>Price: INR</h3>
                                             </div>
                                             <input type="number" name="qty" placeholder="Put quantity">
                                             <button type="submit"
