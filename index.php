@@ -1,9 +1,14 @@
+<?php
+include "db-connection.php";
+
+
+?>
 <html>
     <head>
         <title>Login</title>
         <link rel="stylesheet" href="app.css" />
 </head>
-<body>
+<body class="<?php echo  $_ENV['WEBSITE_HOST'];?>">
 
 <!-- component -->
 <!-- Create By Joker Banny -->
