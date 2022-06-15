@@ -9,4 +9,4 @@ deployment:
     - export changedFiles="$(git --git-dir=$REPOPATH --no-pager diff-tree -r --name-only --no-commit-id HEAD)"
     - php composer.phar install
     - echo "Run the npm"
-    - /usr/local/bin/npm install
+    - source /home/skyesola/nodevenv/testing/12/bin/activate && cd /home/skyesola/testing && npm install
