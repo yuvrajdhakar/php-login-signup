@@ -124,4 +124,31 @@ CREATE TABLE `orders`
     PRIMARY KEY (`id`)
 );
 
-ALTER TABLE `orders` ADD `session_id` VARCHAR(256) NULL;
+ALTER TABLE `orders`
+    ADD `session_id` VARCHAR(256) NULL;
+
+
+CREATE TABLE `plans`
+(
+    `id`          BIGINT       NOT NULL AUTO_INCREMENT,
+    `name`        VARCHAR(256) NOT NULL,
+    `description` LONGTEXT     NOT NULL,
+    `status`      VARCHAR(100) NOT NULL DEFAULT 'draft',
+    `price_id`    VARCHAR(256) NOT NULL,
+    PRIMARY KEY (`id`)
+);
+
+ALTER TABLE `plans`
+    ADD `primary_image` VARCHAR(256) NOT NULL AFTER `description`;
+
+
+CREATE TABLE `plans_orders`
+(
+    `id`         BIGINT       NOT NULL AUTO_INCREMENT,
+    `plan_id`    BIGINT       NOT NULL,
+    `qty`        INT          NOT NULL,
+    `user_id`    BIGINT       NOT NULL,
+    `status`     VARCHAR(256) NOT NULL DEFAULT 'checkout',
+    `created_at` TIMESTAMP    NOT NULL,
+    PRIMARY KEY (`id`)
+);
