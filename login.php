@@ -15,7 +15,7 @@ if( !empty($email) && !empty($password)){
   $stmt->bind_param("s", $email);
 
    $stmt->execute();
-   $result = $stmt->get_result();
+   $result = $stmt->get_result(); //TODO use bind_result
 
   if ($result) {
     if ($result->num_rows > 0) {
