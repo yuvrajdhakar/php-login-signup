@@ -39,7 +39,6 @@ $price_Result = $conn->query("SELECT id,price FROM `products` where id IN ($prod
 $price_arry = [];
 
 while ($pp = $price_Result->fetch_assoc()) {
-
     $price_arry[$pp['id']] = $pp['price'];
 }
 
@@ -53,13 +52,30 @@ foreach ($products_qty as $key => $value) {
 $first_day_this_month = date('Y-m-01 00:00:00'); // hard-coded '01' for first day
 $last_day_this_month = date('Y-m-t 12:00:00');
 
-$cruntmonth_sale = $conn->query( "SELECT * FROM `orders` where status = 'paid' AND created_at BETWEEN '$first_day_this_month' and '$last_day_this_month';");
+$currentMonthProductQtyResult = $conn->query( "SELECT product_id, sum(qty) as sum_qty FROM `orders` where status = 'paid' AND created_at BETWEEN '$first_day_this_month' and '$last_day_this_month'  group by product_id;");
 
-while($cruntmonth_sale->fetch_assoc()){
+$currentMonth_product_ids = "";
+$currentmonth_products_qty = [];
 
-
+while($currentMonthProductQtyRow = $currentMonthProductQtyResult->fetch_assoc()){
+    $currentmonth_products_qty[$currentMonthProductQtyRow['product_id']] = $currentMonthProductQtyRow['sum_qty'];
+    $currentMonth_product_ids = $product_ids . $currentMonthProductQtyRow['product_id'] . ",";
 }
-$crunt_sale = $conn->query("SELECT id,price FROM `products` where id IN ($product_ids);");
+
+$currentMonth_product_ids = rtrim($currentMonth_product_ids, ",");
+
+$current_month_price_Result = $conn->query("SELECT id,price FROM `products` where id IN ($currentMonth_product_ids);");
+$current_month_price_arry = [];
+
+while ($current_month_price_row = $current_month_price_Result->fetch_assoc()) {
+    $current_month_price_arry[$current_month_price_row['id']] = $current_month_price_row['price'];
+}
+
+$current_month_total_sales = 0;
+
+foreach ($currentmonth_products_qty as $key => $value) {
+    $current_month_total_sales = $current_month_total_sales + ($value * $current_month_price_arry[$key]);
+}
 
 //$last_month = strtotime("last month");
 
