@@ -9,7 +9,7 @@ require "db-connection.php";
 \Stripe\Stripe::setApiKey($_ENV['STRIPE_SECRET']);
 
 // This is your Stripe CLI webhook secret for testing your endpoint locally.
-$endpoint_secret = 'whsec_PLUoK305BLSlCTjszabR5trnINQ5Qfa9';
+$endpoint_secret = $_ENV['STRIPE_WEBHOOK_SECRET'];
 
 $payload = @file_get_contents('php://input');
 $sig_header = $_SERVER['HTTP_STRIPE_SIGNATURE'];
@@ -75,8 +75,10 @@ switch ($event->type) {
         }
     case 'customer.subscription.created':
         $subscription = $event->data->object;
+        //
     case 'customer.subscription.deleted':
         $subscription = $event->data->object;
+        //TODO disable the user subscription in database.
     case 'customer.subscription.updated':
         $subscription = $event->data->object;
     // ... handle other event types
