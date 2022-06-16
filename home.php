@@ -53,15 +53,20 @@ foreach ($products_qty as $key => $value) {
 $first_day_this_month = date('Y-m-01 00:00:00'); // hard-coded '01' for first day
 $last_day_this_month = date('Y-m-t 12:00:00');
 
-// "SELECT * FROM `orders` where status = 'paid' AND created_at BETWEEN '$first_day_this_month' and '$last_day_this_month';";
+$cruntmonth_sale = $conn->query( "SELECT * FROM `orders` where status = 'paid' AND created_at BETWEEN '$first_day_this_month' and '$last_day_this_month';");
+
+while($cruntmonth_sale->fetch_assoc()){
 
 
-$last_month = strtotime("last month");
+}
+$crunt_sale = $conn->query("SELECT id,price FROM `products` where id IN ($product_ids);");
 
-$first_day_last_month = date('Y-m-01 00:00:00', $last_month); // hard-coded '01' for first day
-$last_day_last_month = date('Y-m-t 12:00:00', $last_month);
+//$last_month = strtotime("last month");
 
-echo "SELECT * FROM `orders` where status = 'paid' AND created_at BETWEEN '$first_day_last_month' and '$last_day_last_month';";
+//$first_day_last_month = date('Y-m-01 00:00:00', $last_month); // hard-coded '01' for first day
+//$last_day_last_month = date('Y-m-t 12:00:00', $last_month);
+
+ // "SELECT * FROM `orders` where status = 'paid' AND created_at BETWEEN '$first_day_last_month' and '$last_day_last_month';";
 
 if ($_SESSION['user_id']) {
     ?>
