@@ -31,7 +31,7 @@ $checkout_session = \Stripe\Checkout\Session::create([
         'quantity' => $qty,
     ]],
     'mode' => 'payment',
-    'success_url' => $_ENV['WEBSITE_HOST'] . '/success.php?session_id={CHECKOUT_SESSION_ID}',
+    'success_url' => $_ENV['WEBSITE_HOST'] . '/checkout.php?session_id={CHECKOUT_SESSION_ID}',
     'cancel_url' => $_ENV['WEBSITE_HOST'] . '/checkout.php',
 ]);
 $session_id = $checkout_session->id;
