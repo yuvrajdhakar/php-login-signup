@@ -46,8 +46,22 @@ while ($pp = $price_Result->fetch_assoc()) {
 $total_sales = 0;
 
 foreach ($products_qty as $key => $value) {
-    $total_sales = $total_sales + ($value * $price_arry[$key] );
+    $total_sales = $total_sales + ($value * $price_arry[$key]);
 }
+
+
+$first_day_this_month = date('Y-m-01 00:00:00'); // hard-coded '01' for first day
+$last_day_this_month = date('Y-m-t 12:00:00');
+
+// "SELECT * FROM `orders` where status = 'paid' AND created_at BETWEEN '$first_day_this_month' and '$last_day_this_month';";
+
+
+$last_month = strtotime("last month");
+
+$first_day_last_month = date('Y-m-01 00:00:00', $last_month); // hard-coded '01' for first day
+$last_day_last_month = date('Y-m-t 12:00:00', $last_month);
+
+echo "SELECT * FROM `orders` where status = 'paid' AND created_at BETWEEN '$first_day_last_month' and '$last_day_last_month';";
 
 if ($_SESSION['user_id']) {
     ?>
