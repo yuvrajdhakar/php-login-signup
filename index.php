@@ -1,9 +1,12 @@
 <?php
-
- 
+session_start();
 
 include "db-connection.php";
 
+if ($_SESSION['user_id']) {
+    header("Location: home.php");
+    die();
+}
 
 ?>
 <html>
