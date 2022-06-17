@@ -3,84 +3,83 @@
 session_start();
 
 include "db-connection.php";
+if ($_SESSION['user_id']) {
 
-if (isset($_POST['ID']) && !empty($_POST['ID'])) {
-    $id = $_POST['ID'];
-    $del = "DELETE FROM pages  WHERE id='$id';";
-    $delet = $conn->query($del);
+    if (isset($_POST['ID']) && !empty($_POST['ID'])) {
+        $id = $_POST['ID'];
+        $del = "DELETE FROM pages  WHERE id='$id';";
+        $delet = $conn->query($del);
 
-    if ($delet) {
-        header("Location: pages.php?success='Page deleted successfully!");
-        die();
-    } else {
-        header("Location: pages.php?error='Unable to delete the page");
-        die();
-    }
-}
-
-if (isset($_GET['page'])) {
-    $current_page = $_GET['page']; //2
-} else {
-    $current_page = 1;
-}
-
-$per_page = 5;
-$offset_value = (($current_page - 1) * 5);
-
-$order_by = 'ID';
-$order = 'desc';
-
-if (!empty($_GET['order_by'])) {
-    $order_by = $_GET['order_by'];
-}
-
-if (!empty($_GET['order'])) {
-    $order = $_GET['order'];
-}
-
-$order_by = "pages.".$order_by;
-
-
-if (isset($_GET['s'])) {
-    $s = $_GET['s'];
-
-    $total_recordsResult = $conn->query("select count(*) as total_records from pages where title like '%$s%';");
-    $total_records = $total_recordsResult->fetch_assoc()['total_records'];
-
-    $number_of_pages = ceil($total_records / $per_page);
-
-
-    $sql = "select pages.ID, pages.title, pages.status,  pages.created_at, users.id as user_id, users.name as author_name, users.email as email from pages INNER JOIN users on users.id = pages.author where pages.title like '%$s%' order by $order_by $order limit $per_page offset $offset_value";
-
-
-} else {
-
-    if ($_SESSION['role'] == 'admin') {
-        $total_recordsResult = $conn->query("select count(*) as total_records from pages;");
-    } else {
-        $total_recordsResult = $conn->query("select count(*) as total_records from pages where author=" . $_SESSION['user_id'] . ";");
+        if ($delet) {
+            header("Location: pages.php?success='Page deleted successfully!");
+            die();
+        } else {
+            header("Location: pages.php?error='Unable to delete the page");
+            die();
+        }
     }
 
-   
-
-
-    $total_records = $total_recordsResult->fetch_assoc()['total_records'];
-
-    $number_of_pages = ceil($total_records / $per_page);
-    
-    if ($_SESSION['role'] == 'admin') {
-        $sql = "select pages.ID,pages.slug, pages.title, pages.status, pages.created_at, users.id as user_id, users.name as author_name, users.email as email from pages INNER JOIN users on users.id = pages.author  order by $order_by $order limit $per_page OFFSET $offset_value;";
+    if (isset($_GET['page'])) {
+        $current_page = $_GET['page']; //2
     } else {
-       $sql = "select pages.ID,pages.slug, pages.title, pages.status, pages.created_at, users.id as user_id, users.name as author_name, users.email as email from pages INNER JOIN users on users.id = pages.author where pages.author=" . $_SESSION['user_id'] . " limit $per_page OFFSET $offset_value;";
-   }
-    
-}
+        $current_page = 1;
+    }
+
+    $per_page = 5;
+    $offset_value = (($current_page - 1) * 5);
+
+    $order_by = 'ID';
+    $order = 'desc';
+
+    if (!empty($_GET['order_by'])) {
+        $order_by = $_GET['order_by'];
+    }
+
+    if (!empty($_GET['order'])) {
+        $order = $_GET['order'];
+    }
+
+    $order_by = "pages." . $order_by;
+
+
+    if (isset($_GET['s'])) {
+        $s = $_GET['s'];
+
+        $total_recordsResult = $conn->query("select count(*) as total_records from pages where title like '%$s%';");
+        $total_records = $total_recordsResult->fetch_assoc()['total_records'];
+
+        $number_of_pages = ceil($total_records / $per_page);
+
+
+        $sql = "select pages.ID, pages.title, pages.status,  pages.created_at, users.id as user_id, users.name as author_name, users.email as email from pages INNER JOIN users on users.id = pages.author where pages.title like '%$s%' order by $order_by $order limit $per_page offset $offset_value";
+
+
+    } else {
+
+        if ($_SESSION['role'] == 'admin') {
+            $total_recordsResult = $conn->query("select count(*) as total_records from pages;");
+        } else {
+            $total_recordsResult = $conn->query("select count(*) as total_records from pages where author=" . $_SESSION['user_id'] . ";");
+        }
+
+
+        $total_records = $total_recordsResult->fetch_assoc()['total_records'];
+
+        $number_of_pages = ceil($total_records / $per_page);
+
+        if ($_SESSION['role'] == 'admin') {
+            $sql = "select pages.ID,pages.slug, pages.title, pages.status, pages.created_at, users.id as user_id, users.name as author_name, users.email as email from pages INNER JOIN users on users.id = pages.author  order by $order_by $order limit $per_page OFFSET $offset_value;";
+        } else {
+            $sql = "select pages.ID,pages.slug, pages.title, pages.status, pages.created_at, users.id as user_id, users.name as author_name, users.email as email from pages INNER JOIN users on users.id = pages.author where pages.author=" . $_SESSION['user_id'] . " limit $per_page OFFSET $offset_value;";
+        }
+
+    }
 //$sql = "select * from pages order by $order_by $order limit $per_page OFFSET $offset_value;";
 
-$result = $conn->query($sql);
-$title = "Pages lists";
+    $result = $conn->query($sql);
+    $title = "Pages lists";
 
-if ($_SESSION['user_id']) {
+
     ?>
     <!DOCTYPE html>
     <html>
@@ -95,7 +94,7 @@ if ($_SESSION['user_id']) {
 
             <div class="px-4 md:px-10 mx-auto w-full -m-24">
                 <!-- content start here -->
-                 <div class="w-full  mb-12 xl:mb-0 px-4">
+                <div class="w-full  mb-12 xl:mb-0 px-4">
 
                     <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
                         <?php if (isset($_GET['success'])) { ?>
@@ -162,24 +161,40 @@ if ($_SESSION['user_id']) {
                                 </div>
                             </div>
                         </div>
-                        <div class="block w-full overflow-x-auto"> 
+                        <div class="block w-full overflow-x-auto">
                             <!-- Projects table -->
                             <table class="items-center w-full bg-transparent border-collapse">
                                 <thead>
                                 <tr>
                                     <th class="px-6  w-[300px]  bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                                    <?php if (!empty($_GET['order']) && $_GET['order'] == 'desc') { ?>
-                                            <a href="?order_by=id&order=asc">ID<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-caret-up inline-flex" width="40" height="40" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                                    <desc>Download more icon variants from https://tabler-icons.io/i/caret-up</desc>
+                                        <?php if (!empty($_GET['order']) && $_GET['order'] == 'desc') { ?>
+                                            <a href="?order_by=id&order=asc">ID
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                     class="icon icon-tabler icon-tabler-caret-up inline-flex"
+                                                     width="40" height="40" viewBox="0 0 24 24" stroke-width="1"
+                                                     stroke="currentColor" fill="none" stroke-linecap="round"
+                                                     stroke-linejoin="round">
+                                                    <desc>Download more icon variants from
+                                                        https://tabler-icons.io/i/caret-up
+                                                    </desc>
                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                                     <path d="M18 15l-6 -6l-6 6h12"></path>
-                                                </svg></a>
+                                                </svg>
+                                            </a>
                                         <?php } else { ?>
-                                            <a href="?order_by=id&order=desc">ID<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-caret-down inline-flex" width="40" height="40" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                                    <desc>Download more icon variants from https://tabler-icons.io/i/caret-down</desc>
+                                            <a href="?order_by=id&order=desc">ID
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                     class="icon icon-tabler icon-tabler-caret-down inline-flex"
+                                                     width="40" height="40" viewBox="0 0 24 24" stroke-width="1"
+                                                     stroke="currentColor" fill="none" stroke-linecap="round"
+                                                     stroke-linejoin="round">
+                                                    <desc>Download more icon variants from
+                                                        https://tabler-icons.io/i/caret-down
+                                                    </desc>
                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                                     <path d="M18 15l-6 -6l-6 6h12" transform="rotate(180 12 12)"></path>
-                                                </svg></a>
+                                                </svg>
+                                            </a>
                                         <?php } ?>
                                     </th>
                                     <th class="px-6bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
@@ -194,49 +209,50 @@ if ($_SESSION['user_id']) {
                                     <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
                                         Date
                                     </th>
-                                                                  </tr>
-                            </thead>
+                                </tr>
+                                </thead>
                                 <tbody>
                                 <?php
                                 while ($row = $result->fetch_assoc()) {
                                     ?>
-                                     
-                                    <tr id="action_h_id_<?php echo  $row['ID']; ?>" class="action_hover h-20">
-                                        
-                                        <td  class=" border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
-                                            <?php echo $row['ID']; ?>
-                                            <div id="action_div_<?php echo  $row['ID']; ?>" class="hidden">
-                                            <div class="inline-flex pt-3">
-                                            <a href="edit-pages.php?id=<?php echo $row['ID']; ?>"
-                                               class="bg-indigo-500 text-white active:bg-indigo-600 text-[8px] font-bold uppercase px-1 py-0 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                               type="button">
-                                                edit
-                                            </a>
-                                            <form method="post">
-                                                <input type="hidden" name="ID" value="<?php echo $row['ID']; ?>"/>
-                                                <button type="submit"
-                                                        class="bg-red-500 text-white active:bg-red-600 text-[8px] font-bold uppercase px-1 py-0 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                                        type="button">
-                                                    Delete
-                                                </button>
-                                            </form>
 
-                                            <?php if ($row['status'] == 'draft') { ?>
-                                                <a href="view-pages.php?id=<?php echo $row['ID']; ?>"
-                                                   class="bg-indigo-500 text-white active:bg-indigo-600 text-[8px] font-bold uppercase px-1 py-0 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                                   type="button">
-                                                    View page
-                                                </a>
-                                            <?php } else { ?>
-                                                <a href="page-view.php?slug=<?php echo $row['slug']; ?>"
-                                                   target="_blank"
-                                                   class="bg-indigo-500 text-white active:bg-indigo-600 text-[8px] font-bold uppercase px-1 py-0 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                                   type="button">View 
-                                                </a>
-                                            <?php } ?>
-                                </div>
-                                </div>
-                                </td>
+                                    <tr id="action_h_id_<?php echo $row['ID']; ?>" class="action_hover h-20">
+
+                                        <td class=" border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
+                                            <?php echo $row['ID']; ?>
+                                            <div id="action_div_<?php echo $row['ID']; ?>" class="hidden">
+                                                <div class="inline-flex pt-3">
+                                                    <a href="edit-pages.php?id=<?php echo $row['ID']; ?>"
+                                                       class="bg-indigo-500 text-white active:bg-indigo-600 text-[8px] font-bold uppercase px-1 py-0 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                                       type="button">
+                                                        edit
+                                                    </a>
+                                                    <form method="post">
+                                                        <input type="hidden" name="ID"
+                                                               value="<?php echo $row['ID']; ?>"/>
+                                                        <button type="submit"
+                                                                class="bg-red-500 text-white active:bg-red-600 text-[8px] font-bold uppercase px-1 py-0 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                                                type="button">
+                                                            Delete
+                                                        </button>
+                                                    </form>
+
+                                                    <?php if ($row['status'] == 'draft') { ?>
+                                                        <a href="view-pages.php?id=<?php echo $row['ID']; ?>"
+                                                           class="bg-indigo-500 text-white active:bg-indigo-600 text-[8px] font-bold uppercase px-1 py-0 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                                           type="button">
+                                                            View page
+                                                        </a>
+                                                    <?php } else { ?>
+                                                        <a href="page-view.php?slug=<?php echo $row['slug']; ?>"
+                                                           target="_blank"
+                                                           class="bg-indigo-500 text-white active:bg-indigo-600 text-[8px] font-bold uppercase px-1 py-0 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                                           type="button">View
+                                                        </a>
+                                                    <?php } ?>
+                                                </div>
+                                            </div>
+                                        </td>
                                         <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                             <?php echo $row['title']; ?>
                                         </td>
@@ -257,7 +273,7 @@ if ($_SESSION['user_id']) {
                                         <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                             <?php echo $row['created_at']; ?>
                                         </td>
-                                    </tr>     
+                                    </tr>
                                     <?php
                                 }
                                 ?>

@@ -38,8 +38,8 @@ if ($qty && $plan_id) {
             ],
             //  'client_reference_id' => $conn->insert_id,
             'mode' => 'subscription',
-            'success_url' => $_ENV['WEBSITE_HOST'] . '/plans.php?session_id={CHECKOUT_SESSION_ID}',
-            'cancel_url' => $_ENV['WEBSITE_HOST'] . '/plans.php',
+            'success_url' => $_ENV['WEBSITE_HOST'] . '/plan-view.php?session_id={CHECKOUT_SESSION_ID}',
+            'cancel_url' => $_ENV['WEBSITE_HOST'] . '/plan-view.php',
         ]);
 
         header("HTTP/1.1 303 See Other");
