@@ -5,13 +5,13 @@ include "db-connection.php";
 // This is your test secret API key.
 \Stripe\Stripe::setApiKey($_ENV['STRIPE_SECRET']);
 
-header('Content-Type: application/json');
-
 $qty = $_POST['qty'];
 
 $plan_id = $_POST['plan_id'];
 
 $price_data = $conn->query("select price_id, role_name from plans where id=$plan_id");
+if($price_data ){
+
 $row = $price_data->fetch_assoc();
 $price_id = $row['price_id'];
 $role_name = $row['role_name'];
@@ -42,3 +42,8 @@ $checkout_session = \Stripe\Checkout\Session::create([
 
 header("HTTP/1.1 303 See Other");
 header("Location: " . $checkout_session->url);
+    
+}else{
+    header("Location: plan-view.php?error='plan not foud");
+    die();
+}
