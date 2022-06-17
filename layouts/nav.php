@@ -307,8 +307,8 @@
 
                 <li class="items-center">
                     <a
-                            href="plans.php"
-                            class="text-xs uppercase py-3 font-bold block <?php if (endsWith($_SERVER['SCRIPT_NAME'], 'plans.php')) {
+                            href="plan-view.php"
+                            class="text-xs uppercase py-3 font-bold block <?php if (endsWith($_SERVER['SCRIPT_NAME'], 'plan-view.php')) {
                                 echo 'text-pink-500 hover:text-pink-600';
                             } else {
                                 echo 'text-blueGray-700 hover:text-blueGray-500';

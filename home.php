@@ -332,9 +332,15 @@ if ($_SESSION['user_id']) {
                                     </div>
                                 </div>
                             </div>
-        <?php } ?>
-                            <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
-                                <div
+                      <?php } ?>
+                           <?php if($_SESSION['role'] == 'admin'){ ?>
+                            <div class="w-full lg:w-6/12 xl:w-3/12 px-4  ">
+                         <?php  }else{ ?>
+                              <div class="w-full lg:w-6/12 xl:w-3/12 px-4 py-6 ">
+                        <?php   }   
+                           ?> 
+
+                            <div
                                         class="relative flex flex-col min-w-0 break-words bg-white rounded mb-6 xl:mb-0 shadow-lg"
                                 >
                                     <div class="flex-auto p-4">
@@ -442,6 +448,7 @@ if ($_SESSION['user_id']) {
                                     </div>
                                 </div>
                             </div>
+                            <?php if($_SESSION['role'] == 'admin'){ ?>
                             <div class="w-full lg:w-6/12 xl:w-3/12 px-4 py-6">
                                 <div
                                         class="relative flex flex-col min-w-0 break-words bg-white rounded mb-6 xl:mb-0 shadow-lg"
@@ -590,7 +597,7 @@ if ($_SESSION['user_id']) {
                                     </div>
                                 </div>
                             </div>
-
+                             <?php } ?>
                         </div>
                     </div>
                 </div>
