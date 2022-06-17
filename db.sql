@@ -152,3 +152,10 @@ CREATE TABLE `plans_orders`
     `created_at` TIMESTAMP    NOT NULL,
     PRIMARY KEY (`id`)
 );
+
+
+ALTER TABLE `users` ADD `subscription_id` VARCHAR(100) NULL AFTER `role`;
+
+ALTER TABLE `plans` ADD `role_name` VARCHAR(256) NOT NULL AFTER `price_id`;
+
+ALTER TABLE `plans` ADD UNIQUE(`role_name`);

@@ -75,13 +75,27 @@ switch ($event->type) {
         }
     case 'customer.subscription.created':
         $subscription = $event->data->object;
-        //
+        if($subscription->status == 'active'){
+            $metaData = $subscription->metadata;
+            $conn->query("update users set role_name='{$metaData->role_name}' where id={$metaData->user_id}");
+        }
+
     case 'customer.subscription.deleted':
         $subscription = $event->data->object;
-        //TODO disable the user subscription in database.
+
+        if($subscription->status != 'active'){
+            $metaData = $subscription->metadata;
+            $conn->query("update users set role_name='disabled' where id={$metaData->user_id}");
+        }
+
     case 'customer.subscription.updated':
         $subscription = $event->data->object;
-    // ... handle other event types
+
+        if($subscription->status == 'active'){
+            $metaData = $subscription->metadata;
+            $conn->query("update users set role_name='{$metaData->role_name}' where id={$metaData->user_id}");
+        }
+
     default:
         echo 'Received unknown event type ' . $event->type;
 }

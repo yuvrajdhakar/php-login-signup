@@ -11,21 +11,30 @@ $qty = $_POST['qty'];
 
 $plan_id = $_POST['plan_id'];
 
-$price_data = $conn->query("select price_id from plans where id=$plan_id");
-
-$price_id = $price_data->fetch_assoc()['price_id'];
-
+$price_data = $conn->query("select price_id, role_name from plans where id=$plan_id");
+$row = $price_data->fetch_assoc();
+$price_id = $row['price_id'];
+$role_name = $row['role_name'];
 $user_id = $_SESSION['user_id'];
-
-$conn->query("INSERT INTO plans_orders (plan_id, qty, user_id) values ($plan_id, $qty,$user_id)");
 
 $checkout_session = \Stripe\Checkout\Session::create([
     'line_items' => [[
-        # Provide the exact Price ID (e.g. pr_1234) of the product you want to sell
         'price' => $price_id,
         'quantity' => $qty,
     ]],
-    'client_reference_id' => $conn->insert_id,
+    'metadata' => [
+        'plan_id' => $plan_id,
+        'user_id' => $user_id,
+        'role_name' => $role_name
+    ],
+    'subscription_data' => [
+        'metadata' => [
+            'plan_id' => $plan_id,
+            'user_id' => $user_id,
+            'role_name' => $role_name
+        ]
+    ],
+    //  'client_reference_id' => $conn->insert_id,
     'mode' => 'subscription',
     'success_url' => $_ENV['WEBSITE_HOST'] . '/plans.php?session_id={CHECKOUT_SESSION_ID}',
     'cancel_url' => $_ENV['WEBSITE_HOST'] . '/plans.php',

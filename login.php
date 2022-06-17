@@ -29,6 +29,9 @@ if( !empty($email) && !empty($password)){
                 $_SESSION['user_id'] = $row_id;
                 $_SESSION['role'] = $row_role;
 
+                //TODO if role name is 'disabled' redirect to plans page. except the admin
+
+
                 header("Location: home.php");
                 die();
             }else{
