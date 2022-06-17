@@ -8,5 +8,5 @@ https://apilayer.com/marketplace/exchangerates_data-api?preview=true#documentati
 * Apply role all over the project
 * Update Logo on settings page.
 * Create ImageKit media with upload. https://imagekit.io/
-* Dahsboard current month sales value
-* Dahsboard last month sales value
+ 
+* 

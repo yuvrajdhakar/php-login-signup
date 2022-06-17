@@ -1,6 +1,8 @@
 <?php
    // Start the session
    session_start();
+
+   
    include "db-connection.php";
    $total_recordsvalue = $conn->query("select count(*) as total_recordss from users;");
    $total_recordss = $total_recordsvalue->fetch_assoc()['total_recordss'];

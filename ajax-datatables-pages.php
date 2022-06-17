@@ -1,5 +1,11 @@
 <?php
 session_start();
+
+if ($_SESSION['role'] != 'admin') {
+    header("Location: home.php?error='You don't have permission for that page.");
+    die();
+}
+
 include "db-connection.php";
 
 $per_page = $_GET['length'];
