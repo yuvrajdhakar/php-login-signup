@@ -30,7 +30,11 @@ if( !empty($email) && !empty($password)){
                 $_SESSION['role'] = $row_role;
 
                 //TODO if role name is 'disabled' redirect to plans page. except the admin
-
+              
+                if ($_SESSION['role'] == NULL or $_SESSION['role']=='disabled') {
+                    header("Location: plan-view.php?error='Please purchase the plan first to use our system'");
+                    die();
+                }
 
                 header("Location: home.php");
                 die();

@@ -3,10 +3,11 @@ session_start();
 
 include "db-connection.php";
 
-if ($_SESSION['user_id']) {
-    header("Location: home.php");
-    die();
-}
+ if(isset($_SESSION['user_id'])){
+	header("Location: home.php");
+	die();
+ }
+
 
 ?>
 <html>

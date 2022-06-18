@@ -72,7 +72,7 @@ if (!empty($title) && !empty($contant) && !empty($status)) {
     $conn->close();
 } else {
     //return back to signup form with error
-    header("Location: pages.php?error='Please provide all required fields'");
+    header("Location: add-pages.php?error='Please provide all required fields'");
     die();
 
 }

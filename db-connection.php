@@ -10,6 +10,15 @@ $dotenv->load();
 
 require "functions.php";
 
+$isIndexOrLogin = (endsWith($_SERVER['SCRIPT_NAME'], 'index.php') or endsWith($_SERVER['SCRIPT_NAME'], 'login.php'));
+
+if(!$isIndexOrLogin){
+    if (!isset($_SESSION['user_id'])) {
+    header("Location: index.php?error='Please login first.");
+    die();
+    }
+}
+
 $database_name = $_ENV['DATABASE_NAME'];
 $database_user_name = $_ENV['DATABASE_USER_NAME'];
 $database_password = $_ENV['DATABASE_PASSWORD'];

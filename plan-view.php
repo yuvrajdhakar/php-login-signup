@@ -89,9 +89,9 @@
                         <span class="text-sm pt-2 pb-0 px-4 font-bold block w-full whitespace-nowrap bg-transparent text-blueGray-400">
                         Auth Layout
                         </span>
-                        <a href="./auth/login.html"
+                        <a href="logout.php"
                            class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">
-                        Login
+                       logout
                         </a>
                         <a href="./auth/register.html"
                            class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">
@@ -113,8 +113,8 @@
                   </li>
                   <li class="flex items-center">
                      <a class="bg-white text-blueGray-700 active:bg-blueGray-50 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
-                        href="index.php">
-                     <i class="fas fa-arrow-alt-circle-down"></i> Login
+                        href="logout.php">
+                     <i class="fas fa-arrow-alt-circle-down"></i> Logout
                      </a>
                   </li>
                </ul>
