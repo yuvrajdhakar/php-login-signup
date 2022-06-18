@@ -10,7 +10,7 @@ $dotenv->load();
 
 require "functions.php";
 
-$isIndexOrLogin = (endsWith($_SERVER['SCRIPT_NAME'], 'index.php') or endsWith($_SERVER['SCRIPT_NAME'], 'login.php'));
+$isIndexOrLogin = (endsWith($_SERVER['SCRIPT_NAME'], 'index.php') or endsWith($_SERVER['SCRIPT_NAME'], 'login.php') or endsWith($_SERVER['SCRIPT_NAME'], 'process-forgot-password.php'));
 
 if(!$isIndexOrLogin){
     if (!isset($_SESSION['user_id'])) {
