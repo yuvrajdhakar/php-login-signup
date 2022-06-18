@@ -15,6 +15,13 @@ if ($qty && $plan_id) {
     if ($price_data) {
 
         $row = $price_data->fetch_assoc();
+
+        if ($_SESSION['role'] == $row['role_name']) {
+            header("Location: plan-view.php?error='This plan is already active on your account.");
+            die();
+        }
+
+
         $price_id = $row['price_id'];
         $role_name = $row['role_name'];
         $user_id = $_SESSION['user_id'];
