@@ -1,4 +1,5 @@
 <?php
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
@@ -63,8 +64,7 @@ switch ($event->type) {
                 $mail->Subject = 'Hi Your order successfully placed.';
 
 
-
-                $mail->Body = "Hi ".$checkout_session->customer_details->name.", <br/> Your order successfully placed. Thank you make an payment of amount: Rs: ".($checkout_session->amount_total/100);
+                $mail->Body = "Hi " . $checkout_session->customer_details->name . ", <br/> Your order successfully placed. Thank you make an payment of amount: Rs: " . ($checkout_session->amount_total / 100);
 
                 $mail->send();
 
@@ -75,25 +75,25 @@ switch ($event->type) {
         }
     case 'customer.subscription.created':
         $subscription = $event->data->object;
-        if($subscription->status == 'active'){
+        if ($subscription->status == 'active') {
             $metaData = $subscription->metadata;
-            $conn->query("update users set role_name='{$metaData->role_name}' where id='{$metaData->user_id}'");
+            $conn->query("update users set role='{$metaData->role_name}', subscription_id='{$subscription->id}' where id='{$metaData->user_id}'");
         }
 
     case 'customer.subscription.deleted':
         $subscription = $event->data->object;
 
-        if($subscription->status != 'active'){
+        if ($subscription->status != 'active') {
             $metaData = $subscription->metadata;
-            $conn->query("update users set role_name='disabled' where id='{$metaData->user_id}'");
+            $conn->query("update users set role='disabled', subscription_id=null where id='{$metaData->user_id}'");
         }
 
     case 'customer.subscription.updated':
         $subscription = $event->data->object;
 
-        if($subscription->status == 'active'){
+        if ($subscription->status == 'active') {
             $metaData = $subscription->metadata;
-            $conn->query("update users set role_name='{$metaData->role_name}' where id='{$metaData->user_id}'");
+            $conn->query("update users set role='{$metaData->role_name}', subscription_id='{$subscription->id}' where id='{$metaData->user_id}'");
         }
 
     default:
