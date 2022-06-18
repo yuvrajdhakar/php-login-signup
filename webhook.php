@@ -75,6 +75,7 @@ switch ($event->type) {
         }
         break;
     case 'customer.subscription.created':
+    case 'customer.subscription.updated':
         $subscription = $event->data->object;
         if ($subscription->status == 'active') {
             $metaData = $subscription->metadata;
@@ -87,14 +88,6 @@ switch ($event->type) {
         if ($subscription->status != 'active') {
             $metaData = $subscription->metadata;
             $conn->query("update users set role='disabled', subscription_id=null where id='{$metaData->user_id}'");
-        }
-        break;
-    case 'customer.subscription.updated':
-        $subscription = $event->data->object;
-
-        if ($subscription->status == 'active') {
-            $metaData = $subscription->metadata;
-            $conn->query("update users set role='{$metaData->role_name}', subscription_id='{$subscription->id}' where id='{$metaData->user_id}'");
         }
         break;
     default:
