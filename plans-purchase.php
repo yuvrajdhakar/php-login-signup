@@ -27,6 +27,7 @@ if ($qty && $plan_id) {
         $user_id = $_SESSION['user_id'];
 
         $checkout_session = \Stripe\Checkout\Session::create([
+            'customer_email' => $_SESSION['email'],
             'line_items' => [[
                 'price' => $price_id,
                 'quantity' => $qty,
