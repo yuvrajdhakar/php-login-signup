@@ -46,14 +46,14 @@ switch ($event->type) {
             try {
                 //Server settings
                 //   $mail->SMTPDebug = SMTP::DEBUG_SERVER; //Enable verbose debug output
-                $mail->isSMTP(); //Send using SMTP
-                $mail->Host = $_ENV['EMAIL_HOST']; //Set the SMTP server to send through
-                $mail->SMTPAuth = true; //Enable SMTP authentication
-                $mail->Username = $_ENV['EMAIL_USER_NAME']; //SMTP username
-                $mail->Password = $_ENV['EMAIL_PASSWORD']; //SMTP password
-                //   $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; //Enable implicit TLS encryption
-                $mail->Port = $_ENV['EMAIL_PORT']; //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
-                //Recipients
+//                $mail->isSMTP(); //Send using SMTP
+//                $mail->Host = $_ENV['EMAIL_HOST']; //Set the SMTP server to send through
+//                $mail->SMTPAuth = true; //Enable SMTP authentication
+//                $mail->Username = $_ENV['EMAIL_USER_NAME']; //SMTP username
+//                $mail->Password = $_ENV['EMAIL_PASSWORD']; //SMTP password
+//                //   $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; //Enable implicit TLS encryption
+//                $mail->Port = $_ENV['EMAIL_PORT']; //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+//                //Recipients
                 $mail->setFrom($_ENV['EMAIL_FROM'], 'Mailer');
 
                 $mail->addAddress($checkout_session->customer_details->email, $checkout_session->customer_details->name); //Add a recipient
@@ -77,7 +77,7 @@ switch ($event->type) {
         $subscription = $event->data->object;
         if($subscription->status == 'active'){
             $metaData = $subscription->metadata;
-            $conn->query("update users set role_name='{$metaData->role_name}' where id={$metaData->user_id}");
+            $conn->query("update users set role_name='{$metaData->role_name}' where id='{$metaData->user_id}'");
         }
 
     case 'customer.subscription.deleted':
@@ -85,7 +85,7 @@ switch ($event->type) {
 
         if($subscription->status != 'active'){
             $metaData = $subscription->metadata;
-            $conn->query("update users set role_name='disabled' where id={$metaData->user_id}");
+            $conn->query("update users set role_name='disabled' where id='{$metaData->user_id}'");
         }
 
     case 'customer.subscription.updated':
@@ -93,7 +93,7 @@ switch ($event->type) {
 
         if($subscription->status == 'active'){
             $metaData = $subscription->metadata;
-            $conn->query("update users set role_name='{$metaData->role_name}' where id={$metaData->user_id}");
+            $conn->query("update users set role_name='{$metaData->role_name}' where id='{$metaData->user_id}'");
         }
 
     default:
