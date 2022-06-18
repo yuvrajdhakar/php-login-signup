@@ -41,13 +41,13 @@ if (!empty($email))
                 {
                   
                     //Server settings
-                 //   $mail->SMTPDebug = SMTP::DEBUG_SERVER; //Enable verbose debug output
+                    $mail->SMTPDebug = SMTP::DEBUG_SERVER; //Enable verbose debug output
                     $mail->isSMTP(); //Send using SMTP
                     $mail->Host = $_ENV['EMAIL_HOST']; //Set the SMTP server to send through
                     $mail->SMTPAuth = true; //Enable SMTP authentication
                     $mail->Username = $_ENV['EMAIL_USER_NAME']; //SMTP username
                     $mail->Password = $_ENV['EMAIL_PASSWORD']; //SMTP password
-                 //   $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; //Enable implicit TLS encryption
+                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; //Enable implicit TLS encryption
                     $mail->Port = $_ENV['EMAIL_PORT']; //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
                     //Recipients
                     $mail->setFrom($_ENV['EMAIL_FROM'], 'Mailer');
@@ -61,7 +61,7 @@ if (!empty($email))
                  
                     $mail->send();
 
-                    header("Location: forgot-password.php?success='We have sent forogot password email. Please check'");
+                    header("Location: forgot-password.php?success='We have sent forgot password email. Please check'");
                     die();
                 }
                 catch(Exception $e)
