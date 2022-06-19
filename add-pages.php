@@ -1,7 +1,9 @@
 <?php
 session_start();
-
+include "utils/check-login.php";
 include "db-connection.php";
+
+
 $title = "Add new page";
 ?>
 

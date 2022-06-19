@@ -1,7 +1,7 @@
 <?php
 session_start();
 
- 
+include "utils/check-login.php";
 
 $title = "Get exchange rate";
 

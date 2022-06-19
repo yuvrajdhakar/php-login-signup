@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+include "utils/check-login.php";
 require "db-connection.php";
 
 $title = $_POST['title'];

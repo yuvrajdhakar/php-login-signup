@@ -1,4 +1,5 @@
 <?php
+include "utils/check-login.php";
 include "db-connection.php";
 reset($_FILES);
 $temp = current($_FILES);

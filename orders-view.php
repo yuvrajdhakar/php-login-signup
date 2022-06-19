@@ -2,6 +2,8 @@
 // Start the session
 session_start();
 
+include "utils/check-login.php";
+
 include "db-connection.php";
 
 if (isset($_POST['ID']) && !empty($_POST['ID'])) {
