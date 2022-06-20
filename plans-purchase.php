@@ -49,7 +49,7 @@ if ($qty && $plan_id) {
             ],
             //  'client_reference_id' => $conn->insert_id,
             'mode' => 'subscription',
-            'success_url' => $_ENV['WEBSITE_HOST'] . '/plan-view.php?session_id={CHECKOUT_SESSION_ID}',
+            'success_url' => $_ENV['WEBSITE_HOST'] . '/plan-view.php?stripe_checkout_session_id={CHECKOUT_SESSION_ID}',
             'cancel_url' => $_ENV['WEBSITE_HOST'] . '/plan-view.php',
         ];
 
