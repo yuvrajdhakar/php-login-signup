@@ -80,6 +80,19 @@ switch ($event->type) {
         if ($subscription->status == 'active') {
             $metaData = $subscription->metadata;
 
+            $user_data = $conn->query("select * from users where id={$metaData->user_id} limit 1");
+            $user_row = $user_data->fetch_assoc();
+
+            if($user_row['subscription_id']){
+
+                   \Stripe\Subscription::cancel(
+                        $user_row['subscription_id'],
+                        [
+                            'prorate' => true
+                        ]
+                    );
+            }
+
             $conn->query("update users set role='{$metaData->role_name}', subscription_id='{$subscription->id}', customer_id='{$subscription->customer}' where id='{$metaData->user_id}'");
         }
         break;
@@ -88,7 +101,7 @@ switch ($event->type) {
 
         if ($subscription->status != 'active') {
             $metaData = $subscription->metadata;
-            $conn->query("update users set role='disabled', subscription_id=null where id='{$metaData->user_id}'");
+            $conn->query("update users set role='disabled', subscription_id=null where id='{$metaData->user_id}' and subscription_id='{$subscription->id}'");
         }
         break;
     default:
