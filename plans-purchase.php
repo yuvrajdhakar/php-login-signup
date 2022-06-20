@@ -55,6 +55,7 @@ if ($qty && $plan_id) {
 
         if($user_row['customer_id']){
             $session_data['customer'] =$user_row['customer_id'];
+            unset($session_data['customer_email']);
         }
 
         $checkout_session = \Stripe\Checkout\Session::create($session_data);
