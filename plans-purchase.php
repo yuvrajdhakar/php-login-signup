@@ -21,12 +21,15 @@ if ($qty && $plan_id) {
             die();
         }
 
-
         $price_id = $row['price_id'];
         $role_name = $row['role_name'];
         $user_id = $_SESSION['user_id'];
 
-        $checkout_session = \Stripe\Checkout\Session::create([
+        //get user details
+        $user_data = $conn->query("select * from users where id=$user_id limit 1");
+        $user_row = $user_data->fetch_assoc();
+
+        $session_data = [
             'customer_email' => $_SESSION['email'],
             'line_items' => [[
                 'price' => $price_id,
@@ -48,7 +51,13 @@ if ($qty && $plan_id) {
             'mode' => 'subscription',
             'success_url' => $_ENV['WEBSITE_HOST'] . '/plan-view.php?session_id={CHECKOUT_SESSION_ID}',
             'cancel_url' => $_ENV['WEBSITE_HOST'] . '/plan-view.php',
-        ]);
+        ];
+
+        if($user_row['customer_id']){
+            $session_data['customer'] =$user_row['customer_id'];
+        }
+
+        $checkout_session = \Stripe\Checkout\Session::create($session_data);
 
         header("HTTP/1.1 303 See Other");
         header("Location: " . $checkout_session->url);

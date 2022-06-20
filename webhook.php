@@ -79,7 +79,8 @@ switch ($event->type) {
         $subscription = $event->data->object;
         if ($subscription->status == 'active') {
             $metaData = $subscription->metadata;
-            $conn->query("update users set role='{$metaData->role_name}', subscription_id='{$subscription->id}' where id='{$metaData->user_id}'");
+
+            $conn->query("update users set role='{$metaData->role_name}', subscription_id='{$subscription->id}', customer_id='{$metaData->customer}' where id='{$metaData->user_id}'");
         }
         break;
     case 'customer.subscription.deleted':
