@@ -85,8 +85,9 @@ switch ($event->type) {
 
             if($user_row['subscription_id']){
 
-                   \Stripe\Subscription::cancel(
-                        $user_row['subscription_id'],
+                $current_subscription = \Stripe\Subscription::retrieve($user_row['subscription_id']);
+
+                $current_subscription->cancel(
                         [
                             'prorate' => true
                         ]
