@@ -10,7 +10,7 @@ $products = $conn->query("Select * from plans where status='published'");
 
 
 //TODO if stripe_checkout_session_id exits then update the session data from users.
-
+ 
 
 ?>
     <!DOCTYPE html>
