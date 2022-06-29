@@ -79,7 +79,7 @@ if (!empty($email))
         }
         else
         {
-            header("Location: forgot-password.php?error='No user with provided emial id.'");
+            header("Location: forgot-password.php?error='No user with provided email id.'");
             die();
         }
 
