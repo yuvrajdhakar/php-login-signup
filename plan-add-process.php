@@ -9,13 +9,13 @@ $description = $_POST['description'];
 $primary_image = $_POST['primary_image'];
 $statuse = $_POST['status'];
 $price_id = $_POST['price_id'];
+$role_name = $_POST['role_name'];
 
-
-if (!empty($name) && !empty($description) && !empty($primary_image) && !empty($statuse)&& !empty($price_id)) {
+if (!empty($name) && !empty($description) && !empty($primary_image) && !empty($statuse)&& !empty($price_id) && !empty($role_name)) {
  
    
        
-        $sql =  "INSERT INTO plans (name, description, primary_image, status, price_id) values ('$name', '$description','$primary_image', '$statuse', '$price_id')";
+        $sql =  "INSERT INTO plans (name, description, primary_image, status, price_id, role_name) values ('$name', '$description','$primary_image', '$statuse', '$price_id', '$role_name')";
    
 
 
