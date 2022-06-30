@@ -161,3 +161,14 @@ ALTER TABLE `plans` ADD `role_name` VARCHAR(256) NOT NULL AFTER `price_id`;
 ALTER TABLE `plans` ADD UNIQUE(`role_name`);
 
 ALTER TABLE `users` ADD `customer_id` VARCHAR(256) NOT NULL AFTER `subscription_id`;
+
+
+CREATE TABLE `posts` (
+                         `id` bigint NOT NULL,
+                         `title` varchar(256) NOT NULL,
+                         `userId` bigint NOT NULL,
+                         `body` longtext NOT NULL
+);
+
+ALTER TABLE `posts`
+    ADD UNIQUE KEY `post_id` (`id`);
