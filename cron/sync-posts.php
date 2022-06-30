@@ -1,7 +1,6 @@
 <?php
-echo php_sapi_name();
-error_log( php_sapi_name(), 3, "error.log");
-if(php_sapi_name() !== 'cli'){
+
+if(php_sapi_name() !== 'cgi-fcgi'){
     die('Can only be executed via Cron job.');
 }
 
