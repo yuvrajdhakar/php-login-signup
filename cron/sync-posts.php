@@ -1,6 +1,6 @@
 <?php
 
-if(php_sapi_name() !== 'cgi-fcgi'){
+if(php_sapi_name() !== 'cgi-fcgi' or php_sapi_name() !== 'cli'){
     die('Can only be executed via Cron job.');
 }
 
