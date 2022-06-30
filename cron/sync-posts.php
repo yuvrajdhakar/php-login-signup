@@ -1,4 +1,7 @@
 <?php
+if(php_sapi_name() !== 'cli'){
+    die('Can only be executed via Cron job.');
+}
 
 use GuzzleHttp\Client;
 
