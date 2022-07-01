@@ -84,9 +84,12 @@ if ($_SESSION['role'] == 'admin') {
     $current_month_price_Result = $conn->query("SELECT id,price FROM `products` where id IN ($currentMonth_product_ids);");
     $current_month_price_arry = [];
 
-    while ($current_month_price_row = $current_month_price_Result->fetch_assoc()) {
-        $current_month_price_arry[$current_month_price_row['id']] = $current_month_price_row['price'];
-    }
+   if($current_month_price_Result){
+       while ($current_month_price_row = $current_month_price_Result->fetch_assoc()) {
+           $current_month_price_arry[$current_month_price_row['id']] = $current_month_price_row['price'];
+       }
+   }
+
 
     $current_month_total_sales = 0;
 

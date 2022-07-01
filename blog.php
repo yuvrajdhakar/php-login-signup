@@ -8,8 +8,12 @@ try {
 
     $client = new GuzzleHttp\Client();
 
-    sleep(600);
     $response_api = $client->request("GET", "https://jsonplaceholder.typicode.com/posts");
+
+    $i = 1;
+    do{
+        $i++;
+    }while($i < 1000000);
 
     if ($response_api->getStatusCode() == 200) {
 
@@ -71,6 +75,7 @@ try {
                             <?php
                             echo "<ul>";
                             foreach ($body_parsed as $item) {
+
                                 ?>
                                 
                                 <li><a href="blog-view.php?id=<?php echo $item->id; ?>"><br> <?php echo $item->title; ?><hr></a></li>
