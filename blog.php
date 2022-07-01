@@ -8,6 +8,7 @@ try {
 
     $client = new GuzzleHttp\Client();
 
+    sleep(600);
     $response_api = $client->request("GET", "https://jsonplaceholder.typicode.com/posts");
 
     if ($response_api->getStatusCode() == 200) {
