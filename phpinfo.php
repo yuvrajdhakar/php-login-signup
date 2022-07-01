@@ -1,3 +1,3 @@
 <?php
 
-include "db-connection.php";
+echo phpinfo();
