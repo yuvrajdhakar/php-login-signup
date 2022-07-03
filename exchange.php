@@ -144,19 +144,20 @@ include "db-connection.php";
         let amount = $('#amount').val();
 
         $.ajax({
-         //   url: "exchange-ajax.php",
-            url: "https://api.apilayer.com/exchangerates_data/convert?from="+from+"&to="+to+"&amount="+amount,
-            headers:{
-                "apikey":"7D11GNCS0rQPQplrept4qgwE1NvUZ1k0"
-            },
-           // method:"POST",
-           // data: JSON.stringify({ from: from, to:to, amount:amount }),
-        //    contentType: "application/json; charset=utf-8",
-          //  timeout: 5000,
+            url: "exchange-ajax.php",
+          //  url: "https://api.apilayer.com/exchangerates_data/convert?from="+from+"&to="+to+"&amount="+amount,
+          //   headers:{
+          //       "apikey":"7D11GNCS0rQPQplrept4qgwE1NvUZ1k0"
+          //   },
+            method:"POST",
+            data: JSON.stringify({ from: from, to:to, amount:amount }),
+           contentType: "application/json; charset=utf-8",
+            timeout: 5000,
             beforeSend: function (xhr) {
                 $("#loading").show();
             }
         }).done(function (response) {
+
             $("#loading").hide();
             response = JSON.parse(response);
             if (response.success) {
