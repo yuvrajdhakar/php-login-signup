@@ -41,14 +41,14 @@ $countriesResult = $conn->query("select * from countries");
                     <div class="rounded-t bg-white mb-0 px-6 py-6">
                         <div class="text-center flex justify-between">
                             <h6 class="text-blueGray-700 text-xl font-bold">
-                                Manage Page Settings :
+                               your information:
                             </h6>
                         </div>
                     </div>
                     <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
                         <form method="POST" enctype="multipart/form-data">
                             <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-                                Settings
+                              ditels
                             </h6>
                             <div class="flex flex-wrap">
                                 <div class="w-full lg:w-6/12 px-4">
@@ -77,6 +77,7 @@ $countriesResult = $conn->query("select * from countries");
                                             State
                                         </label>
                                         <select name="state"
+                                        onchange="getcityes(this.value)"
                                                 id="states"
                                                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
                                             <option value="">Select your state</option>
@@ -92,6 +93,7 @@ $countriesResult = $conn->query("select * from countries");
                                             City
                                         </label>
                                         <select name="city"
+                                                 id= "cityes"
                                                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
                                             <option value="">Select your City</option>
 
@@ -134,12 +136,50 @@ $countriesResult = $conn->query("select * from countries");
 
                let statesElement = document.getElementById("states");
                 $('#states option:not(:first)').remove();
+                $('#cityes option:not(:first)').remove();
                 if(data){
                     for (const stateData of data) {
                         var opt = document.createElement('option');
                         opt.value = stateData.id;
                         opt.innerHTML = stateData.name;
                         statesElement.appendChild(opt);
+                    }
+                }
+
+            } else {
+                console.log("no result found.");
+                alert(response.message);
+            }
+
+        });
+    }
+</script>
+<script>
+    function getcityes(state_id){
+        $.ajax({
+            url: "api/get-cities.php?state_id="+state_id,
+            method:"GET",
+            timeout: 5000,
+            beforeSend: function (xhr) {
+                $("#loading").show();
+            }
+        }).done(function (response) {
+
+            $("#loading").hide();
+
+            response = JSON.parse(response);
+            if (response.success) {
+
+                let data = response.data;
+
+               let cityesElement = document.getElementById("cityes");
+                $('#cityes option:not(:first)').remove();
+                if(data){
+                    for (const statessData of data) {
+                        var opt = document.createElement('option');
+                        opt.value = statessData.id;
+                        opt.innerHTML = statessData.name;
+                        cityesElement.appendChild(opt);
                     }
                 }
 
