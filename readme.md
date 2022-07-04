@@ -10,4 +10,4 @@ https://apilayer.com/marketplace/exchangerates_data-api?preview=true#documentati
 * Create ImageKit media with upload. https://imagekit.io/
 * Create API for forgot password
 * Create forgot password page using API
-* 
+* apply country,state,city selector on signup form. (add new users fields in database)
