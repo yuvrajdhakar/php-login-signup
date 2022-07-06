@@ -8,6 +8,7 @@ if ($_SESSION['role'] != 'admin') {
 
 use GuzzleHttp\Client;
 
+
 require "db-connection.php";
 
 $body = file_get_contents('php://input');
@@ -65,7 +66,10 @@ if (!empty($from) && !empty($to) && !empty($amount)) {
             $response['message'] = "Not able to get conversion rate from API.";
         }
 
-    } catch (Exception $e) {
+    }catch (GuzzleHttp\Exception\InvalidArgumentException $e){
+
+    }
+    catch (Exception $e) {
         $response['message'] = $e->getMessage();
     }
 

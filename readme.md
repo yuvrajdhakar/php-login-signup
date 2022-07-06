@@ -11,3 +11,4 @@ https://apilayer.com/marketplace/exchangerates_data-api?preview=true#documentati
 * Create API for forgot password
 * Create forgot password page using API
 * apply country,state,city selector on signup form. (add new users fields in database)
+* apply cron logic on dbbackup and checkbacup.

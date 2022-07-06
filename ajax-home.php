@@ -2,8 +2,6 @@
 
 session_start();
 
- 
-
 if ($_SESSION['role'] != 'admin') {
     header("Location: home.php?error='You don't have permission for that page.");
     die();
@@ -17,7 +15,7 @@ $response = [
     "data" => null
 ];
 
-try{
+try {
     $total_recordsvalue = $conn->query("select count(*) as total_users from users;");
     $total_users = $total_recordsvalue->fetch_assoc()['total_users'];
 
@@ -43,14 +41,14 @@ try{
         "data" => [
             'total_users' => $total_users,
             'total_pages' => $total_pages,
-           'total_activs' => $total_activs,
-         'total_inactivs' => $total_inactivs,
-         'published'      => $published,
-         'draft'         =>  $draft,
+            'total_activs' => $total_activs,
+            'total_inactivs' => $total_inactivs,
+            'published' => $published,
+            'draft' => $draft,
 
         ]
     ];
-}catch (Exception $e){
+} catch (Exception $e) {
 
 }
 

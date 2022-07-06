@@ -29,8 +29,8 @@ if (isset($_GET['page'])) {
     $current_page = 1;
 }
 
-$per_page = 5;
-$offset_value = (($current_page - 1) * 5);
+$per_page = 6;
+$offset_value = (($current_page - 1) * $per_page);
 
 $order_by = 'id';
 $order = 'desc';

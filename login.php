@@ -7,22 +7,25 @@ require "db-connection.php";
 $email = $_POST['email'];
 $password = $_POST['password'];
 
-if( !empty($email) && !empty($password)){
+if (!empty($email) && !empty($password)) {
 
- $sql = "select id, name, email,password, status, role from users where email = '$email' LIMIT 1";
+    //TODO check email valid
 
-  $stmt = $conn->prepare("select id, name, email,password, status, role from users where email = ? LIMIT 1");
-  $stmt->bind_param("s", $email);
+// $sql = "select id, name, email,password, status, role from users where email = '$email' LIMIT 1";
 
-   $stmt->execute();
-  // $result = $stmt->get_result(); //TODO use bind_result
+    $stmt = $conn->prepare("select id, name, email,password, status, role from users where email = ? LIMIT 1");
+    $stmt->bind_param("s", $email);
+
+    $stmt->execute();
+
+    // $result = $stmt->get_result(); //TODO use bind_result
     $stmt->bind_result($row_id, $row_name, $row_email, $row_password, $row_status, $row_role);
-  if ($stmt->fetch()) {
-       // $row = $result->fetch_assoc();
+    if ($stmt->fetch()) {
+        // $row = $result->fetch_assoc();
 
-        if( password_verify($password, $row_password)  ){
+        if (password_verify($password, $row_password)) {
 
-            if($row_status == 1) {
+            if ($row_status == 1) {
                 $_SESSION['name'] = $row_name;
                 $_SESSION['email'] = $row_email;
 
@@ -30,35 +33,34 @@ if( !empty($email) && !empty($password)){
                 $_SESSION['role'] = $row_role;
 
                 //TODO if role name is 'disabled' redirect to plans page. except the admin
-              
-                if ($_SESSION['role'] == NULL or $_SESSION['role']=='disabled') {
+
+                if ($_SESSION['role'] == NULL or $_SESSION['role'] == 'disabled') {
                     header("Location: plan-view.php?error='Please purchase the plan first to use our system'");
                     die();
                 }
 
                 header("Location: home.php");
                 die();
-            }else{
+            } else {
                 header("Location: index.php?error='Your account is disabled.'");
                 die();
             }
-        }else{
+        } else {
             header("Location: index.php?error='Your password is incorrect.'");
             die();
         }
 
-       
 
-   } else {
-     $err = "Error: " . $sql . "<br>" . $conn->error;
+    } else {
+        $err = "Error: " . $sql . "<br>" . $conn->error;
 
-     header("Location: index.php?error='$err'");
-     die();
-   }
-   
-        $conn->close();
+        header("Location: index.php?error='$err'");
+        die();
+    }
 
-}else{
+    $conn->close();
+
+} else {
     header("Location: index.php?error='Please provide login details'");
     die();
 }
