@@ -25,7 +25,7 @@
 </div>
 <?php } ?>
 
-				<form method="post" action="process-forgot-password.php">
+				<form method="post" action="api-process-forgot-password.php">
 					<div>
 						<span class="text-sm text-gray-900">Hello</span>
 						<h1 class="text-2xl font-bold">Request forgot password</h1>
