@@ -6,6 +6,9 @@ $name = $_POST['name'];
 $email = $_POST['email'];
 $password = $_POST['password'];
 $confirm_password = $_POST['confirm_password'];
+$country = $_POST['country'];
+$state = $_POST['state'];
+$city = $_POST['city'];
 
 if (!empty($name) && !empty($email) && !empty($password) && !empty($confirm_password)) {
     //signup the user
@@ -21,9 +24,16 @@ if (!empty($name) && !empty($email) && !empty($password) && !empty($confirm_pass
 
         //  $sql = "INSERT INTO users (name, email, password) values ('$name', '$email', '$encrypt_password' )";
 
-        $stmt = $conn->prepare("INSERT INTO users (name, email, password) values ('?', '?', '?' )");
-        $stmt->bind_param("sss", $name, $email, $encrypt_password);
+       
+        $stmt = $conn->prepare("INSERT INTO users (name, email, password, country, state, cities) values (?, ?, ?, ?, ?, ?)");
+       
+        if ( false===$stmt ) {
+            die("Error in prepare");
+        }
+        $stmt->bind_param('ssssss', $name, $email, $encrypt_password, $country, $state, $city);
 
+        
+       
         //  if ($conn->query($sql) === TRUE) {
         if ($stmt->execute()) {
             $msg = "Your account created successfully.";

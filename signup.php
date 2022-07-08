@@ -1,7 +1,19 @@
+
+<?php
+session_start();
+include "db-connection.php";
+
+$countriesResult = $conn->query("select * from countries");
+ 
+ 
+?>
 <html>
     <head>
         <title>Signup</title>
         <link rel="stylesheet" href="app.css" />
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    
 </head>
 <body>
 
@@ -46,6 +58,47 @@
                         
 							
         </div>
+		<div class="my-3">
+		<label class="block text-md mb-2" htmlfor="grid-password"> Country </label>
+						 
+						<select class="px-4 w-full border-2 py-2 rounded-md text-sm outline-none" name="country"
+                                                onchange="getStates(this.value)"
+                                                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+                                            <option value="">Select your country</option>
+                                            <?php
+                                            while ($country = $countriesResult->fetch_assoc()) {
+                                            ?>
+                                                <option value="<?php echo $country['country_code'];?>"><?php echo $country['country_name']; ?></option>
+                                            <?php } ?>
+                                        </select> 
+							
+                               </div>
+		                          <div class="my-3">
+                                        <label class="block text-md mb-2"  htmlfor="grid-password">State </label>    
+                                        <select class="px-4 w-full border-2 py-2 rounded-md text-sm outline-none" name="state"
+                                        onchange="getcityes(this.value)"
+                                                id="states"
+                                                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+                                            <option value="">Select your state</option>
+                                           
+
+                                        </select>
+                                    </div>
+
+									<div class="my-3">
+                                        <label class="block text-md mb-2"  htmlfor="grid-password">City</label>
+                                        <select class="px-4 w-full border-2 py-2 rounded-md text-sm outline-none" name="city"
+                                                 id= "cityes"
+                                                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+                                            <option value="">Select your City</option>
+                                            
+                                        </select>
+                                    </div>
+									 
+                                
+                            
+
+		         
 						
 							<div class="">
 								<button class="mt-4 mb-3 w-full bg-green-500 hover:bg-green-400 text-white py-2 rounded-md transition duration-100">Signup</button>
@@ -58,4 +111,82 @@
 	</div>
 </div>
 </div>
+
+<script>
+    function getStates(country_code){
+        $.ajax({
+            url: "api/get-states.php?country_code="+country_code,
+            method:"GET",
+            timeout: 5000,
+            beforeSend: function (xhr) {
+                $("#loading").show();
+            }
+        }).done(function (response) {
+
+            $("#loading").hide();
+
+            response = JSON.parse(response);
+            if (response.success) {
+
+                let data = response.data;
+
+               let statesElement = document.getElementById("states");
+                $('#states option:not(:first)').remove();
+                $('#cityes option:not(:first)').remove();
+                if(data){
+                    for (const stateData of data) {
+                        var opt = document.createElement('option');
+                        opt.value = stateData.id;
+                        opt.innerHTML = stateData.name;
+                        statesElement.appendChild(opt);
+                    }
+                }
+
+            } else {
+                console.log("no result found.");
+                alert(response.message);
+            }
+
+        });
+    }
+</script>
+<script>
+    function getcityes(state_id){
+        $.ajax({
+            url: "api/get-cities.php?state_id="+state_id,
+            method:"GET",
+            timeout: 5000,
+            beforeSend: function (xhr) {
+                $("#loading").show();
+            }
+        }).done(function (response) {
+
+            $("#loading").hide();
+
+            response = JSON.parse(response);
+            if (response.success) {
+
+                let data = response.data;
+
+               let cityesElement = document.getElementById("cityes");
+                $('#cityes option:not(:first)').remove();
+                if(data){
+                    for (const statessData of data) {
+                        var opt = document.createElement('option');
+                        opt.value = statessData.id;
+                        opt.innerHTML = statessData.name;
+                        cityesElement.appendChild(opt);
+                    }
+                }
+
+            } else {
+                console.log("no result found.");
+                alert(response.message);
+            }
+
+        });
+    }
+</script>
+
 </body>
+ 

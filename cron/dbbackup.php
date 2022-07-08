@@ -1,8 +1,11 @@
 <?php
 error_reporting(E_ALL);
-require "vendor/autoload.php";
+require "../vendor/autoload.php";
 
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+ 
+
+
+$dotenv = Dotenv\Dotenv::createImmutable("../");
 $dotenv->load();
 
 /* Instantiate Backup_Database and perform backup */
@@ -40,7 +43,7 @@ class Backup_Database {
 
 
     /* Backup the whole database or just some tables Use '*' for whole database or 'table1 table2 table3...' @param string $tables  */
-    public function backupTables($tables = '*', $outputDir = '.') {
+    public function backupTables($tables = '*', $outputDir = '..') {
         try {
             /* Tables to export  */
             if ($tables == '*') {
