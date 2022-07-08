@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 include "../db-connection.php";
 
@@ -22,5 +21,6 @@ while($row = $results->fetch_assoc()){
 
 $response['data'] = $settings;
 
+header('Content-Type: application/json; charset=utf-8');
 echo json_encode($response);
 die();

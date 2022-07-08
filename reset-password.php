@@ -6,14 +6,11 @@ $token = $_GET['token'];
 
 $sql = "select id, name, email from users where reset_token = '$token' LIMIT 1";
 
-
 $result = $conn->query($sql);
 
 if ($result) {
     if ($result->num_rows > 0) {
-
         ?>
-
         <html>
     <head>
         <title>Create new password</title>
