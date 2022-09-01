@@ -76,8 +76,8 @@ if ($_SESSION['user_id']) {
         }
 
     }
-//$sql = "select * from pages order by $order_by $order limit $per_page OFFSET $offset_value;";
-
+$sql = "select * from pages order by $order_by $order limit $per_page OFFSET $offset_value;";
+ 
     $result = $conn->query($sql);
     $title = "Pages lists";
 
@@ -264,7 +264,7 @@ if ($_SESSION['user_id']) {
 
                                         <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                             <?php
-                                            echo $row['author_name'];
+                                           // echo $row['author_name'];
                                             //  $user_id = $row['author'];
                                             //  $user_result_q = $conn->query("SELECT * from users where id=$user_id");
                                             //   $user_details = $user_result_q->fetch_assoc();
