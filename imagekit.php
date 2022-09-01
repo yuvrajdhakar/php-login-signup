@@ -19,6 +19,7 @@ $imageKit = new ImageKit(
 $listFiles = $imageKit->listFiles(array(
     "skip" => 0,
     "limit" => 10,
+    
 ));
 
 if (isset($_POST['fileId']) && !empty($_POST['fileId'])) {
